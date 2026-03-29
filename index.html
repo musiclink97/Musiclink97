@@ -23,18 +23,25 @@
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      background:var(--bg);
+      background:linear-gradient(180deg,#10131a,#0c0f14);
       color:var(--text);
     }
 
-    a{ color:#93c5fd; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
+    a{
+      color:#93c5fd;
+      text-decoration:none;
+    }
+
+    a:hover{
+      text-decoration:underline;
+    }
+
     .hidden{ display:none !important; }
 
     header{
       position:sticky;
       top:0;
-      z-index:50;
+      z-index:60;
       background:rgba(15,17,21,.96);
       backdrop-filter:blur(12px);
       border-bottom:1px solid var(--line);
@@ -56,7 +63,7 @@
     .container{
       max-width:760px;
       margin:0 auto;
-      padding:14px 12px 92px;
+      padding:14px 12px 96px;
     }
 
     .card{
@@ -65,7 +72,7 @@
       border-radius:18px;
       padding:14px;
       margin-bottom:14px;
-      box-shadow:0 8px 22px rgba(0,0,0,.14);
+      box-shadow:0 8px 24px rgba(0,0,0,.14);
     }
 
     .title{
@@ -128,6 +135,7 @@
       font-size:30px;
       font-weight:800;
       flex-shrink:0;
+      color:white;
     }
 
     input, select, textarea{
@@ -141,6 +149,10 @@
       color:var(--text);
       font-size:14px;
       outline:none;
+    }
+
+    input[type="file"]{
+      padding:10px;
     }
 
     textarea{
@@ -195,7 +207,7 @@
     .stories::-webkit-scrollbar{ display:none; }
 
     .story{
-      min-width:86px;
+      min-width:88px;
       text-align:center;
       background:var(--card);
       border:1px solid var(--line);
@@ -223,7 +235,7 @@
       border-radius:18px;
       overflow:hidden;
       margin-bottom:16px;
-      box-shadow:0 8px 22px rgba(0,0,0,.14);
+      box-shadow:0 8px 24px rgba(0,0,0,.14);
     }
 
     .post-header{
@@ -400,7 +412,7 @@
       display:flex;
       justify-content:space-around;
       padding:10px 6px;
-      z-index:60;
+      z-index:70;
     }
 
     .nav button{
@@ -433,14 +445,6 @@
       color:#bfdbfe;
       font-size:12px;
       margin-top:6px;
-    }
-
-    .live-box{
-      background:#111827;
-      border:1px solid #1f2937;
-      border-radius:16px;
-      padding:14px;
-      margin-top:12px;
     }
 
     .empty{
@@ -478,7 +482,8 @@
 
         <input id="postTitle" placeholder="Titre du post">
         <textarea id="postCaption" placeholder="Description"></textarea>
-        <input id="postMedia" placeholder="Lien image / vidéo / audio">
+        <input type="file" id="postFile" accept="image/*,video/*,audio/*">
+        <input id="postMedia" placeholder="Ou colle un lien image / vidéo / audio">
         <input id="postLocation" placeholder="Lieu du post (ex: Saint-Denis)">
         <input type="datetime-local" id="postSchedule">
 
@@ -516,6 +521,11 @@
     </section>
 
     <section id="activity-tab" class="hidden">
+      <div class="card">
+        <div class="title">Notifications</div>
+        <div id="notificationsList"></div>
+      </div>
+
       <div class="card">
         <div class="title">Activité</div>
         <div id="activityList"></div>
@@ -595,12 +605,7 @@
 
       <div class="card">
         <div class="title">Mes œuvres</div>
-        <div class="gallery">
-          <div class="gallery-item">Photos</div>
-          <div class="gallery-item">Vidéos</div>
-          <div class="gallery-item">Audios</div>
-          <div class="gallery-item">Lives</div>
-        </div>
+        <div id="myWorks" class="gallery"></div>
       </div>
     </section>
   </div>
@@ -622,12 +627,11 @@
         send: "Envoyer",
         followers: "abonnés",
         following: "abonnements",
-        hide: "Masquer",
-        block: "Bloquer",
         enteredLive: "Tu es entré dans le live",
         noActivity: "Aucune activité pour le moment.",
         noProfile: "Aucun profil enregistré.",
-        messageSent: "Message envoyé"
+        messageSent: "Message envoyé",
+        noNotifications: "Aucune notification."
       },
       en: {
         shared: "Post shared",
@@ -635,12 +639,11 @@
         send: "Send",
         followers: "followers",
         following: "following",
-        hide: "Hide",
-        block: "Block",
         enteredLive: "You entered the live",
         noActivity: "No activity yet.",
         noProfile: "No saved profile.",
-        messageSent: "Message sent"
+        messageSent: "Message sent",
+        noNotifications: "No notifications."
       },
       es: {
         shared: "Publicación compartida",
@@ -648,12 +651,11 @@
         send: "Enviar",
         followers: "seguidores",
         following: "siguiendo",
-        hide: "Ocultar",
-        block: "Bloquear",
         enteredLive: "Entraste al live",
         noActivity: "Sin actividad.",
         noProfile: "Ningún perfil guardado.",
-        messageSent: "Mensaje enviado"
+        messageSent: "Mensaje enviado",
+        noNotifications: "Sin notificaciones."
       }
     };
 
@@ -726,6 +728,7 @@
         media: "https://picsum.photos/id/1015/900/1200",
         likes: 8,
         shares: 2,
+        views: 24,
         comments: ["Stylé", "J'aime bien"],
         createdAt: Date.now() - 200000
       },
@@ -741,6 +744,7 @@
         media: "",
         likes: 15,
         shares: 3,
+        views: 41,
         comments: ["J'arrive", "Hâte"],
         createdAt: Date.now() - 100000
       }
@@ -749,12 +753,13 @@
     let profiles = JSON.parse(localStorage.getItem('musicmap_profiles')) || defaultProfiles;
     let posts = JSON.parse(localStorage.getItem('musicmap_posts')) || defaultPosts;
     let follows = JSON.parse(localStorage.getItem('musicmap_follows')) || [];
-    let followersMap = JSON.parse(localStorage.getItem('musicmap_followersMap')) || {};
     let activity = JSON.parse(localStorage.getItem('musicmap_activity')) || [];
     let likedPosts = JSON.parse(localStorage.getItem('musicmap_likedposts')) || [];
     let hiddenPosts = JSON.parse(localStorage.getItem('musicmap_hiddenPosts')) || [];
     let blockedUsers = JSON.parse(localStorage.getItem('musicmap_blockedUsers')) || [];
     let messages = JSON.parse(localStorage.getItem('musicmap_messages')) || [];
+    let notifications = JSON.parse(localStorage.getItem('musicmap_notifications')) || [];
+    let viewedPosts = JSON.parse(localStorage.getItem('musicmap_viewedPosts')) || [];
     let myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
 
     let mediaRecorder = null;
@@ -765,16 +770,45 @@
       localStorage.setItem('musicmap_profiles', JSON.stringify(profiles));
       localStorage.setItem('musicmap_posts', JSON.stringify(posts));
       localStorage.setItem('musicmap_follows', JSON.stringify(follows));
-      localStorage.setItem('musicmap_followersMap', JSON.stringify(followersMap));
       localStorage.setItem('musicmap_activity', JSON.stringify(activity));
       localStorage.setItem('musicmap_likedposts', JSON.stringify(likedPosts));
       localStorage.setItem('musicmap_hiddenPosts', JSON.stringify(hiddenPosts));
       localStorage.setItem('musicmap_blockedUsers', JSON.stringify(blockedUsers));
       localStorage.setItem('musicmap_messages', JSON.stringify(messages));
+      localStorage.setItem('musicmap_notifications', JSON.stringify(notifications));
+      localStorage.setItem('musicmap_viewedPosts', JSON.stringify(viewedPosts));
       localStorage.setItem('musicmap_role', currentUserRole);
       localStorage.setItem('musicmap_feedmode', feedMode);
       localStorage.setItem('musicmap_language', currentLanguage);
       localStorage.setItem('musicmap_profile', JSON.stringify(myProfile));
+    }
+
+    function addNotification(text){
+      notifications.push({
+        id: Date.now() + Math.random(),
+        text,
+        date: new Date().toLocaleString()
+      });
+      saveAll();
+    }
+
+    function renderNotifications(){
+      const box = document.getElementById('notificationsList');
+      box.innerHTML = '';
+
+      if(!notifications.length){
+        box.innerHTML = `<div class="empty">${t('noNotifications')}</div>`;
+        return;
+      }
+
+      notifications.slice().reverse().forEach(n => {
+        box.innerHTML += `
+          <div class="list-item">
+            <strong>${safeText(n.text)}</strong>
+            <div class="small muted" style="margin-top:6px;">${safeText(n.date)}</div>
+          </div>
+        `;
+      });
     }
 
     function navTab(tab, btn) {
@@ -820,7 +854,12 @@
     function safeUrl(url) {
       if (!url) return '';
       const trimmed = url.trim();
-      if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) return trimmed;
+      if (
+        trimmed.startsWith('http://') ||
+        trimmed.startsWith('https://') ||
+        trimmed.startsWith('data:') ||
+        trimmed.startsWith('blob:')
+      ) return trimmed;
       return 'https://' + trimmed;
     }
 
@@ -844,6 +883,7 @@
       box.appendChild(first);
 
       profiles.slice(0,6).forEach(p => {
+        if(blockedUsers.includes(p.name)) return;
         const item = document.createElement('div');
         item.className = 'story';
         item.innerHTML = `
@@ -855,7 +895,19 @@
     }
 
     function computeScore(post){
-      return (post.likes || 0) + (post.comments?.length || 0) * 2 + (post.shares || 0) * 3;
+      return (post.likes || 0) + (post.comments?.length || 0) * 2 + (post.shares || 0) * 3 + Math.floor((post.views || 0) / 10);
+    }
+
+    function countView(postId){
+      const key = `${postId}-viewed`;
+      if(viewedPosts.includes(key)) return;
+
+      viewedPosts.push(key);
+      const post = posts.find(p => p.id === postId);
+      if(post){
+        post.views = (post.views || 0) + 1;
+        saveAll();
+      }
     }
 
     function postVisible(post){
@@ -925,6 +977,7 @@
       }
 
       list.forEach(post => {
+        countView(post.id);
         const authorProfile = profiles.find(p => p.name === post.author);
         const isLiked = likedPosts.includes(post.id);
 
@@ -951,9 +1004,10 @@
             </div>
 
             <div class="stats">
-              <span>${post.likes} j'aime</span>
-              <span>${post.comments.length} commentaires</span>
-              <span>${post.shares} partages</span>
+              <span>👀 ${post.views || 0} vues</span>
+              <span>❤️ ${post.likes} j'aime</span>
+              <span>💬 ${post.comments.length} commentaires</span>
+              <span>🔁 ${post.shares} partages</span>
             </div>
 
             <div><strong>${safeText(post.title)}</strong></div>
@@ -984,11 +1038,13 @@
         likedPosts.push(id);
         post.likes += 1;
         activity.push(`Tu as aimé le post de ${post.author}`);
+        addNotification(`Tu as aimé le post de ${post.author}`);
       }
 
       saveAll();
       renderFeed();
       renderActivity();
+      renderNotifications();
     }
 
     function addComment(id){
@@ -1002,9 +1058,12 @@
       post.comments.push(text);
       input.value = '';
       activity.push(`Tu as commenté le post de ${post.author}`);
+      addNotification(`Nouveau commentaire sur ${post.author}`);
+
       saveAll();
       renderFeed();
       renderActivity();
+      renderNotifications();
     }
 
     function focusComment(id){
@@ -1017,9 +1076,11 @@
       if(!post) return;
       post.shares += 1;
       activity.push(`Tu as partagé le post de ${post.author}`);
+      addNotification(`Tu as partagé le post de ${post.author}`);
       saveAll();
       renderFeed();
       renderActivity();
+      renderNotifications();
       alert(t('shared'));
     }
 
@@ -1042,6 +1103,7 @@
         renderFeed();
         renderProfiles();
         renderActivity();
+        renderMap();
       }
     }
 
@@ -1059,7 +1121,9 @@
       const type = document.getElementById('postType').value;
       const title = document.getElementById('postTitle').value.trim();
       const caption = document.getElementById('postCaption').value.trim();
-      const media = document.getElementById('postMedia').value.trim();
+      const mediaLink = document.getElementById('postMedia').value.trim();
+      const fileInput = document.getElementById('postFile');
+      const file = fileInput.files[0];
       const location = document.getElementById('postLocation').value.trim();
       const schedule = document.getElementById('postSchedule').value;
 
@@ -1068,35 +1132,53 @@
         return;
       }
 
-      const newPost = {
-        id: Date.now(),
-        author: myProfile.name,
-        role: myProfile.role,
-        city: myProfile.city,
-        location: location || myProfile.city,
-        type,
-        title,
-        caption,
-        media,
-        likes: 0,
-        comments: [],
-        shares: 0,
-        scheduled: schedule || null,
-        createdAt: Date.now()
-      };
+      function finishCreate(mediaValue){
+        const newPost = {
+          id: Date.now(),
+          author: myProfile.name,
+          role: myProfile.role,
+          city: myProfile.city,
+          location: location || myProfile.city,
+          type,
+          title,
+          caption,
+          media: mediaValue || '',
+          likes: 0,
+          comments: [],
+          shares: 0,
+          views: 0,
+          scheduled: schedule || null,
+          createdAt: Date.now()
+        };
 
-      posts.push(newPost);
-      activity.push(`Tu as publié : ${title}`);
+        posts.push(newPost);
+        activity.push(`Tu as publié : ${title}`);
+        addNotification(`Ton post "${title}" est publié`);
 
-      document.getElementById('postTitle').value = '';
-      document.getElementById('postCaption').value = '';
-      document.getElementById('postMedia').value = '';
-      document.getElementById('postLocation').value = '';
-      document.getElementById('postSchedule').value = '';
+        document.getElementById('postTitle').value = '';
+        document.getElementById('postCaption').value = '';
+        document.getElementById('postMedia').value = '';
+        document.getElementById('postLocation').value = '';
+        document.getElementById('postSchedule').value = '';
+        document.getElementById('postFile').value = '';
 
-      saveAll();
-      renderFeed();
-      renderActivity();
+        saveAll();
+        renderFeed();
+        renderActivity();
+        renderNotifications();
+        renderProfile();
+        renderMyWorks();
+      }
+
+      if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+          finishCreate(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        finishCreate(mediaLink);
+      }
     }
 
     function filterProfiles(){
@@ -1149,7 +1231,7 @@
               ${followed ? 'Suivi' : 'Suivre'}
             </button>
             <button class="btn-soft" onclick="proposeTo('${safeText(p.name)}')">Proposer</button>
-            <button class="btn-red" onclick="blockUser('${safeText(p.name)}')">${t('block')}</button>
+            <button class="btn-red" onclick="blockUser('${safeText(p.name)}')">Bloquer</button>
             ${p.website ? `<a class="file-chip" href="${safeUrl(p.website)}" target="_blank">Lien</a>` : ''}
           </div>
         `;
@@ -1168,11 +1250,13 @@
         follows.push(name);
         target.followers = (target.followers || 0) + 1;
         activity.push(`Tu suis maintenant ${name}`);
+        addNotification(`Tu suis maintenant ${name}`);
       }
 
       saveAll();
       renderProfiles();
       renderActivity();
+      renderNotifications();
       renderProfile();
       renderFeed();
       renderMap();
@@ -1182,8 +1266,10 @@
       const message = prompt(`Que veux-tu proposer à ${name} ?`);
       if(!message) return;
       activity.push(`Tu as proposé à ${name} : ${message}`);
+      addNotification(`Proposition envoyée à ${name}`);
       saveAll();
       renderActivity();
+      renderNotifications();
       alert("Proposition envoyée dans le prototype.");
     }
 
@@ -1228,7 +1314,6 @@
       }
 
       currentLanguage = language;
-
       const previousFollowers = profiles.find(p => p.name === name)?.followers || 0;
 
       myProfile = {
@@ -1247,12 +1332,55 @@
       }
 
       activity.push(`Profil mis à jour : ${name}`);
+      addNotification(`Profil enregistré : ${name}`);
       saveAll();
       renderStories();
       renderProfiles();
       renderProfile();
       renderMap();
       renderActivity();
+      renderNotifications();
+      renderMyWorks();
+    }
+
+    function renderMyWorks(){
+      const box = document.getElementById('myWorks');
+      if(!box) return;
+
+      box.innerHTML = '';
+
+      if(!myProfile || !myProfile.name){
+        box.innerHTML = `<div class="gallery-item">Aucune œuvre</div>`;
+        return;
+      }
+
+      const myPosts = posts.filter(p => p.author === myProfile.name);
+
+      if(!myPosts.length){
+        box.innerHTML = `<div class="gallery-item">Aucune œuvre</div>`;
+        return;
+      }
+
+      myPosts.slice().reverse().forEach(post => {
+        let mediaHtml = '';
+        if(post.type === 'photo' && post.media){
+          mediaHtml = `<img src="${safeUrl(post.media)}" style="width:100%;height:100px;object-fit:cover;border-radius:10px;">`;
+        } else if(post.type === 'video'){
+          mediaHtml = `<div class="small">🎥 Vidéo</div>`;
+        } else if(post.type === 'audio'){
+          mediaHtml = `<div class="small">🎵 Audio</div>`;
+        } else if(post.type === 'live'){
+          mediaHtml = `<div class="small">🔴 Live</div>`;
+        }
+
+        box.innerHTML += `
+          <div class="gallery-item">
+            <strong>${safeText(post.title)}</strong>
+            <div class="small muted" style="margin:6px 0;">${safeText(post.location || '')}</div>
+            ${mediaHtml}
+          </div>
+        `;
+      });
     }
 
     function renderProfile(){
@@ -1264,6 +1392,7 @@
         document.getElementById('heroFollowers').textContent = `0 ${t('followers')} • ${follows.length} ${t('following')}`;
         document.getElementById('heroAvatar').innerHTML = '👤';
         preview.innerHTML = `<div class="empty">${t('noProfile')}</div>`;
+        renderMyWorks();
         return;
       }
 
@@ -1299,6 +1428,8 @@
         ${myProfile.contact ? `<div style="margin-top:10px;" class="muted">Contact : ${safeText(myProfile.contact)}</div>` : ''}
         ${myProfile.website ? `<div style="margin-top:8px;"><a href="${safeUrl(myProfile.website)}" target="_blank">${safeText(myProfile.website)}</a></div>` : ''}
       `;
+
+      renderMyWorks();
     }
 
     function renderMap(){
@@ -1355,8 +1486,10 @@
       const post = posts.find(p => p.id === postId);
       if(!post) return;
       activity.push(`Tu es entré dans le live de ${post.author}`);
+      addNotification(`Live rejoint : ${post.author}`);
       saveAll();
       renderActivity();
+      renderNotifications();
       alert(`${t('enteredLive')} : ${post.author}`);
     }
 
@@ -1406,9 +1539,11 @@
       document.getElementById('messageText').value = '';
       document.getElementById('messageFile').value = '';
       activity.push(t('messageSent'));
+      addNotification(t('messageSent'));
       saveAll();
       renderMessages();
       renderActivity();
+      renderNotifications();
     }
 
     function renderMessages(){
@@ -1478,6 +1613,7 @@
     renderProfiles();
     renderMap();
     renderActivity();
+    renderNotifications();
     renderMessages();
     renderProfile();
     setFeedMode(feedMode);
