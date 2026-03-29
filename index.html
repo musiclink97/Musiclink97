@@ -1054,6 +1054,13 @@
     renderMap();
     renderMessages();
     renderMyProfile();
+    const SUPABASE_URL = "https://glxkwzfmwbfjrpvclvih.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xxxxxxxxxxxxx";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
   </script>
 </body>
 </html>
