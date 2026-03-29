@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MusicMap Live</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f1014;
+      color: #fff;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #151821;
+      border-bottom: 1px solid #252938;
+      padding: 14px;
+    }
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .sub {
+      font-size: 12px;
+      color: #aeb6c9;
+      margin-top: 2px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-top: 12px;
+      padding-bottom: 2px;
+    }
+    .tab-btn {
+      border: none;
+      background: #222738;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: #00d084;
+      color: black;
+      font-weight: 700;
+    }
+
+    .container {
+      padding: 14px;
+      padding-bottom: 92px;
+    }
+
+    .hidden { display: none; }
+
+    .card {
+      background: #171b25;
+      border: 1px solid #252938;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #2a3145;
+      object-fit: cover;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .muted {
+      color: #aeb6c9;
+      font-size: 14px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      background: #23293a;
+      border-radius: 999px;
+      margin: 6px 6px 0 0;
+      font-size: 12px;
+    }
+
+    .pill.live {
+      background: #ff3b5c;
+      color: white;
+      font-weight: bold;
+    }
+
+    .pill.premium {
+      background: #4b3d13;
+      color: #ffd76a;
+      border: 1px solid #7b641e;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 13px;
+      cursor: pointer;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .btn-main {
+      background: #00d084;
+      color: black;
+    }
+
+    .btn-secondary {
+      background: #252b3d;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #ff3b5c;
+      color: white;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 14px;
+      margin-top: 10px;
+      color: #d3d8e7;
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #31384b;
+      background: #10131a;
+      color: white;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .stories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-bottom: 14px;
+    }
+
+    .story {
+      min-width: 84px;
+      text-align: center;
+      background: #171b25;
+      border: 1px solid #252938;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .story-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      background: linear-gradient(135deg, #00d084, #0cc2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .story-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mapbox {
+      position: relative;
+      height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #293044;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(0,208,132,.15), transparent 18%),
+        radial-gradient(circle at 70% 60%, rgba(12,194,255,.12), transparent 18%),
+        linear-gradient(180deg, #1a2030, #0f1219);
+    }
+
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      padding: 7px 9px;
+      border-radius: 999px;
+      background: #00d084;
+      color: black;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0,0,0,.28);
+      cursor: pointer;
+    }
+
+    .map-pin.premium {
+      background: gold;
+    }
+
+    .map-pin.live {
+      background: #ff3b5c;
+      color: white;
+    }
+
+    .media-box {
+      background: #11141b;
+      border: 1px dashed #31384b;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    .feed-badge {
+      font-size: 12px;
+      color: #aeb6c9;
+      margin-top: 4px;
+    }
+
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #151821;
+      border-top: 1px solid #252938;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 6px;
+      z-index: 30;
+    }
+
+    .nav button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .small {
+      font-size: 12px;
+    }
+
+    .comment-box {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #252938;
+    }
+
+    .message {
+      background: #222738;
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+    }
+
+    .empty {
+      text-align: center;
+      color: #9da6be;
+      padding: 22px 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">MusicMap</div>
+    <div class="sub">Réseau musique, création, map et lives</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('feed', this)">Feed</button>
+      <button class="tab-btn" onclick="showTab('map', this)">Map</button>
+      <button class="tab-btn" onclick="showTab('discover', this)">Découvrir</button>
+      <button class="tab-btn" onclick="showTab('messages', this)">Messages</button>
+      <button class="tab-btn" onclick="showTab('profile', this)">Profil</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <section id="feed-tab">
+      <div class="stories" id="storiesList"></div>
+
+      <div class="card">
+        <div class="title">Publier</div>
+        <div class="muted">Les créateurs peuvent publier photo, vidéo, audio et lancer un live.</div>
+        <select id="postType">
+          <option value="photo">Photo</option>
+          <option value="video">Vidéo</option>
+          <option value="audio">Audio</option>
+          <option value="live">Live</option>
+        </select>
+        <input id="postTitle" placeholder="Titre du post ou du live">
+        <textarea id="postCaption" placeholder="Description / légende"></textarea>
+        <input id="postMedia" placeholder="Lien image / vidéo / audio (optionnel)">
+        <button class="btn btn-main" onclick="createPost()">Publier</button>
+      </div>
+
+      <div id="feedList"></div>
+    </section>
+
+    <section id="map-tab" class="hidden">
+      <div class="card">
+        <div class="between">
+          <div>
+            <div class="title">Carte artistique</div>
+            <div class="muted">Studios, artistes, caméramans, danseurs et profils recommandés.</div>
+          </div>
+        </div>
+        <div class="mapbox" id="mapBox"></div>
+      </div>
+      <div id="mapProfileView"></div>
+    </section>
+
+    <section id="discover-tab" class="hidden">
+      <div class="card">
+        <div class="title">Recherche</div>
+        <input id="searchInput" placeholder="Chercher : studio, rappeur, danseur, ville..." oninput="filterProfiles()">
+        <select id="roleFilter" onchange="filterProfiles()">
+          <option value="">Tous les rôles</option>
+          <option value="Artiste">Artiste</option>
+          <option value="Studio">Studio</option>
+          <option value="Beatmaker">Beatmaker</option>
+          <option value="Caméraman">Caméraman</option>
+          <option value="Danseur">Danseur</option>
+          <option value="Photographe">Photographe</option>
+          <option value="Fan">Fan</option>
+        </select>
+      </div>
+      <div id="discoverList"></div>
+    </section>
+
+    <section id="messages-tab" class="hidden">
+      <div class="card">
+        <div class="title">Messagerie</div>
+        <div class="muted">Prototype de discussion privée.</div>
+        <select id="messageTarget">
+          <option value="Studio 974">Studio 974</option>
+          <option value="Luna K">Luna K</option>
+          <option value="Kévin Beats">Kévin Beats</option>
+          <option value="Lina Cam">Lina Cam</option>
+          <option value="Mia Move">Mia Move</option>
+        </select>
+        <textarea id="messageText" placeholder="Écris ton message"></textarea>
+        <button class="btn btn-main" onclick="sendMessage()">Envoyer</button>
+      </div>
+      <div class="card">
+        <div class="title">Conversations</div>
+        <div id="messagesList"></div>
+      </div>
+    </section>
+
+    <section id="profile-tab" class="hidden">
+      <div class="card">
+        <div class="title">Mon compte</div>
+        <div class="muted">Rôle actuel : <span id="currentRole">Fan</span></div>
+        <button class="btn btn-main" onclick="becomeCreator()">Devenir créateur</button>
+      </div>
+
+      <div class="card">
+        <div class="title">Créer / modifier mon profil</div>
+        <input id="profilePhoto" placeholder="Lien de ta photo de profil">
+        <input id="nameInput" placeholder="Nom / nom d’artiste">
+        <input id="cityInput" placeholder="Ville">
+        <select id="typeInput">
+          <option>Artiste</option>
+          <option>Studio</option>
+          <option>Beatmaker</option>
+          <option>Caméraman</option>
+          <option>Danseur</option>
+          <option>Photographe</option>
+          <option>Fan</option>
+        </select>
+        <input id="specialtyInput" placeholder="Spécialité / style musical">
+        <textarea id="bioInput" placeholder="Bio"></textarea>
+        <input id="instagramInput" placeholder="Instagram ou lien externe">
+        <button class="btn btn-main" onclick="saveProfile()">Enregistrer mon profil</button>
+      </div>
+
+      <div class="card">
+        <div class="title">Mon profil aperçu</div>
+        <div id="myProfilePreview" class="muted">Aucun profil enregistré.</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="nav">
+    <button onclick="navTab('feed')">Accueil</button>
+    <button onclick="navTab('map')">Map</button>
+    <button onclick="navTab('discover')">Recherche</button>
+    <button onclick="navTab('messages')">Messages</button>
+    <button onclick="navTab('profile')">Profil</button>
+  </div>
+
+  <script>
+    let currentUserRole = localStorage.getItem('musicmap_role') || 'Fan';
+
+    const defaultProfiles = [
+      {
+        name: "Studio 974",
+        role: "Studio",
+        city: "Saint-Denis",
+        specialty: "Enregistrement, mix, mastering",
+        bio: "Studio pro disponible pour artistes et voix off.",
+        premium: true,
+        x: 22,
+        y: 34,
+        photo: "",
+        instagram: "@studio974"
+      },
+      {
+        name: "Luna K",
+        role: "Artiste",
+        city: "Saint-Denis",
+        specialty: "Rap mélodique",
+        bio: "Artiste en développement, démos et clips.",
+        premium: false,
+        x: 48,
+        y: 62,
+        photo: "",
+        instagram: "@lunak"
+      },
+      {
+        name: "Kévin Beats",
+        role: "Beatmaker",
+        city: "Saint-Paul",
+        specialty: "Afro, trap, amapiano",
+        bio: "Beatmaker dispo pour collaborations et placements.",
+        premium: false,
+        x: 72,
+        y: 54,
+        photo: "",
+        instagram: "@kevinbeats"
+      },
+      {
+        name: "Lina Cam",
+        role: "Caméraman",
+        city: "Saint-Pierre",
+        specialty: "Clips, backstage, réels",
+        bio: "Réalisation vidéo pour artistes et marques.",
+        premium: true,
+        x: 58,
+        y: 28,
+        photo: "",
+        instagram: "@linacam"
+      },
+      {
+        name: "Mia Move",
+        role: "Danseur",
+        city: "Le Port",
+        specialty: "Danse urbaine",
+        bio: "Danseuse, chorégraphies pour scènes et clips.",
+        premium: false,
+        x: 37,
+        y: 47,
+        photo: "",
+        instagram: "@miamove"
+      }
+    ];
+
+    const defaultPosts = [
+      {
+        id: 1,
+        author: "Luna K",
+        role: "Artiste",
+        city: "Saint-Denis",
+        type: "audio",
+        title: "Nuit 974",
+        caption: "Nouvelle démo, dites-moi ce que vous en pensez.",
+        media: "",
+        likes: 24,
+        comments: ["Très propre 🔥", "Le refrain reste en tête"],
+        shares: 4,
+        live: false
+      },
+      {
+        id: 2,
+        author: "Lina Cam",
+        role: "Caméraman",
+        city: "Saint-Pierre",
+        type: "video",
+        title: "Extrait de clip",
+        caption: "Backstage du dernier tournage.",
+        media: "",
+        likes: 41,
+        comments: ["La lumière est folle", "Très pro"],
+        shares: 8,
+        live: false
+      },
+      {
+        id: 3,
+        author: "Studio 974",
+        role: "Studio",
+        city: "Saint-Denis",
+        type: "live",
+        title: "Live session studio",
+        caption: "Session en direct ce soir à 20h.",
+        media: "",
+        likes: 17,
+        comments: ["Je passe !", "Envoyez le lien"],
+        shares: 5,
+        live: true
+      }
+    ];
+
+    let profiles = JSON.parse(localStorage.getItem('musicmap_profiles')) || defaultProfiles;
+    let posts = JSON.parse(localStorage.getItem('musicmap_posts')) || defaultPosts;
+    let messages = JSON.parse(localStorage.getItem('musicmap_messages')) || [];
+
+    function saveAll() {
+      localStorage.setItem('musicmap_profiles', JSON.stringify(profiles));
+      localStorage.setItem('musicmap_posts', JSON.stringify(posts));
+      localStorage.setItem('musicmap_messages', JSON.stringify(messages));
+      localStorage.setItem('musicmap_role', currentUserRole);
+    }
+
+    function showTab(tab, btn) {
+      ['feed', 'map', 'discover', 'messages', 'profile'].forEach(name => {
+        document.getElementById(name + '-tab').classList.add('hidden');
+      });
+      document.getElementById(tab + '-tab').classList.remove('hidden');
+
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) {
+        btn.classList.add('active');
+      }
+    }
+
+    function navTab(tab) {
+      showTab(tab);
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      const match = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
+        const txt = b.textContent.toLowerCase();
+        if (tab === 'feed') return txt.includes('feed');
+        if (tab === 'map') return txt.includes('map');
+        if (tab === 'discover') return txt.includes('découvrir');
+        if (tab === 'messages') return txt.includes('messages');
+        if (tab === 'profile') return txt.includes('profil');
+      });
+      if (match) match.classList.add('active');
+    }
+
+    function emojiForRole(role) {
+      if (role === 'Artiste') return '🎤';
+      if (role === 'Studio') return '🎧';
+      if (role === 'Beatmaker') return '🥁';
+      if (role === 'Caméraman') return '🎥';
+      if (role === 'Danseur') return '💃';
+      if (role === 'Photographe') return '📸';
+      if (role === 'Fan') return '❤️';
+      return '👤';
+    }
+
+    function renderAvatar(photo, role) {
+      if (photo) {
+        return `<div class="avatar"><img src="${photo}" alt="photo"></div>`;
+      }
+      return `<div class="avatar">${emojiForRole(role)}</div>`;
+    }
+
+    function renderStories() {
+      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+      const stories = document.getElementById('storiesList');
+      stories.innerHTML = '';
+
+      const first = document.createElement('div');
+      first.className = 'story';
+      first.innerHTML = `
+        <div class="story-avatar">${myProfile?.photo ? `<img src="${myProfile.photo}" alt="story">` : '➕'}</div>
+        <div class="small">Ta story</div>
+      `;
+      stories.appendChild(first);
+
+      profiles.slice(0, 6).forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'story';
+        item.innerHTML = `
+          <div class="story-avatar">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : emojiForRole(p.role)}</div>
+          <div class="small">${p.name}</div>
+        `;
+        stories.appendChild(item);
+      });
+    }
+
+    function renderFeed() {
+      const feed = document.getElementById('feedList');
+      feed.innerHTML = '';
+
+      if (!posts.length) {
+        feed.innerHTML = `<div class="card empty">Aucun post pour le moment.</div>`;
+        return;
+      }
+
+      posts.slice().reverse().forEach(post => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const authorProfile = profiles.find(p => p.name === post.author);
+        const avatar = renderAvatar(authorProfile?.photo || '', post.role);
+
+        card.innerHTML = `
+          <div class="row">
+            ${avatar}
+            <div>
+              <strong>${post.author}</strong><br>
+              <span class="muted">${post.role} • ${post.city}</span>
+              <div class="feed-badge">${labelType(post.type)}</div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <strong>${post.title}</strong>
+            ${post.live ? `<div class="pill live">LIVE</div>` : ''}
+            <p>${post.caption}</p>
+          </div>
+
+          <div class="media-box">
+            ${renderMedia(post)}
+          </div>
+
+          <div class="stats">
+            <span>❤️ ${post.likes}</span>
+            <span>💬 ${post.comments.length}</span>
+            <span>🔁 ${post.shares}</span>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-secondary" onclick="likePost(${post.id})">Aimer</button>
+            <button class="btn btn-secondary" onclick="sharePost(${post.id})">Partager</button>
+            <button class="btn ${post.live ? 'btn-danger' : 'btn-secondary'}" onclick="joinLive(${post.id})">
+              ${post.live ? 'Rejoindre le live' : 'Voir le post'}
+            </button>
+          </div>
+
+          <div class="comment-box">
+            <input id="comment-${post.id}" placeholder="Ajouter un commentaire">
+            <button class="btn btn-main" onclick="addComment(${post.id})">Commenter</button>
+            <div id="comments-${post.id}" style="margin-top:8px;"></div>
+          </div>
+        `;
+        feed.appendChild(card);
+        renderComments(post.id);
+      });
+    }
+
+    function renderComments(postId) {
+      const post = posts.find(p => p.id === postId);
+      const target = document.getElementById('comments-' + postId);
+      if (!target || !post) return;
+
+      target.innerHTML = '';
+      post.comments.forEach(c => {
+        const d = document.createElement('div');
+        d.className = 'message';
+        d.textContent = c;
+        target.appendChild(d);
+      });
+    }
+
+    function labelType(type) {
+      if (type === 'photo') return 'Publication photo';
+      if (type === 'video') return 'Publication vidéo';
+      if (type === 'audio') return 'Publication audio';
+      if (type === 'live') return 'Live';
+      return 'Publication';
+    }
+
+    function renderMedia(post) {
+      if (post.type === 'photo') {
+        return post.media
+          ? `<img src="${post.media}" alt="photo" style="width:100%; border-radius:10px;">`
+          : `📷 Photo du post`;
+      }
+      if (post.type === 'video') {
+        return post.media
+          ? `<video controls style="width:100%; border-radius:10px;"><source src="${post.media}"></video>`
+          : `🎥 Vidéo du post`;
+      }
+      if (post.type === 'audio') {
+        return post.media
+          ? `<audio controls style="width:100%;"><source src="${post.media}"></audio>`
+          : `🎵 Audio du post`;
+      }
+      if (post.type === 'live') {
+        return `🔴 Live en cours ou programmé<br><span class="small">Dans la vraie app, tu brancheras une vraie techno live ici.</span>`;
+      }
+      return `Contenu`;
+    }
+
+    function likePost(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      post.likes += 1;
+      saveAll();
+      renderFeed();
+    }
+
+    function sharePost(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      post.shares += 1;
+      saveAll();
+      renderFeed();
+      alert("Post partagé dans le prototype.");
+    }
+
+    function addComment(id) {
+      const input = document.getElementById('comment-' + id);
+      const value = input.value.trim();
+      if (!value) return;
+      const post = posts.find(p => p.id === id);
+      post.comments.push(value);
+      input.value = '';
+      saveAll();
+      renderFeed();
+    }
+
+    function joinLive(id) {
+      const post = posts.find(p => p.id === id);
+      if (!post) return;
+      if (post.type === 'live') {
+        alert("Prototype live : dans la vraie app, ce bouton ouvrira la salle live.");
+      } else {
+        alert("Vue détaillée du post à ajouter dans la vraie app.");
+      }
+    }
+
+    function createPost() {
+      if (currentUserRole !== 'Créateur') {
+        alert("Seuls les créateurs peuvent publier du contenu principal.");
+        return;
+      }
+
+      const type = document.getElementById('postType').value;
+      const title = document.getElementById('postTitle').value.trim();
+      const caption = document.getElementById('postCaption').value.trim();
+      const media = document.getElementById('postMedia').value.trim();
+      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+
+      if (!myProfile || !myProfile.name) {
+        alert("Crée d’abord ton profil.");
+        return;
+      }
+
+      if (!title) {
+        alert("Ajoute un titre.");
+        return;
+      }
+
+      const newPost = {
+        id: Date.now(),
+        author: myProfile.name,
+        role: myProfile.role,
+        city: myProfile.city,
+        type,
+        title,
+        caption,
+        media,
+        likes: 0,
+        comments: [],
+        shares: 0,
+        live: type === 'live'
+      };
+
+      posts.push(newPost);
+      saveAll();
+      renderFeed();
+
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postCaption').value = '';
+      document.getElementById('postMedia').value = '';
+
+      alert(type === 'live' ? "Live créé dans le prototype." : "Publication ajoutée.");
+    }
+
+    function renderMap() {
+      const map = document.getElementById('mapBox');
+      map.innerHTML = '';
+
+      profiles.forEach(p => {
+        const pin = document.createElement('div');
+        let cls = 'map-pin';
+        if (p.premium) cls += ' premium';
+        if (hasLiveByAuthor(p.name)) cls += ' live';
+
+        pin.className = cls;
+        pin.style.left = (p.x || 50) + '%';
+        pin.style.top = (p.y || 50) + '%';
+        pin.textContent = p.name;
+        pin.onclick = () => showMapProfile(p.name);
+        map.appendChild(pin);
+      });
+    }
+
+    function hasLiveByAuthor(name) {
+      return posts.some(p => p.author === name && p.type === 'live');
+    }
+
+    function showMapProfile(name) {
+      const p = profiles.find(x => x.name === name);
+      const target = document.getElementById('mapProfileView');
+      if (!p) return;
+
+      target.innerHTML = `
+        <div class="card">
+          <div class="row">
+            ${renderAvatar(p.photo, p.role)}
+            <div>
+              <strong>${p.name}</strong><br>
+              <span class="muted">${p.role} • ${p.city}</span>
+            </div>
+          </div>
+          <p style="margin-top:10px;">${p.bio}</p>
+          <div class="pill">${p.specialty || 'Sans spécialité'}</div>
+          ${p.premium ? `<div class="pill premium">Recommandé</div>` : ''}
+          ${hasLiveByAuthor(p.name) ? `<div class="pill live">Live actif / prévu</div>` : ''}
+          <div class="actions">
+            <button class="btn btn-secondary" onclick="alert('Contact prototype : bientôt messagerie directe')">Contacter</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderProfiles(list = profiles) {
+      const wrap = document.getElementById('discoverList');
+      wrap.innerHTML = '';
+
+      if (!list.length) {
+        wrap.innerHTML = `<div class="card empty">Aucun profil trouvé.</div>`;
+        return;
+      }
+
+      list.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="row">
+            ${renderAvatar(p.photo, p.role)}
+            <div>
+              <strong>${p.name}</strong><br>
+              <span class="muted">${p.role} • ${p.city}</span>
+            </div>
+          </div>
+          <p style="margin-top:10px;">${p.bio}</p>
+          <div class="pill">${p.specialty || 'Sans spécialité'}</div>
+          ${p.premium ? `<div class="pill premium">Recommandé</div>` : ''}
+          <div class="actions">
+            <button class="btn btn-secondary" onclick="alert('Contact prototype : bientôt messagerie / Insta / WhatsApp')">Contacter</button>
+          </div>
+        `;
+        wrap.appendChild(card);
+      });
+    }
+
+    function filterProfiles() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const role = document.getElementById('roleFilter').value;
+
+      const filtered = profiles.filter(p => {
+        const textMatch =
+          p.name.toLowerCase().includes(q) ||
+          p.role.toLowerCase().includes(q) ||
+          p.city.toLowerCase().includes(q) ||
+          (p.specialty || '').toLowerCase().includes(q) ||
+          (p.bio || '').toLowerCase().includes(q);
+
+        const roleMatch = !role || p.role === role;
+        return textMatch && roleMatch;
+      });
+
+      renderProfiles(filtered);
+    }
+
+    function becomeCreator() {
+      currentUserRole = 'Créateur';
+      saveAll();
+      document.getElementById('currentRole').textContent = currentUserRole;
+      alert("Ton rôle passe en mode créateur dans le prototype.");
+    }
+
+    function saveProfile() {
+      const photo = document.getElementById('profilePhoto').value.trim();
+      const name = document.getElementById('nameInput').value.trim();
+      const city = document.getElementById('cityInput').value.trim();
+      const role = document.getElementById('typeInput').value;
+      const specialty = document.getElementById('specialtyInput').value.trim();
+      const bio = document.getElementById('bioInput').value.trim();
+      const instagram = document.getElementById('instagramInput').value.trim();
+
+      if (!name || !city || !bio) {
+        alert("Remplis au moins le nom, la ville et la bio.");
+        return;
+      }
+
+      const myProfile = {
+        name, city, role, specialty, bio, instagram, photo,
+        premium: false,
+        x: 40 + Math.floor(Math.random() * 30),
+        y: 30 + Math.floor(Math.random() * 35)
+      };
+
+      localStorage.setItem('musicmap_profile', JSON.stringify(myProfile));
+
+      const existingIndex = profiles.findIndex(p => p.name === name);
+      if (existingIndex >= 0) {
+        profiles[existingIndex] = { ...profiles[existingIndex], ...myProfile };
+      } else {
+        profiles.push(myProfile);
+      }
+
+      if (role !== 'Fan') {
+        currentUserRole = 'Créateur';
+      }
+
+      saveAll();
+      renderMyProfile();
+      renderProfiles();
+      renderMap();
+      renderStories();
+      document.getElementById('currentRole').textContent = currentUserRole;
+      alert("Profil enregistré.");
+    }
+
+    function renderMyProfile() {
+      document.getElementById('currentRole').textContent = currentUserRole;
+      const raw = localStorage.getItem('musicmap_profile');
+      const preview = document.getElementById('myProfilePreview');
+
+      if (!raw) {
+        preview.innerHTML = 'Aucun profil enregistré.';
+        return;
+      }
+
+      const p = JSON.parse(raw);
+      preview.innerHTML = `
+        <div class="row">
+          ${renderAvatar(p.photo, p.role)}
+          <div>
+            <strong>${p.name}</strong><br>
+            <span class="muted">${p.role} • ${p.city}</span>
+          </div>
+        </div>
+        <p style="margin-top:10px;">${p.bio}</p>
+        <div class="pill">${p.specialty || 'Sans spécialité'}</div>
+        ${p.instagram ? `<div class="pill">${p.instagram}</div>` : ''}
+      `;
+
+      document.getElementById('profilePhoto').value = p.photo || '';
+      document.getElementById('nameInput').value = p.name || '';
+      document.getElementById('cityInput').value = p.city || '';
+      document.getElementById('typeInput').value = p.role || 'Artiste';
+      document.getElementById('specialtyInput').value = p.specialty || '';
+      document.getElementById('bioInput').value = p.bio || '';
+      document.getElementById('instagramInput').value = p.instagram || '';
+    }
+
+    function sendMessage() {
+      const to = document.getElementById('messageTarget').value;
+      const text = document.getElementById('messageText').value.trim();
+      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+      const from = myProfile?.name || 'Moi';
+
+      if (!text) {
+        alert("Écris un message.");
+        return;
+      }
+
+      messages.push({
+        id: Date.now(),
+        from,
+        to,
+        text
+      });
+
+      document.getElementById('messageText').value = '';
+      saveAll();
+      renderMessages();
+      alert("Message ajouté au prototype.");
+    }
+
+    function renderMessages() {
+      const wrap = document.getElementById('messagesList');
+      wrap.innerHTML = '';
+
+      if (!messages.length) {
+        wrap.innerHTML = `<div class="empty">Aucun message pour le moment.</div>`;
+        return;
+      }
+
+      messages.slice().reverse().forEach(m => {
+        const d = document.createElement('div');
+        d.className = 'message';
+        d.innerHTML = `<strong>${m.from}</strong> → <strong>${m.to}</strong><br>${m.text}`;
+        wrap.appendChild(d);
+      });
+    }
+
+    renderStories();
+    renderFeed();
+    renderProfiles();
+    renderMap();
+    renderMessages();
+    renderMyProfile();
+  </script>
+</body>
+</html>
