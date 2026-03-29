@@ -14,7 +14,7 @@
       --muted:#9ca3af;
       --line:#2b3140;
       --blue:#2563eb;
-      --blue2:#60a5fa;
+      --violet:#8b5cf6;
       --red:#ef4444;
       --green:#10b981;
       --gold:#f59e0b;
@@ -41,38 +41,61 @@
     header{
       position:sticky;
       top:0;
-      z-index:60;
+      z-index:80;
       background:rgba(15,17,21,.96);
       backdrop-filter:blur(12px);
       border-bottom:1px solid var(--line);
-      padding:14px 16px;
+      padding:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
     }
 
     .brand{
-      font-size:22px;
+      font-size:20px;
       font-weight:800;
-      letter-spacing:.2px;
     }
 
     .sub{
       font-size:12px;
       color:var(--muted);
-      margin-top:3px;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .header-btn{
+      background:#111827;
+      color:white;
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:8px 10px;
+      position:relative;
     }
 
     .container{
       max-width:760px;
       margin:0 auto;
-      padding:14px 12px 96px;
+      padding:12px 12px 96px;
     }
 
     .card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:14px;
-      box-shadow:0 8px 24px rgba(0,0,0,.14);
+      border-radius:16px;
+      padding:12px;
+      margin-bottom:12px;
     }
 
     .title{
@@ -86,12 +109,15 @@
       font-size:14px;
     }
 
-    .small{ font-size:12px; }
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
 
     .row{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
     }
 
     .between{
@@ -102,47 +128,46 @@
     }
 
     .avatar{
-      width:46px;
-      height:46px;
+      width:44px;
+      height:44px;
       border-radius:50%;
-      background:linear-gradient(135deg,var(--blue2),var(--blue));
-      color:#fff;
+      overflow:hidden;
+      flex-shrink:0;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:800;
-      flex-shrink:0;
-      overflow:hidden;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:white;
     }
 
     .avatar img,
     .story-avatar img,
-    .profile-avatar-lg img{
+    .hero-avatar img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
 
-    .profile-avatar-lg{
-      width:84px;
-      height:84px;
+    .hero-avatar{
+      width:76px;
+      height:76px;
       border-radius:50%;
-      background:linear-gradient(135deg,var(--blue2),var(--blue));
+      overflow:hidden;
+      flex-shrink:0;
       display:flex;
       align-items:center;
       justify-content:center;
-      overflow:hidden;
-      font-size:30px;
+      font-size:28px;
       font-weight:800;
-      flex-shrink:0;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
       color:white;
     }
 
-    input, select, textarea{
+    input, textarea, select{
       width:100%;
-      padding:12px;
+      padding:11px;
       margin-top:8px;
-      margin-bottom:10px;
       border-radius:12px;
       border:1px solid var(--line);
       background:#0f131b;
@@ -151,13 +176,13 @@
       outline:none;
     }
 
-    input[type="file"]{
-      padding:10px;
-    }
-
     textarea{
       min-height:90px;
       resize:vertical;
+    }
+
+    input[type="file"]{
+      padding:10px;
     }
 
     button{
@@ -166,158 +191,232 @@
       padding:10px 14px;
       font-weight:800;
       cursor:pointer;
-      transition:.15s ease;
     }
 
-    button:active{ transform:scale(.98); }
+    .btn-main{
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:white;
+    }
 
-    .btn-main{ background:var(--blue); color:white; }
-    .btn-soft{ background:var(--soft); color:white; }
-    .btn-green{ background:var(--green); color:#03130d; }
-    .btn-red{ background:var(--red); color:white; }
-    .btn-gold{ background:var(--gold); color:#261600; }
+    .btn-soft{
+      background:var(--soft);
+      color:white;
+    }
 
-    .actions{
+    .btn-red{
+      background:var(--red);
+      color:white;
+    }
+
+    .btn-green{
+      background:var(--green);
+      color:#04130d;
+    }
+
+    .tabs{
       display:flex;
       gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
+      overflow:auto;
+      padding-bottom:4px;
     }
 
-    .feed-switch{
-      display:flex;
-      gap:8px;
-      margin-bottom:14px;
+    .tabs::-webkit-scrollbar,
+    .stories::-webkit-scrollbar{
+      display:none;
     }
 
-    .feed-switch button.active{
-      background:var(--blue);
-      color:#fff;
+    .tabs button.active{
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:white;
     }
 
     .stories{
       display:flex;
       gap:10px;
-      overflow-x:auto;
-      padding-bottom:4px;
-      margin-bottom:14px;
-      scrollbar-width:none;
+      overflow:auto;
+      padding-bottom:6px;
+      margin-bottom:12px;
     }
 
-    .stories::-webkit-scrollbar{ display:none; }
-
     .story{
-      min-width:88px;
+      min-width:82px;
       text-align:center;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:10px;
     }
 
     .story-avatar{
-      width:56px;
-      height:56px;
+      width:58px;
+      height:58px;
       border-radius:50%;
-      margin:0 auto 8px;
-      background:linear-gradient(135deg,#f472b6,#2563eb);
+      margin:auto;
+      margin-bottom:6px;
+      overflow:hidden;
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#fff;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+      color:white;
       font-weight:800;
-      overflow:hidden;
     }
 
-    .post-card{
+    .post{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:16px;
       overflow:hidden;
-      margin-bottom:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,.14);
+      margin-bottom:14px;
+      position:relative;
     }
 
-    .post-header{
+    .post-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px;
+    }
+
+    .post-user{
       display:flex;
       align-items:center;
       gap:10px;
-      padding:12px;
+      min-width:0;
     }
 
-    .post-img{
+    .post-user-info{
+      min-width:0;
+    }
+
+    .post-user-info b,
+    .post-user-info div{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .post-media{
       width:100%;
-      max-height:560px;
-      object-fit:cover;
       display:block;
       background:#0b0d12;
     }
 
-    .post-media-box{
-      background:#0f131b;
-      border-top:1px solid var(--line);
-      border-bottom:1px solid var(--line);
-      padding:18px;
-      text-align:center;
-      color:var(--muted);
+    img.post-media{
+      width:100%;
+      height:auto;
+      max-height:80vh;
+      object-fit:contain;
+      background:#0b0d12;
     }
 
-    .post-content{
-      padding:12px;
+    video.post-media{
+      width:100%;
+      max-height:80vh;
+      background:#0b0d12;
+    }
+
+    .post-body{
+      padding:10px;
     }
 
     .post-actions{
       display:flex;
-      gap:18px;
-      font-size:22px;
-      margin-bottom:10px;
-      user-select:none;
+      gap:14px;
       flex-wrap:wrap;
+      font-size:20px;
+      margin-bottom:8px;
     }
 
     .post-actions span{
       cursor:pointer;
     }
 
-    .liked{ color:#ff4d6d; }
-
     .stats{
       display:flex;
       gap:12px;
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:8px;
       flex-wrap:wrap;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
     }
 
     .comment{
       background:#111827;
-      padding:8px 10px;
       border-radius:10px;
+      padding:8px 10px;
       margin-top:8px;
       font-size:14px;
-      line-height:1.35;
     }
 
-    .comment-box{
+    .comment-row{
       display:flex;
+      justify-content:space-between;
       gap:8px;
-      margin-top:10px;
+      align-items:flex-start;
     }
 
-    .comment-box input{
-      flex:1;
-      margin:0;
+    .comment-row button{
+      background:#222734;
+      color:white;
+      padding:4px 8px;
+      font-size:12px;
+      border-radius:8px;
+    }
+
+    .menu-wrap{
+      position:relative;
+      flex-shrink:0;
+    }
+
+    .menu-btn{
+      background:none;
+      color:white;
+      font-size:22px;
+      padding:4px 8px;
+      line-height:1;
+    }
+
+    .menu{
+      position:absolute;
+      top:34px;
+      right:0;
+      min-width:170px;
+      background:#111827;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:6px;
+      z-index:30;
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+    }
+
+    .menu button{
+      width:100%;
+      text-align:left;
+      background:none;
+      color:white;
+      padding:10px;
+      border-radius:10px;
+    }
+
+    .menu button:hover{
+      background:#1f2937;
+    }
+
+    .list-item{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      margin-bottom:12px;
     }
 
     .pill{
       display:inline-block;
-      font-size:12px;
-      border-radius:999px;
-      padding:6px 10px;
-      margin:6px 6px 0 0;
       background:#172554;
       color:#bfdbfe;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      margin-top:8px;
+      margin-right:6px;
     }
 
     .pill.green{
@@ -325,81 +424,51 @@
       color:#a7f3d0;
     }
 
-    .pill.gold{
-      background:#3b2f12;
-      color:#fde68a;
-    }
-
-    .pill.red{
-      background:#450a0a;
-      color:#fecaca;
-    }
-
-    .list-item{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      margin-bottom:12px;
-    }
-
-    .profile-hero{
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-
-    .gallery{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .gallery-item{
-      background:#0f131b;
-      border:1px solid var(--line);
-      border-radius:14px;
-      min-height:92px;
-      padding:10px;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .mapbox{
+    .map{
       position:relative;
-      height:340px;
+      height:320px;
       border-radius:16px;
       overflow:hidden;
       border:1px solid var(--line);
       background:
-        radial-gradient(circle at 20% 30%, rgba(37,99,235,.12), transparent 18%),
-        radial-gradient(circle at 70% 60%, rgba(16,185,129,.12), transparent 18%),
+        radial-gradient(circle at 20% 30%, rgba(37,99,235,.18), transparent 20%),
+        radial-gradient(circle at 70% 60%, rgba(139,92,246,.15), transparent 20%),
         linear-gradient(180deg,#151923,#0f1115);
     }
 
-    .map-pin{
+    .pin{
       position:absolute;
       transform:translate(-50%,-50%);
-      padding:7px 9px;
-      border-radius:999px;
-      background:var(--blue);
+      background:linear-gradient(135deg,var(--blue),var(--violet));
       color:white;
+      padding:6px 9px;
+      border-radius:999px;
       font-size:12px;
-      font-weight:800;
-      box-shadow:0 4px 14px rgba(0,0,0,.28);
+      font-weight:700;
       cursor:pointer;
       white-space:nowrap;
     }
 
-    .map-pin.gold{
-      background:var(--gold);
-      color:#201100;
-    }
-
-    .map-pin.red{
+    .notif-badge{
+      position:absolute;
+      top:-4px;
+      right:-4px;
       background:var(--red);
       color:white;
+      border-radius:999px;
+      font-size:10px;
+      padding:2px 6px;
+      line-height:1.2;
+    }
+
+    .file-link{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#172554;
+      font-size:12px;
+      color:#bfdbfe;
     }
 
     .nav{
@@ -407,44 +476,27 @@
       left:0;
       right:0;
       bottom:0;
-      background:#0f1115;
+      z-index:70;
+      background:#111;
       border-top:1px solid var(--line);
       display:flex;
       justify-content:space-around;
-      padding:10px 6px;
-      z-index:70;
+      padding:8px;
     }
 
     .nav button{
-      background:transparent;
-      color:var(--muted);
-      padding:8px 10px;
-      border-radius:10px;
-      font-size:13px;
-      font-weight:700;
+      background:none;
+      color:#aaa;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      font-size:12px;
+      min-width:54px;
+      position:relative;
     }
 
     .nav button.active{
-      background:var(--blue);
       color:white;
-    }
-
-    .message-item{
-      background:#111827;
-      border:1px solid #1e293b;
-      border-radius:14px;
-      padding:10px 12px;
-      margin-top:10px;
-    }
-
-    .file-chip{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#172554;
-      color:#bfdbfe;
-      font-size:12px;
-      margin-top:6px;
     }
 
     .empty{
@@ -453,1170 +505,895 @@
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="brand">MusicMap</div>
-    <div class="sub">Musique, profils, connexion, visibilité</div>
-  </header>
 
-  <div class="container">
+<header>
+  <div class="logo">
+    <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:20px;">🎵</div>
+    <div>
+      <div class="brand">MusicMap</div>
+      <div class="sub">Connecte les talents</div>
+    </div>
+  </div>
 
-    <section id="feed-tab">
-      <div id="storiesList" class="stories"></div>
+  <div class="header-actions">
+    <button class="header-btn" onclick="nav('mapSection')">📍</button>
+    <button class="header-btn" onclick="nav('notif')">
+      🔔
+      <span id="notifTopBadge" class="notif-badge hidden">0</span>
+    </button>
+  </div>
+</header>
 
-      <div class="feed-switch">
-        <button id="btn-foryou" class="btn-soft active" onclick="setFeedMode('foryou')">Pour toi</button>
-        <button id="btn-following" class="btn-soft" onclick="setFeedMode('following')">Abonnements</button>
+<div class="container">
+
+  <section id="feed">
+    <div class="stories" id="stories"></div>
+
+    <div class="card">
+      <div class="title">Publier</div>
+      <div class="small">Photo, vidéo, audio ou live annoncé.</div>
+
+      <select id="postType">
+        <option value="photo">Photo</option>
+        <option value="video">Vidéo</option>
+        <option value="audio">Audio</option>
+        <option value="live">Live</option>
+      </select>
+
+      <input id="title" placeholder="Titre">
+      <textarea id="caption" placeholder="Description"></textarea>
+      <input type="file" id="postFile" accept="image/*,video/*,audio/*">
+      <input id="media" placeholder="Ou colle un lien image / vidéo / audio">
+      <input id="postLocation" placeholder="Lieu (ex: Saint-Denis)">
+      <button class="btn-main" onclick="createPost()">Publier</button>
+    </div>
+
+    <div id="feedList"></div>
+  </section>
+
+  <section id="discover" class="hidden">
+    <div class="card">
+      <div class="title">Découvrir</div>
+      <input id="searchDiscover" placeholder="Chercher un talent, ville, métier..." oninput="renderDiscover()">
+    </div>
+    <div id="discoverList"></div>
+  </section>
+
+  <section id="mapSection" class="hidden">
+    <div class="card">
+      <div class="title">Map</div>
+      <div class="small">Clique sur un point pour voir le profil.</div>
+      <div class="map" id="mapBox"></div>
+    </div>
+    <div id="mapProfile"></div>
+  </section>
+
+  <section id="notif" class="hidden">
+    <div class="card">
+      <div class="title">Notifications</div>
+      <div class="small">Tout ce qui se passe sur ton compte.</div>
+    </div>
+    <div id="notifList"></div>
+  </section>
+
+  <section id="messages" class="hidden">
+    <div class="card">
+      <div class="title">Messages</div>
+      <select id="messageTarget"></select>
+      <textarea id="messageText" placeholder="Écris un message"></textarea>
+      <input type="file" id="messageFile">
+      <div class="row">
+        <button class="btn-main" onclick="sendMessage()">Envoyer</button>
+        <button class="btn-soft" id="recordBtn" onclick="toggleRecord()">🎤 Vocal</button>
       </div>
+      <div id="recordStatus" class="small"></div>
+    </div>
+    <div id="messagesList"></div>
+  </section>
 
-      <div class="card">
-        <div class="title">Publier</div>
-        <div class="muted">Photo, vidéo, audio ou live annoncé.</div>
-
-        <select id="postType">
-          <option value="photo">Photo</option>
-          <option value="video">Vidéo</option>
-          <option value="audio">Audio</option>
-          <option value="live">Live</option>
-        </select>
-
-        <input id="postTitle" placeholder="Titre du post">
-        <textarea id="postCaption" placeholder="Description"></textarea>
-        <input type="file" id="postFile" accept="image/*,video/*,audio/*">
-        <input id="postMedia" placeholder="Ou colle un lien image / vidéo / audio">
-        <input id="postLocation" placeholder="Lieu du post (ex: Saint-Denis)">
-        <input type="datetime-local" id="postSchedule">
-
-        <button class="btn-main" onclick="createPost()">Publier</button>
-      </div>
-
-      <div id="feedList"></div>
-    </section>
-
-    <section id="discover-tab" class="hidden">
-      <div class="card">
-        <div class="title">Découvrir</div>
-        <input id="searchInput" placeholder="Chercher : artiste, studio, ville..." oninput="filterProfiles()">
-        <select id="roleFilter" onchange="filterProfiles()">
-          <option value="">Tous les rôles</option>
-          <option value="Artiste">Artiste</option>
-          <option value="Studio">Studio</option>
-          <option value="Beatmaker">Beatmaker</option>
-          <option value="Caméraman">Caméraman</option>
-          <option value="Danseur">Danseur</option>
-          <option value="Pro">Pro</option>
-          <option value="Fan">Fan</option>
-        </select>
-      </div>
-      <div id="discoverList"></div>
-    </section>
-
-    <section id="map-tab" class="hidden">
-      <div class="card">
-        <div class="title">Map</div>
-        <div class="muted">Clique sur un profil pour ouvrir sa fiche.</div>
-        <div id="mapBox" class="mapbox"></div>
-      </div>
-      <div id="mapProfileView"></div>
-    </section>
-
-    <section id="activity-tab" class="hidden">
-      <div class="card">
-        <div class="title">Notifications</div>
-        <div id="notificationsList"></div>
-      </div>
-
-      <div class="card">
-        <div class="title">Activité</div>
-        <div id="activityList"></div>
-      </div>
-    </section>
-
-    <section id="messages-tab" class="hidden">
-      <div class="card">
-        <div class="title">Conversations</div>
-        <select id="messageTarget">
-          <option value="Luna K">Luna K</option>
-          <option value="Studio 974">Studio 974</option>
-          <option value="Lina Cam">Lina Cam</option>
-        </select>
-        <textarea id="messageText" placeholder="Écris un message"></textarea>
-        <input type="file" id="messageFile">
-        <div class="actions">
-          <button class="btn-main" onclick="sendMessage()">Envoyer</button>
-          <button class="btn-soft" id="recordBtn" onclick="toggleRecord()">🎤 Vocal</button>
-        </div>
-        <div id="recordStatus" class="small muted"></div>
-      </div>
-      <div class="card">
-        <div class="title">Messages</div>
-        <div id="messagesList"></div>
-      </div>
-    </section>
-
-    <section id="profile-tab" class="hidden">
-      <div class="card">
-        <div class="profile-hero">
-          <div class="profile-avatar-lg" id="heroAvatar">👤</div>
-          <div>
-            <div class="title" id="heroName">Mon profil</div>
-            <div class="muted" id="heroMeta">Fan • Réunion</div>
-            <div>
-              <span class="pill green" id="heroStatus">Disponible</span>
-            </div>
-            <div class="small muted" id="heroFollowers">0 abonnés • 0 abonnements</div>
-          </div>
+  <section id="profile" class="hidden">
+    <div class="card">
+      <div class="row">
+        <div class="hero-avatar" id="profileAvatarHero">👤</div>
+        <div>
+          <div class="brand" id="profileHeroName">Mon profil</div>
+          <div class="sub" id="profileHeroRole">Aucun profil</div>
         </div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="title">Créer / modifier mon profil</div>
-        <input id="profilePhoto" placeholder="Lien photo de profil">
-        <input id="nameInput" placeholder="Nom / pseudo">
-        <input id="cityInput" placeholder="Ville">
-        <select id="typeInput">
+    <div class="card">
+      <div class="tabs">
+        <button id="tab-btn-overview" class="active" onclick="showProfileTab('overview')">Aperçu</button>
+        <button id="tab-btn-likes" onclick="showProfileTab('likes')">J’aime</button>
+        <button id="tab-btn-archive" onclick="showProfileTab('archive')">Archives</button>
+        <button id="tab-btn-blocked" onclick="showProfileTab('blocked')">Bloqués</button>
+      </div>
+
+      <div id="tab-overview">
+        <select id="role" onchange="toggleRole()">
           <option>Artiste</option>
-          <option>Studio</option>
           <option>Beatmaker</option>
           <option>Caméraman</option>
           <option>Danseur</option>
-          <option>Pro</option>
-          <option>Fan</option>
+          <option>Graphiste</option>
+          <option>DJ</option>
+          <option>Décorateur</option>
+          <option>Cascadeur</option>
+          <option>Monteur</option>
+          <option>Photographe</option>
+          <option>Ingé son</option>
+          <option>Studio</option>
+          <option>Styliste</option>
+          <option>Manager</option>
+          <option>Producteur</option>
+          <option>Autre</option>
         </select>
-        <input id="specialtyInput" placeholder="Spécialité">
-        <input id="contactInput" placeholder="Contact direct / Insta / WhatsApp">
-        <input id="websiteInput" placeholder="Site / YouTube / TikTok / lien cliquable">
-        <input id="collabInput" placeholder="Je cherche / je propose quoi ?">
-        <select id="languageInput">
-          <option value="fr">Français</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-        </select>
-        <textarea id="bioInput" placeholder="Bio"></textarea>
+
+        <input id="customRole" class="hidden" placeholder="Ton métier exact">
+        <input id="name" placeholder="Nom">
+        <input id="city" placeholder="Ville">
+        <input id="photo" placeholder="Photo URL">
+        <input id="specialty" placeholder="Spécialité">
+        <input id="contact" placeholder="Contact">
+        <input id="website" placeholder="Lien / site / réseau">
+        <input id="collab" placeholder="Je cherche / je propose">
+        <textarea id="bio" placeholder="Bio"></textarea>
 
         <button class="btn-main" onclick="saveProfile()">Enregistrer</button>
-        <button class="btn-green" onclick="becomeCreator()">Passer en créateur</button>
       </div>
 
-      <div class="card">
-        <div class="title">Mon aperçu</div>
-        <div id="myProfilePreview" class="muted">Aucun profil enregistré.</div>
+      <div id="tab-likes" class="hidden"></div>
+      <div id="tab-archive" class="hidden"></div>
+      <div id="tab-blocked" class="hidden"></div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button class="active" data-target="feed" onclick="nav('feed', this)">
+    <div>🏠</div>
+    <div>Accueil</div>
+  </button>
+
+  <button data-target="discover" onclick="nav('discover', this)">
+    <div>🔍</div>
+    <div>Découvrir</div>
+  </button>
+
+  <button data-target="messages" onclick="nav('messages', this)">
+    <div>💬</div>
+    <div>Messages</div>
+  </button>
+
+  <button data-target="profile" onclick="nav('profile', this)">
+    <div>👤</div>
+    <div>Profil</div>
+  </button>
+</div>
+
+<script>
+let posts = JSON.parse(localStorage.getItem("posts")) || [];
+let likes = JSON.parse(localStorage.getItem("likes")) || [];
+let archive = JSON.parse(localStorage.getItem("archive")) || [];
+let blocked = JSON.parse(localStorage.getItem("blocked")) || [];
+let hiddenPosts = JSON.parse(localStorage.getItem("hiddenPosts")) || [];
+let notif = JSON.parse(localStorage.getItem("notif")) || [];
+let profile = JSON.parse(localStorage.getItem("profile")) || null;
+let messages = JSON.parse(localStorage.getItem("messages")) || [];
+let openMenuId = null;
+let currentSection = "feed";
+
+let mediaRecorder = null;
+let audioChunks = [];
+let recording = false;
+
+const defaultTalents = [
+  {name:"Luna K", role:"Artiste", city:"Saint-Denis", x:30, y:30, bio:"Artiste en développement", specialty:"Rap mélodique"},
+  {name:"Studio 974", role:"Studio", city:"Saint-Denis", x:65, y:40, bio:"Enregistrement / mix", specialty:"Studio"},
+  {name:"Lina Cam", role:"Caméraman", city:"Saint-Pierre", x:50, y:72, bio:"Clips / backstage", specialty:"Vidéo"}
+];
+
+function save(){
+  localStorage.setItem("posts", JSON.stringify(posts));
+  localStorage.setItem("likes", JSON.stringify(likes));
+  localStorage.setItem("archive", JSON.stringify(archive));
+  localStorage.setItem("blocked", JSON.stringify(blocked));
+  localStorage.setItem("hiddenPosts", JSON.stringify(hiddenPosts));
+  localStorage.setItem("notif", JSON.stringify(notif));
+  localStorage.setItem("profile", JSON.stringify(profile));
+  localStorage.setItem("messages", JSON.stringify(messages));
+}
+
+function nav(id, btn){
+  currentSection = id;
+  document.querySelectorAll(".container > section").forEach(x=>x.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  if(btn){
+    btn.classList.add("active");
+  }else{
+    const autoBtn = document.querySelector(`.nav button[data-target="${id}"]`);
+    if(autoBtn) autoBtn.classList.add("active");
+  }
+
+  if(id === "mapSection") renderMap();
+  if(id === "notif") renderNotifications();
+  if(id === "discover") renderDiscover();
+  if(id === "messages") renderMessages();
+}
+
+function addNotif(text){
+  notif.unshift({
+    text,
+    date: new Date().toLocaleString()
+  });
+  save();
+}
+
+function createPost(){
+  let title = document.getElementById("title").value.trim();
+  let media = document.getElementById("media").value.trim();
+  let caption = document.getElementById("caption").value.trim();
+  let type = document.getElementById("postType").value;
+  let location = document.getElementById("postLocation").value.trim();
+  let file = document.getElementById("postFile").files[0];
+
+  if(!title){
+    alert("Ajoute un titre");
+    return;
+  }
+
+  function finish(mediaValue){
+    posts.unshift({
+      id: Date.now(),
+      title,
+      caption,
+      media: mediaValue || "",
+      type,
+      location,
+      likes: 0,
+      views: 0,
+      shares: 0,
+      comments: [],
+      collabs: [],
+      author: profile?.name || "Moi",
+      role: profile?.role || "Talent",
+      createdAt: Date.now(),
+      replyTo: null
+    });
+
+    addNotif("Nouveau post publié");
+    document.getElementById("title").value = "";
+    document.getElementById("caption").value = "";
+    document.getElementById("media").value = "";
+    document.getElementById("postLocation").value = "";
+    document.getElementById("postFile").value = "";
+    save();
+    renderAll();
+  }
+
+  if(file){
+    const reader = new FileReader();
+    reader.onload = e => finish(e.target.result);
+    reader.readAsDataURL(file);
+  } else {
+    finish(media);
+  }
+}
+
+function createCreativeReply(parentId){
+  const parentPost = posts.find(p => p.id === parentId);
+  if(!parentPost) return;
+
+  const title = prompt("Titre de ta réponse créative");
+  if(!title || !title.trim()) return;
+
+  const caption = prompt("Description de ta réponse") || "";
+  const media = prompt("Lien de ta photo / vidéo / audio") || "";
+  const type = prompt("Type : photo, video ou audio", "video") || "video";
+
+  posts.unshift({
+    id: Date.now(),
+    title: title.trim(),
+    caption: caption.trim(),
+    media: media.trim(),
+    type: type === "audio" ? "audio" : type === "photo" ? "photo" : "video",
+    location: profile?.city || "",
+    likes: 0,
+    views: 0,
+    shares: 0,
+    comments: [],
+    collabs: [],
+    author: profile?.name || "Moi",
+    role: profile?.role || "Talent",
+    createdAt: Date.now(),
+    replyTo: parentId
+  });
+
+  addNotif(`Réponse créative envoyée à "${parentPost.title}"`);
+  save();
+  renderAll();
+}
+
+function proposeCollab(postId){
+  const post = posts.find(p => p.id === postId);
+  if(!post) return;
+
+  const message = prompt("Décris ta proposition de collaboration");
+  if(!message || !message.trim()) return;
+
+  if(!post.collabs) post.collabs = [];
+  post.collabs.push({
+    name: profile?.name || "Moi",
+    role: profile?.role || "Talent",
+    message: message.trim(),
+    date: new Date().toLocaleString()
+  });
+
+  addNotif(`Proposition de collab envoyée à "${post.title}"`);
+  save();
+  renderAll();
+}
+
+function renderPostMedia(p){
+  if(p.type === "video"){
+    return p.media ? `<video class="post-media" controls><source src="${p.media}"></video>` : "";
+  }
+  if(p.type === "audio"){
+    return p.media ? `<div class="post-body"><audio controls style="width:100%"><source src="${p.media}"></audio></div>` : "";
+  }
+  if(p.type === "live"){
+    return `<div class="post-body"><div class="file-link">🔴 Live annoncé</div></div>`;
+  }
+  return p.media ? `<img class="post-media" src="${p.media}" alt="">` : "";
+}
+
+function renderPosts(list, targetId, withMenu=true){
+  let html = "";
+  list.forEach(p=>{
+    if(archive.includes(p.id)) return;
+    if(hiddenPosts.includes(p.id)) return;
+    if(blocked.includes(p.author)) return;
+
+    const isMine = (profile?.name || "Moi") === p.author;
+
+    html += `
+      <div class="post">
+        <div class="post-head">
+          <div class="post-user">
+            <div class="avatar">
+              ${(profile && profile.photo && p.author === profile.name)
+                ? `<img src="${profile.photo}">`
+                : (p.author || "M").charAt(0)}
+            </div>
+            <div class="post-user-info">
+              <div><b>${p.author || "Moi"}</b></div>
+              <div class="small">${p.role || ""}${p.location ? " • " + p.location : ""}</div>
+            </div>
+          </div>
+
+          ${withMenu ? `
+          <div class="menu-wrap">
+            <button class="menu-btn" onclick="toggleMenu(${p.id}, event)">⋯</button>
+            <div id="menu-${p.id}" class="menu ${openMenuId===p.id ? '' : 'hidden'}">
+              ${isMine ? `<button onclick="editPost(${p.id})">✏️ Modifier</button>` : ""}
+              ${isMine ? `<button onclick="deletePost(${p.id})">🗑️ Supprimer</button>` : ""}
+              <button onclick="archivePost(${p.id})">📦 Archiver</button>
+              <button onclick="hidePost(${p.id})">🙈 Masquer</button>
+              <button onclick="confirmBlock('${p.author || ""}')">⛔ Bloquer</button>
+              <button onclick="reportPost()">⚠️ Signaler</button>
+            </div>
+          </div>` : ""}
+        </div>
+
+        ${renderPostMedia(p)}
+
+        <div class="post-body">
+          <div><b>${p.title}</b></div>
+          ${p.replyTo ? `<div class="small">Réponse créative à un post</div>` : ""}
+          ${p.caption ? `<div style="margin-top:6px">${p.caption}</div>` : ""}
+
+          ${(p.collabs && p.collabs.length) ? `<div class="pill green">${p.collabs.length} proposition(s) de collab</div>` : ""}
+
+          <div class="stats">
+            <span>👀 ${p.views || 0} vues</span>
+            <span>❤️ ${p.likes || 0} j’aime</span>
+            <span>💬 ${p.comments.length} commentaires</span>
+            <span>🔁 ${p.shares || 0} partages</span>
+          </div>
+
+          <div class="post-actions">
+            <span onclick="like(${p.id})">❤️</span>
+            <span onclick="commentPost(${p.id})">💬</span>
+            <span onclick="sharePost(${p.id})">🔁</span>
+            <span onclick="createCreativeReply(${p.id})">🎨</span>
+            <span onclick="proposeCollab(${p.id})">🤝</span>
+          </div>
+
+          ${(p.comments || []).map((c, index)=>`
+            <div class="comment">
+              <div class="comment-row">
+                <div>${c}</div>
+                <button onclick="deleteComment(${p.id}, ${index})">Suppr</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
       </div>
+    `;
+  });
 
-      <div class="card">
-        <div class="title">Mes œuvres</div>
-        <div id="myWorks" class="gallery"></div>
-      </div>
-    </section>
-  </div>
+  document.getElementById(targetId).innerHTML = html || `<div class="card empty">Rien ici pour le moment.</div>`;
+}
 
-  <div class="nav">
-    <button class="active" onclick="navTab('feed', this)">Accueil</button>
-    <button onclick="navTab('discover', this)">Découvrir</button>
-    <button onclick="navTab('map', this)">Map</button>
-    <button onclick="navTab('activity', this)">Activité</button>
-    <button onclick="navTab('messages', this)">Messages</button>
-    <button onclick="navTab('profile', this)">Profil</button>
-  </div>
+function renderFeed(){
+  renderPosts(posts, "feedList", true);
+}
 
-  <script>
-    const translations = {
-      fr: {
-        shared: "Post partagé",
-        commentPlaceholder: "Commenter...",
-        send: "Envoyer",
-        followers: "abonnés",
-        following: "abonnements",
-        enteredLive: "Tu es entré dans le live",
-        noActivity: "Aucune activité pour le moment.",
-        noProfile: "Aucun profil enregistré.",
-        messageSent: "Message envoyé",
-        noNotifications: "Aucune notification."
-      },
-      en: {
-        shared: "Post shared",
-        commentPlaceholder: "Comment...",
-        send: "Send",
-        followers: "followers",
-        following: "following",
-        enteredLive: "You entered the live",
-        noActivity: "No activity yet.",
-        noProfile: "No saved profile.",
-        messageSent: "Message sent",
-        noNotifications: "No notifications."
-      },
-      es: {
-        shared: "Publicación compartida",
-        commentPlaceholder: "Comentar...",
-        send: "Enviar",
-        followers: "seguidores",
-        following: "siguiendo",
-        enteredLive: "Entraste al live",
-        noActivity: "Sin actividad.",
-        noProfile: "Ningún perfil guardado.",
-        messageSent: "Mensaje enviado",
-        noNotifications: "Sin notificaciones."
-      }
-    };
+function toggleMenu(id, event){
+  event.stopPropagation();
+  openMenuId = openMenuId === id ? null : id;
+  renderFeed();
+}
 
-    function t(key) {
-      return translations[currentLanguage]?.[key] || translations.fr[key] || key;
+document.addEventListener("click", ()=> {
+  if(openMenuId !== null){
+    openMenuId = null;
+    renderFeed();
+  }
+});
+
+function like(id){
+  let p = posts.find(x=>x.id===id);
+  if(!p) return;
+  p.likes++;
+  likes.push(id);
+  addNotif("Tu as liké un post");
+  save();
+  renderAll();
+}
+
+function commentPost(id){
+  let text = prompt("Écris ton commentaire");
+  if(!text || !text.trim()) return;
+  let p = posts.find(x=>x.id===id);
+  if(!p) return;
+  p.comments.push(text.trim());
+  addNotif("Nouveau commentaire");
+  save();
+  renderAll();
+}
+
+function deleteComment(postId, index){
+  let p = posts.find(x=>x.id===postId);
+  if(!p) return;
+  p.comments.splice(index,1);
+  save();
+  renderAll();
+}
+
+function sharePost(id){
+  let p = posts.find(x=>x.id===id);
+  if(!p) return;
+  p.shares = (p.shares || 0) + 1;
+  addNotif("Post partagé");
+  save();
+  renderAll();
+}
+
+function editPost(id){
+  let p = posts.find(x=>x.id===id);
+  if(!p) return;
+
+  let newTitle = prompt("Modifier le titre", p.title);
+  if(newTitle !== null && newTitle.trim()) p.title = newTitle.trim();
+
+  let newCaption = prompt("Modifier la description", p.caption || "");
+  if(newCaption !== null) p.caption = newCaption.trim();
+
+  save();
+  renderAll();
+}
+
+function deletePost(id){
+  if(!confirm("Supprimer ce post ?")) return;
+  posts = posts.filter(x=>x.id!==id);
+  save();
+  renderAll();
+}
+
+function archivePost(id){
+  if(!archive.includes(id)) archive.push(id);
+  save();
+  renderAll();
+}
+
+function hidePost(id){
+  if(!hiddenPosts.includes(id)) hiddenPosts.push(id);
+  save();
+  renderAll();
+}
+
+function confirmBlock(name){
+  if(!name) return;
+  if(confirm("Tu veux vraiment bloquer " + name + " ?")){
+    blockUser(name);
+  }
+}
+
+function blockUser(name){
+  if(!blocked.includes(name)) blocked.push(name);
+  save();
+  renderAll();
+}
+
+function reportPost(){
+  alert("Signalement envoyé");
+}
+
+function renderNotifications(){
+  let html = notif.map(n=>`
+    <div class="list-item">
+      <div><b>${typeof n === "string" ? n : n.text}</b></div>
+      <div class="small">${typeof n === "string" ? "" : n.date}</div>
+    </div>
+  `).join("");
+  document.getElementById("notifList").innerHTML = html || `<div class="card empty">Aucune notification.</div>`;
+}
+
+function renderNotifBadge(){
+  const top = document.getElementById("notifTopBadge");
+  if(notif.length){
+    top.classList.remove("hidden");
+    top.textContent = notif.length > 9 ? "9+" : notif.length;
+  }else{
+    top.classList.add("hidden");
+  }
+}
+
+function toggleRole(){
+  let r = document.getElementById("role").value;
+  document.getElementById("customRole").classList.toggle("hidden", r !== "Autre");
+}
+
+function saveProfile(){
+  const selectedRole = document.getElementById("role").value;
+  const customRole = document.getElementById("customRole").value.trim();
+
+  profile = {
+    name: document.getElementById("name").value.trim(),
+    photo: document.getElementById("photo").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    specialty: document.getElementById("specialty").value.trim(),
+    contact: document.getElementById("contact").value.trim(),
+    website: document.getElementById("website").value.trim(),
+    collab: document.getElementById("collab").value.trim(),
+    bio: document.getElementById("bio").value.trim(),
+    role: selectedRole === "Autre" && customRole ? customRole : selectedRole
+  };
+
+  save();
+  addNotif("Profil enregistré");
+  alert("Profil enregistré");
+  renderAll();
+}
+
+function renderProfile(){
+  const heroName = document.getElementById("profileHeroName");
+  const heroRole = document.getElementById("profileHeroRole");
+  const heroAvatar = document.getElementById("profileAvatarHero");
+
+  if(!profile){
+    heroName.textContent = "Mon profil";
+    heroRole.textContent = "Aucun profil";
+    heroAvatar.innerHTML = "👤";
+    return;
+  }
+
+  heroName.textContent = profile.name || "Mon profil";
+  heroRole.textContent = `${profile.role || ""}${profile.city ? " • " + profile.city : ""}`;
+  heroAvatar.innerHTML = profile.photo ? `<img src="${profile.photo}">` : (profile.name || "M").charAt(0);
+
+  document.getElementById("name").value = profile.name || "";
+  document.getElementById("photo").value = profile.photo || "";
+  document.getElementById("city").value = profile.city || "";
+  document.getElementById("specialty").value = profile.specialty || "";
+  document.getElementById("contact").value = profile.contact || "";
+  document.getElementById("website").value = profile.website || "";
+  document.getElementById("collab").value = profile.collab || "";
+  document.getElementById("bio").value = profile.bio || "";
+
+  const knownRoles = [
+    "Artiste","Beatmaker","Caméraman","Danseur","Graphiste","DJ","Décorateur",
+    "Cascadeur","Monteur","Photographe","Ingé son","Studio","Styliste","Manager","Producteur"
+  ];
+
+  if(knownRoles.includes(profile.role)){
+    document.getElementById("role").value = profile.role;
+    document.getElementById("customRole").classList.add("hidden");
+    document.getElementById("customRole").value = "";
+  }else{
+    document.getElementById("role").value = "Autre";
+    document.getElementById("customRole").classList.remove("hidden");
+    document.getElementById("customRole").value = profile.role || "";
+  }
+}
+
+function showProfileTab(tab){
+  ["overview","likes","archive","blocked"].forEach(t=>{
+    document.getElementById("tab-"+t).classList.add("hidden");
+    document.getElementById("tab-btn-"+t).classList.remove("active");
+  });
+  document.getElementById("tab-"+tab).classList.remove("hidden");
+  document.getElementById("tab-btn-"+tab).classList.add("active");
+}
+
+function renderProfileLists(){
+  const likedPosts = posts.filter(p => likes.includes(p.id));
+  document.getElementById("tab-likes").innerHTML = likedPosts.length
+    ? likedPosts.map(p=>`<div class="list-item"><b>${p.title}</b><div class="small">${p.author || ""}</div></div>`).join("")
+    : `<div class="empty">Aucun j’aime.</div>`;
+
+  const archivedPosts = posts.filter(p => archive.includes(p.id));
+  document.getElementById("tab-archive").innerHTML = archivedPosts.length
+    ? archivedPosts.map(p=>`<div class="list-item"><b>${p.title}</b></div>`).join("")
+    : `<div class="empty">Aucune archive.</div>`;
+
+  document.getElementById("tab-blocked").innerHTML = blocked.length
+    ? blocked.map(name=>`
+        <div class="list-item between">
+          <div>${name}</div>
+          <button class="btn-soft" onclick="unblock('${name}')">Débloquer</button>
+        </div>
+      `).join("")
+    : `<div class="empty">Aucun compte bloqué.</div>`;
+}
+
+function unblock(name){
+  blocked = blocked.filter(x=>x!==name);
+  save();
+  renderAll();
+}
+
+function renderDiscover(){
+  const q = (document.getElementById("searchDiscover").value || "").toLowerCase();
+  const allTalents = [...defaultTalents];
+
+  if(profile && profile.name){
+    allTalents.push({
+      name: profile.name,
+      role: profile.role || "Talent",
+      city: profile.city || "",
+      bio: profile.bio || "",
+      specialty: profile.specialty || "",
+      website: profile.website || "",
+      x: 55,
+      y: 52
+    });
+  }
+
+  const unique = [];
+  const seen = new Set();
+  allTalents.forEach(t=>{
+    if(!seen.has(t.name)){
+      seen.add(t.name);
+      unique.push(t);
     }
-
-    let currentUserRole = localStorage.getItem('musicmap_role') || 'Fan';
-    let feedMode = localStorage.getItem('musicmap_feedmode') || 'foryou';
-    let currentLanguage = localStorage.getItem('musicmap_language') || 'fr';
-
-    const defaultProfiles = [
-      {
-        name: "Luna K",
-        role: "Artiste",
-        city: "Saint-Denis",
-        specialty: "Rap mélodique",
-        bio: "Artiste en développement, démos et clips.",
-        photo: "",
-        contact: "@lunak",
-        website: "https://example.com",
-        collab: "Cherche beatmaker et clips",
-        followers: 12,
-        x: 44,
-        y: 42,
-        premium: false
-      },
-      {
-        name: "Studio 974",
-        role: "Studio",
-        city: "Saint-Denis",
-        specialty: "Enregistrement / mix / mastering",
-        bio: "Studio pro disponible pour artistes.",
-        photo: "",
-        contact: "@studio974",
-        website: "https://example.com",
-        collab: "Studio dispo aujourd'hui",
-        followers: 24,
-        x: 25,
-        y: 30,
-        premium: true
-      },
-      {
-        name: "Lina Cam",
-        role: "Caméraman",
-        city: "Saint-Pierre",
-        specialty: "Clips / backstage",
-        bio: "Réalisation vidéo pour artistes.",
-        photo: "",
-        contact: "@linacam",
-        website: "https://example.com",
-        collab: "Disponible pour tournage ce week-end",
-        followers: 18,
-        x: 70,
-        y: 64,
-        premium: false
-      }
-    ];
-
-    const defaultPosts = [
-      {
-        id: 1,
-        author: "Luna K",
-        role: "Artiste",
-        city: "Saint-Denis",
-        location: "Saint-Denis",
-        type: "photo",
-        title: "Nuit 974",
-        caption: "Nouvelle vibe 🔥",
-        media: "https://picsum.photos/id/1015/900/1200",
-        likes: 8,
-        shares: 2,
-        views: 24,
-        comments: ["Stylé", "J'aime bien"],
-        createdAt: Date.now() - 200000
-      },
-      {
-        id: 2,
-        author: "Studio 974",
-        role: "Studio",
-        city: "Saint-Denis",
-        location: "Saint-Denis",
-        type: "live",
-        title: "Live studio",
-        caption: "On démarre dans 10 minutes 🎶",
-        media: "",
-        likes: 15,
-        shares: 3,
-        views: 41,
-        comments: ["J'arrive", "Hâte"],
-        createdAt: Date.now() - 100000
-      }
-    ];
-
-    let profiles = JSON.parse(localStorage.getItem('musicmap_profiles')) || defaultProfiles;
-    let posts = JSON.parse(localStorage.getItem('musicmap_posts')) || defaultPosts;
-    let follows = JSON.parse(localStorage.getItem('musicmap_follows')) || [];
-    let activity = JSON.parse(localStorage.getItem('musicmap_activity')) || [];
-    let likedPosts = JSON.parse(localStorage.getItem('musicmap_likedposts')) || [];
-    let hiddenPosts = JSON.parse(localStorage.getItem('musicmap_hiddenPosts')) || [];
-    let blockedUsers = JSON.parse(localStorage.getItem('musicmap_blockedUsers')) || [];
-    let messages = JSON.parse(localStorage.getItem('musicmap_messages')) || [];
-    let notifications = JSON.parse(localStorage.getItem('musicmap_notifications')) || [];
-    let viewedPosts = JSON.parse(localStorage.getItem('musicmap_viewedPosts')) || [];
-    let myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
-
-    let mediaRecorder = null;
-    let audioChunks = [];
-    let recording = false;
-
-    function saveAll() {
-      localStorage.setItem('musicmap_profiles', JSON.stringify(profiles));
-      localStorage.setItem('musicmap_posts', JSON.stringify(posts));
-      localStorage.setItem('musicmap_follows', JSON.stringify(follows));
-      localStorage.setItem('musicmap_activity', JSON.stringify(activity));
-      localStorage.setItem('musicmap_likedposts', JSON.stringify(likedPosts));
-      localStorage.setItem('musicmap_hiddenPosts', JSON.stringify(hiddenPosts));
-      localStorage.setItem('musicmap_blockedUsers', JSON.stringify(blockedUsers));
-      localStorage.setItem('musicmap_messages', JSON.stringify(messages));
-      localStorage.setItem('musicmap_notifications', JSON.stringify(notifications));
-      localStorage.setItem('musicmap_viewedPosts', JSON.stringify(viewedPosts));
-      localStorage.setItem('musicmap_role', currentUserRole);
-      localStorage.setItem('musicmap_feedmode', feedMode);
-      localStorage.setItem('musicmap_language', currentLanguage);
-      localStorage.setItem('musicmap_profile', JSON.stringify(myProfile));
-    }
-
-    function addNotification(text){
-      notifications.push({
-        id: Date.now() + Math.random(),
-        text,
-        date: new Date().toLocaleString()
-      });
-      saveAll();
-    }
-
-    function renderNotifications(){
-      const box = document.getElementById('notificationsList');
-      box.innerHTML = '';
-
-      if(!notifications.length){
-        box.innerHTML = `<div class="empty">${t('noNotifications')}</div>`;
-        return;
-      }
-
-      notifications.slice().reverse().forEach(n => {
-        box.innerHTML += `
-          <div class="list-item">
-            <strong>${safeText(n.text)}</strong>
-            <div class="small muted" style="margin-top:6px;">${safeText(n.date)}</div>
-          </div>
-        `;
-      });
-    }
-
-    function navTab(tab, btn) {
-      ['feed','discover','map','activity','messages','profile'].forEach(name => {
-        document.getElementById(name + '-tab').classList.add('hidden');
-      });
-      document.getElementById(tab + '-tab').classList.remove('hidden');
-
-      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-    }
-
-    function setFeedMode(mode){
-      feedMode = mode;
-      document.getElementById('btn-foryou').classList.toggle('active', mode === 'foryou');
-      document.getElementById('btn-following').classList.toggle('active', mode === 'following');
-      saveAll();
-      renderFeed();
-    }
-
-    function emojiForRole(role) {
-      const map = {
-        'Artiste':'🎤',
-        'Studio':'🎧',
-        'Beatmaker':'🥁',
-        'Caméraman':'🎥',
-        'Danseur':'💃',
-        'Pro':'🛠️',
-        'Fan':'❤️'
-      };
-      return map[role] || '👤';
-    }
-
-    function safeText(str='') {
-      return str
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
-    }
-
-    function safeUrl(url) {
-      if (!url) return '';
-      const trimmed = url.trim();
-      if (
-        trimmed.startsWith('http://') ||
-        trimmed.startsWith('https://') ||
-        trimmed.startsWith('data:') ||
-        trimmed.startsWith('blob:')
-      ) return trimmed;
-      return 'https://' + trimmed;
-    }
-
-    function renderAvatar(photo, role){
-      if(photo){
-        return `<div class="avatar"><img src="${safeUrl(photo)}" alt=""></div>`;
-      }
-      return `<div class="avatar">${emojiForRole(role)}</div>`;
-    }
-
-    function renderStories(){
-      const box = document.getElementById('storiesList');
-      box.innerHTML = '';
-
-      const first = document.createElement('div');
-      first.className = 'story';
-      first.innerHTML = `
-        <div class="story-avatar">${myProfile?.photo ? `<img src="${safeUrl(myProfile.photo)}" alt="">` : '➕'}</div>
-        <div class="small">Ta story</div>
-      `;
-      box.appendChild(first);
-
-      profiles.slice(0,6).forEach(p => {
-        if(blockedUsers.includes(p.name)) return;
-        const item = document.createElement('div');
-        item.className = 'story';
-        item.innerHTML = `
-          <div class="story-avatar">${p.photo ? `<img src="${safeUrl(p.photo)}" alt="">` : emojiForRole(p.role)}</div>
-          <div class="small">${safeText(p.name)}</div>
-        `;
-        box.appendChild(item);
-      });
-    }
-
-    function computeScore(post){
-      return (post.likes || 0) + (post.comments?.length || 0) * 2 + (post.shares || 0) * 3 + Math.floor((post.views || 0) / 10);
-    }
-
-    function countView(postId){
-      const key = `${postId}-viewed`;
-      if(viewedPosts.includes(key)) return;
-
-      viewedPosts.push(key);
-      const post = posts.find(p => p.id === postId);
-      if(post){
-        post.views = (post.views || 0) + 1;
-        saveAll();
-      }
-    }
-
-    function postVisible(post){
-      if(hiddenPosts.includes(post.id)) return false;
-      if(blockedUsers.includes(post.author)) return false;
-
-      if(post.scheduled){
-        const postTime = new Date(post.scheduled).getTime();
-        if(postTime > Date.now()) return false;
-      }
-
-      if(feedMode === 'following'){
-        return follows.includes(post.author);
-      }
-
-      return true;
-    }
-
-    function getFeedPosts(){
-      let list = [...posts].filter(postVisible);
-      if(feedMode === 'foryou'){
-        list.sort((a,b) => computeScore(b) - computeScore(a));
-      } else {
-        list.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
-      }
-      return list;
-    }
-
-    function renderMedia(post){
-      if(post.type === 'photo'){
-        return post.media
-          ? `<img src="${safeUrl(post.media)}" class="post-img" alt="">`
-          : `<div class="post-media-box">📷 Photo</div>`;
-      }
-      if(post.type === 'video'){
-        return post.media
-          ? `<div class="post-media-box"><video controls style="width:100%;border-radius:12px;"><source src="${safeUrl(post.media)}"></video></div>`
-          : `<div class="post-media-box">🎥 Vidéo</div>`;
-      }
-      if(post.type === 'audio'){
-        return post.media
-          ? `<div class="post-media-box"><audio controls style="width:100%;"><source src="${safeUrl(post.media)}"></audio></div>`
-          : `<div class="post-media-box">🎵 Audio</div>`;
-      }
-      if(post.type === 'live'){
-        return `
-          <div class="post-media-box">
-            🔴 Live annoncé
-            <div class="actions" style="justify-content:center;">
-              <button class="btn-red" onclick="enterLive(${post.id})">Entrer dans le live</button>
-            </div>
-          </div>
-        `;
-      }
-      return '';
-    }
-
-    function renderFeed(){
-      const feed = document.getElementById('feedList');
-      feed.innerHTML = '';
-
-      const list = getFeedPosts();
-
-      if(!list.length){
-        feed.innerHTML = `<div class="card empty">Aucun post pour le moment.</div>`;
-        return;
-      }
-
-      list.forEach(post => {
-        countView(post.id);
-        const authorProfile = profiles.find(p => p.name === post.author);
-        const isLiked = likedPosts.includes(post.id);
-
-        const div = document.createElement('div');
-        div.className = 'post-card';
-        div.innerHTML = `
-          <div class="post-header">
-            ${renderAvatar(authorProfile?.photo || '', post.role)}
-            <div>
-              <strong>${safeText(post.author)}</strong><br>
-              <span class="muted">${safeText(post.role)} • ${safeText(post.location || post.city || '')}</span>
-            </div>
-          </div>
-
-          ${renderMedia(post)}
-
-          <div class="post-content">
-            <div class="post-actions">
-              <span class="${isLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">❤️</span>
-              <span onclick="focusComment(${post.id})">💬</span>
-              <span onclick="sharePost(${post.id})">🔁</span>
-              <span onclick="hidePost(${post.id})">🙈</span>
-              <span onclick="blockUser('${safeText(post.author)}')">⛔</span>
-            </div>
-
-            <div class="stats">
-              <span>👀 ${post.views || 0} vues</span>
-              <span>❤️ ${post.likes} j'aime</span>
-              <span>💬 ${post.comments.length} commentaires</span>
-              <span>🔁 ${post.shares} partages</span>
-            </div>
-
-            <div><strong>${safeText(post.title)}</strong></div>
-            <div style="margin-top:6px;"><strong>${safeText(post.author)}</strong> ${safeText(post.caption || '')}</div>
-
-            <div id="comments-${post.id}">
-              ${post.comments.map(c => `<div class="comment">${safeText(c)}</div>`).join('')}
-            </div>
-
-            <div class="comment-box">
-              <input id="input-${post.id}" placeholder="${t('commentPlaceholder')}">
-              <button class="btn-main" onclick="addComment(${post.id})">${t('send')}</button>
-            </div>
-          </div>
-        `;
-        feed.appendChild(div);
-      });
-    }
-
-    function toggleLike(id){
-      const post = posts.find(p => p.id === id);
-      if(!post) return;
-
-      if(likedPosts.includes(id)){
-        likedPosts = likedPosts.filter(x => x !== id);
-        post.likes = Math.max(0, post.likes - 1);
-      } else {
-        likedPosts.push(id);
-        post.likes += 1;
-        activity.push(`Tu as aimé le post de ${post.author}`);
-        addNotification(`Tu as aimé le post de ${post.author}`);
-      }
-
-      saveAll();
-      renderFeed();
-      renderActivity();
-      renderNotifications();
-    }
-
-    function addComment(id){
-      const input = document.getElementById(`input-${id}`);
-      const text = input.value.trim();
-      if(!text) return;
-
-      const post = posts.find(p => p.id === id);
-      if(!post) return;
-
-      post.comments.push(text);
-      input.value = '';
-      activity.push(`Tu as commenté le post de ${post.author}`);
-      addNotification(`Nouveau commentaire sur ${post.author}`);
-
-      saveAll();
-      renderFeed();
-      renderActivity();
-      renderNotifications();
-    }
-
-    function focusComment(id){
-      const input = document.getElementById(`input-${id}`);
-      if(input) input.focus();
-    }
-
-    function sharePost(id){
-      const post = posts.find(p => p.id === id);
-      if(!post) return;
-      post.shares += 1;
-      activity.push(`Tu as partagé le post de ${post.author}`);
-      addNotification(`Tu as partagé le post de ${post.author}`);
-      saveAll();
-      renderFeed();
-      renderActivity();
-      renderNotifications();
-      alert(t('shared'));
-    }
-
-    function hidePost(id){
-      if(!hiddenPosts.includes(id)){
-        hiddenPosts.push(id);
-        activity.push("Tu as masqué une publication");
-        saveAll();
-        renderFeed();
-        renderActivity();
-      }
-    }
-
-    function blockUser(name){
-      if(!blockedUsers.includes(name)){
-        blockedUsers.push(name);
-        follows = follows.filter(n => n !== name);
-        activity.push(`Tu as bloqué ${name}`);
-        saveAll();
-        renderFeed();
-        renderProfiles();
-        renderActivity();
-        renderMap();
-      }
-    }
-
-    function createPost(){
-      if(currentUserRole !== 'Créateur'){
-        alert("Passe en créateur pour publier.");
-        return;
-      }
-
-      if(!myProfile || !myProfile.name){
-        alert("Crée ton profil d'abord.");
-        return;
-      }
-
-      const type = document.getElementById('postType').value;
-      const title = document.getElementById('postTitle').value.trim();
-      const caption = document.getElementById('postCaption').value.trim();
-      const mediaLink = document.getElementById('postMedia').value.trim();
-      const fileInput = document.getElementById('postFile');
-      const file = fileInput.files[0];
-      const location = document.getElementById('postLocation').value.trim();
-      const schedule = document.getElementById('postSchedule').value;
-
-      if(!title){
-        alert("Ajoute un titre.");
-        return;
-      }
-
-      function finishCreate(mediaValue){
-        const newPost = {
-          id: Date.now(),
-          author: myProfile.name,
-          role: myProfile.role,
-          city: myProfile.city,
-          location: location || myProfile.city,
-          type,
-          title,
-          caption,
-          media: mediaValue || '',
-          likes: 0,
-          comments: [],
-          shares: 0,
-          views: 0,
-          scheduled: schedule || null,
-          createdAt: Date.now()
-        };
-
-        posts.push(newPost);
-        activity.push(`Tu as publié : ${title}`);
-        addNotification(`Ton post "${title}" est publié`);
-
-        document.getElementById('postTitle').value = '';
-        document.getElementById('postCaption').value = '';
-        document.getElementById('postMedia').value = '';
-        document.getElementById('postLocation').value = '';
-        document.getElementById('postSchedule').value = '';
-        document.getElementById('postFile').value = '';
-
-        saveAll();
-        renderFeed();
-        renderActivity();
-        renderNotifications();
-        renderProfile();
-        renderMyWorks();
-      }
-
-      if(file){
-        const reader = new FileReader();
-        reader.onload = function(e){
-          finishCreate(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        finishCreate(mediaLink);
-      }
-    }
-
-    function filterProfiles(){
-      renderProfiles();
-    }
-
-    function renderProfiles(){
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const role = document.getElementById('roleFilter').value;
-      const box = document.getElementById('discoverList');
-      box.innerHTML = '';
-
-      const list = profiles.filter(p => {
-        if(blockedUsers.includes(p.name)) return false;
-        const textMatch =
-          p.name.toLowerCase().includes(q) ||
-          p.role.toLowerCase().includes(q) ||
-          p.city.toLowerCase().includes(q) ||
-          (p.specialty || '').toLowerCase().includes(q) ||
-          (p.bio || '').toLowerCase().includes(q) ||
-          (p.collab || '').toLowerCase().includes(q);
-        const roleMatch = !role || p.role === role;
-        return textMatch && roleMatch;
-      });
-
-      if(!list.length){
-        box.innerHTML = `<div class="card empty">Aucun profil trouvé.</div>`;
-        return;
-      }
-
-      list.forEach(p => {
-        const followed = follows.includes(p.name);
-        const div = document.createElement('div');
-        div.className = 'list-item';
-        div.innerHTML = `
-          <div class="row">
-            ${renderAvatar(p.photo, p.role)}
-            <div>
-              <strong>${safeText(p.name)}</strong><br>
-              <span class="muted">${safeText(p.role)} • ${safeText(p.city)}</span>
-            </div>
-          </div>
-
-          <p style="margin:10px 0 0;">${safeText(p.bio || '')}</p>
-          <div class="pill">${safeText(p.specialty || 'Sans spécialité')}</div>
-          ${p.collab ? `<div class="pill green">${safeText(p.collab)}</div>` : ''}
-
-          <div class="actions">
-            <button class="${followed ? 'btn-soft' : 'btn-green'}" onclick="toggleFollow('${safeText(p.name)}')">
-              ${followed ? 'Suivi' : 'Suivre'}
-            </button>
-            <button class="btn-soft" onclick="proposeTo('${safeText(p.name)}')">Proposer</button>
-            <button class="btn-red" onclick="blockUser('${safeText(p.name)}')">Bloquer</button>
-            ${p.website ? `<a class="file-chip" href="${safeUrl(p.website)}" target="_blank">Lien</a>` : ''}
-          </div>
-        `;
-        box.appendChild(div);
-      });
-    }
-
-    function toggleFollow(name){
-      const target = profiles.find(p => p.name === name);
-      if(!target) return;
-
-      if(follows.includes(name)){
-        follows = follows.filter(n => n !== name);
-        target.followers = Math.max(0, (target.followers || 0) - 1);
-      } else {
-        follows.push(name);
-        target.followers = (target.followers || 0) + 1;
-        activity.push(`Tu suis maintenant ${name}`);
-        addNotification(`Tu suis maintenant ${name}`);
-      }
-
-      saveAll();
-      renderProfiles();
-      renderActivity();
-      renderNotifications();
-      renderProfile();
-      renderFeed();
-      renderMap();
-    }
-
-    function proposeTo(name){
-      const message = prompt(`Que veux-tu proposer à ${name} ?`);
-      if(!message) return;
-      activity.push(`Tu as proposé à ${name} : ${message}`);
-      addNotification(`Proposition envoyée à ${name}`);
-      saveAll();
-      renderActivity();
-      renderNotifications();
-      alert("Proposition envoyée dans le prototype.");
-    }
-
-    function renderActivity(){
-      const box = document.getElementById('activityList');
-      box.innerHTML = '';
-
-      if(!activity.length){
-        box.innerHTML = `<div class="empty">${t('noActivity')}</div>`;
-        return;
-      }
-
-      activity.slice().reverse().forEach(item => {
-        box.innerHTML += `<div class="list-item">${safeText(item)}</div>`;
-      });
-    }
-
-    function becomeCreator(){
-      currentUserRole = 'Créateur';
-      activity.push("Ton compte est passé en créateur");
-      saveAll();
-      renderActivity();
-      renderProfile();
-      alert("Tu peux maintenant publier.");
-    }
-
-    function saveProfile(){
-      const photo = document.getElementById('profilePhoto').value.trim();
-      const name = document.getElementById('nameInput').value.trim();
-      const city = document.getElementById('cityInput').value.trim();
-      const role = document.getElementById('typeInput').value;
-      const specialty = document.getElementById('specialtyInput').value.trim();
-      const contact = document.getElementById('contactInput').value.trim();
-      const website = document.getElementById('websiteInput').value.trim();
-      const collab = document.getElementById('collabInput').value.trim();
-      const bio = document.getElementById('bioInput').value.trim();
-      const language = document.getElementById('languageInput').value;
-
-      if(!name || !city){
-        alert("Remplis au moins le nom et la ville.");
-        return;
-      }
-
-      currentLanguage = language;
-      const previousFollowers = profiles.find(p => p.name === name)?.followers || 0;
-
-      myProfile = {
-        name, city, role, specialty, contact, website, collab, bio, photo, language,
-        followers: previousFollowers,
-        x: profiles.find(p => p.name === name)?.x || (30 + Math.floor(Math.random() * 40)),
-        y: profiles.find(p => p.name === name)?.y || (25 + Math.floor(Math.random() * 45)),
-        premium: false
-      };
-
-      const existingIndex = profiles.findIndex(p => p.name === name);
-      if(existingIndex >= 0){
-        profiles[existingIndex] = { ...profiles[existingIndex], ...myProfile };
-      } else {
-        profiles.push(myProfile);
-      }
-
-      activity.push(`Profil mis à jour : ${name}`);
-      addNotification(`Profil enregistré : ${name}`);
-      saveAll();
-      renderStories();
-      renderProfiles();
-      renderProfile();
-      renderMap();
-      renderActivity();
-      renderNotifications();
-      renderMyWorks();
-    }
-
-    function renderMyWorks(){
-      const box = document.getElementById('myWorks');
-      if(!box) return;
-
-      box.innerHTML = '';
-
-      if(!myProfile || !myProfile.name){
-        box.innerHTML = `<div class="gallery-item">Aucune œuvre</div>`;
-        return;
-      }
-
-      const myPosts = posts.filter(p => p.author === myProfile.name);
-
-      if(!myPosts.length){
-        box.innerHTML = `<div class="gallery-item">Aucune œuvre</div>`;
-        return;
-      }
-
-      myPosts.slice().reverse().forEach(post => {
-        let mediaHtml = '';
-        if(post.type === 'photo' && post.media){
-          mediaHtml = `<img src="${safeUrl(post.media)}" style="width:100%;height:100px;object-fit:cover;border-radius:10px;">`;
-        } else if(post.type === 'video'){
-          mediaHtml = `<div class="small">🎥 Vidéo</div>`;
-        } else if(post.type === 'audio'){
-          mediaHtml = `<div class="small">🎵 Audio</div>`;
-        } else if(post.type === 'live'){
-          mediaHtml = `<div class="small">🔴 Live</div>`;
-        }
-
-        box.innerHTML += `
-          <div class="gallery-item">
-            <strong>${safeText(post.title)}</strong>
-            <div class="small muted" style="margin:6px 0;">${safeText(post.location || '')}</div>
-            ${mediaHtml}
-          </div>
-        `;
-      });
-    }
-
-    function renderProfile(){
-      const preview = document.getElementById('myProfilePreview');
-
-      if(!myProfile){
-        document.getElementById('heroName').textContent = 'Mon profil';
-        document.getElementById('heroMeta').textContent = 'Fan • Réunion';
-        document.getElementById('heroFollowers').textContent = `0 ${t('followers')} • ${follows.length} ${t('following')}`;
-        document.getElementById('heroAvatar').innerHTML = '👤';
-        preview.innerHTML = `<div class="empty">${t('noProfile')}</div>`;
-        renderMyWorks();
-        return;
-      }
-
-      const followersCount = profiles.find(p => p.name === myProfile.name)?.followers || 0;
-
-      document.getElementById('heroName').textContent = myProfile.name;
-      document.getElementById('heroMeta').textContent = `${myProfile.role} • ${myProfile.city}`;
-      document.getElementById('heroFollowers').textContent = `${followersCount} ${t('followers')} • ${follows.length} ${t('following')}`;
-      document.getElementById('heroAvatar').innerHTML = myProfile.photo ? `<img src="${safeUrl(myProfile.photo)}" alt="">` : emojiForRole(myProfile.role);
-
-      document.getElementById('profilePhoto').value = myProfile.photo || '';
-      document.getElementById('nameInput').value = myProfile.name || '';
-      document.getElementById('cityInput').value = myProfile.city || '';
-      document.getElementById('typeInput').value = myProfile.role || 'Artiste';
-      document.getElementById('specialtyInput').value = myProfile.specialty || '';
-      document.getElementById('contactInput').value = myProfile.contact || '';
-      document.getElementById('websiteInput').value = myProfile.website || '';
-      document.getElementById('collabInput').value = myProfile.collab || '';
-      document.getElementById('bioInput').value = myProfile.bio || '';
-      document.getElementById('languageInput').value = myProfile.language || currentLanguage || 'fr';
-
-      preview.innerHTML = `
+  });
+
+  const filtered = unique.filter(t => {
+    if(blocked.includes(t.name)) return false;
+    const text = `${t.name} ${t.role} ${t.city} ${t.bio||""} ${t.specialty||""}`.toLowerCase();
+    return text.includes(q);
+  });
+
+  document.getElementById("discoverList").innerHTML = filtered.length
+    ? filtered.map(t=>`
+      <div class="list-item">
         <div class="row">
-          ${renderAvatar(myProfile.photo, myProfile.role)}
+          <div class="avatar">${t.name.charAt(0)}</div>
           <div>
-            <strong>${safeText(myProfile.name)}</strong><br>
-            <span class="muted">${safeText(myProfile.role)} • ${safeText(myProfile.city)}</span>
+            <div><b>${t.name}</b></div>
+            <div class="small">${t.role}${t.city ? " • " + t.city : ""}</div>
           </div>
         </div>
-        <p style="margin-top:10px;">${safeText(myProfile.bio || '')}</p>
-        ${myProfile.specialty ? `<div class="pill">${safeText(myProfile.specialty)}</div>` : ''}
-        ${myProfile.collab ? `<div class="pill green">${safeText(myProfile.collab)}</div>` : ''}
-        ${myProfile.contact ? `<div style="margin-top:10px;" class="muted">Contact : ${safeText(myProfile.contact)}</div>` : ''}
-        ${myProfile.website ? `<div style="margin-top:8px;"><a href="${safeUrl(myProfile.website)}" target="_blank">${safeText(myProfile.website)}</a></div>` : ''}
-      `;
+        ${t.specialty ? `<div class="pill">${t.specialty}</div>` : ""}
+        ${t.bio ? `<div class="small" style="margin-top:8px">${t.bio}</div>` : ""}
+      </div>
+    `).join("")
+    : `<div class="card empty">Aucun résultat.</div>`;
+}
 
-      renderMyWorks();
+function renderMap(){
+  const map = document.getElementById("mapBox");
+  const box = document.getElementById("mapProfile");
+  const allTalents = [...defaultTalents];
+
+  if(profile && profile.name){
+    allTalents.push({
+      name: profile.name,
+      role: profile.role || "Talent",
+      city: profile.city || "",
+      bio: profile.bio || "",
+      specialty: profile.specialty || "",
+      website: profile.website || "",
+      x: 55,
+      y: 52
+    });
+  }
+
+  const unique = [];
+  const seen = new Set();
+  allTalents.forEach(t=>{
+    if(!seen.has(t.name)){
+      seen.add(t.name);
+      unique.push(t);
     }
+  });
 
-    function renderMap(){
-      const box = document.getElementById('mapBox');
-      box.innerHTML = '';
+  map.innerHTML = "";
+  box.innerHTML = "";
 
-      profiles.forEach(p => {
-        if(blockedUsers.includes(p.name)) return;
-
-        const pin = document.createElement('div');
-        let cls = 'map-pin';
-        if(p.premium) cls += ' gold';
-        if(posts.some(x => x.author === p.name && x.type === 'live')) cls += ' red';
-
-        pin.className = cls;
-        pin.style.left = (p.x || 50) + '%';
-        pin.style.top = (p.y || 50) + '%';
-        pin.textContent = p.name;
-        pin.onclick = () => openMapProfile(p.name);
-        box.appendChild(pin);
-      });
-    }
-
-    function openMapProfile(name){
-      const p = profiles.find(x => x.name === name);
-      const box = document.getElementById('mapProfileView');
-      if(!p) return;
-
+  unique.forEach(t=>{
+    if(blocked.includes(t.name)) return;
+    const pin = document.createElement("div");
+    pin.className = "pin";
+    pin.style.left = (t.x || 50) + "%";
+    pin.style.top = (t.y || 50) + "%";
+    pin.textContent = t.name;
+    pin.onclick = () => {
       box.innerHTML = `
         <div class="card">
           <div class="row">
-            ${renderAvatar(p.photo, p.role)}
+            <div class="avatar">${t.name.charAt(0)}</div>
             <div>
-              <strong>${safeText(p.name)}</strong><br>
-              <span class="muted">${safeText(p.role)} • ${safeText(p.city)}</span>
+              <div><b>${t.name}</b></div>
+              <div class="small">${t.role}${t.city ? " • " + t.city : ""}</div>
             </div>
           </div>
-
-          <p style="margin-top:10px;">${safeText(p.bio || '')}</p>
-          ${p.specialty ? `<div class="pill">${safeText(p.specialty)}</div>` : ''}
-          ${p.collab ? `<div class="pill green">${safeText(p.collab)}</div>` : ''}
-          ${p.premium ? `<div class="pill gold">Profil recommandé</div>` : ''}
-
-          <div class="actions">
-            <button class="btn-soft" onclick="toggleFollow('${safeText(p.name)}')">Suivre</button>
-            <button class="btn-main" onclick="proposeTo('${safeText(p.name)}')">Proposer</button>
-            ${p.website ? `<a class="file-chip" href="${safeUrl(p.website)}" target="_blank">Lien</a>` : ''}
-          </div>
+          ${t.specialty ? `<div class="pill">${t.specialty}</div>` : ""}
+          ${t.bio ? `<div class="small" style="margin-top:8px">${t.bio}</div>` : ""}
+          ${t.website ? `<div style="margin-top:8px"><a href="${t.website}" target="_blank">Voir le lien</a></div>` : ""}
         </div>
       `;
-    }
+    };
+    map.appendChild(pin);
+  });
+}
 
-    function enterLive(postId){
-      const post = posts.find(p => p.id === postId);
-      if(!post) return;
-      activity.push(`Tu es entré dans le live de ${post.author}`);
-      addNotification(`Live rejoint : ${post.author}`);
-      saveAll();
-      renderActivity();
-      renderNotifications();
-      alert(`${t('enteredLive')} : ${post.author}`);
-    }
+function renderStories(){
+  const box = document.getElementById("stories");
+  const items = [...defaultTalents];
+  if(profile && profile.name){
+    items.unshift({name: profile.name, photo: profile.photo || ""});
+  }
 
-    function sendMessage(voiceUrl = '', voiceName = ''){
-      const target = document.getElementById('messageTarget').value;
-      const text = document.getElementById('messageText').value.trim();
-      const fileInput = document.getElementById('messageFile');
-      const file = fileInput.files[0];
-      const from = myProfile?.name || 'Moi';
+  box.innerHTML = items.slice(0,6).map(t=>`
+    <div class="story">
+      <div class="story-avatar">
+        ${t.photo ? `<img src="${t.photo}">` : (t.name || "M").charAt(0)}
+      </div>
+      <div class="small">${t.name}</div>
+    </div>
+  `).join("");
+}
 
-      if(!text && !file && !voiceUrl){
-        return;
-      }
+function populateMessageTargets(){
+  const select = document.getElementById("messageTarget");
+  const names = [...new Set([...defaultTalents.map(t=>t.name), ...(profile && profile.name ? [profile.name] : [])])];
+  select.innerHTML = names.map(n=>`<option value="${n}">${n}</option>`).join("");
+}
 
-      if(file){
-        const reader = new FileReader();
-        reader.onload = function(e){
-          messages.push({
-            id: Date.now(),
-            from,
-            to: target,
-            text,
-            fileName: file.name,
-            fileUrl: e.target.result,
-            voiceUrl: voiceUrl || '',
-            voiceName: voiceName || ''
-          });
-          finishMessage();
-        };
-        reader.readAsDataURL(file);
-      } else {
-        messages.push({
-          id: Date.now(),
-          from,
-          to: target,
-          text,
-          fileName: '',
-          fileUrl: '',
-          voiceUrl: voiceUrl || '',
-          voiceName: voiceName || ''
-        });
-        finishMessage();
-      }
-    }
+function sendMessage(voiceUrl=''){
+  const target = document.getElementById("messageTarget").value;
+  const text = document.getElementById("messageText").value.trim();
+  const file = document.getElementById("messageFile").files[0];
+  const from = profile?.name || "Moi";
 
-    function finishMessage(){
-      document.getElementById('messageText').value = '';
-      document.getElementById('messageFile').value = '';
-      activity.push(t('messageSent'));
-      addNotification(t('messageSent'));
-      saveAll();
-      renderMessages();
-      renderActivity();
-      renderNotifications();
-    }
+  if(!text && !file && !voiceUrl) return;
 
-    function renderMessages(){
-      const box = document.getElementById('messagesList');
-      box.innerHTML = '';
-
-      if(!messages.length){
-        box.innerHTML = `<div class="empty">Aucun message.</div>`;
-        return;
-      }
-
-      messages.slice().reverse().forEach(m => {
-        box.innerHTML += `
-          <div class="message-item">
-            <strong>${safeText(m.from)}</strong> → <strong>${safeText(m.to)}</strong>
-            ${m.text ? `<div style="margin-top:6px;">${safeText(m.text)}</div>` : ''}
-            ${m.fileUrl ? `<div class="file-chip"><a href="${m.fileUrl}" download="${safeText(m.fileName)}">${safeText(m.fileName)}</a></div>` : ''}
-            ${m.voiceUrl ? `<div style="margin-top:8px;"><audio controls style="width:100%;"><source src="${m.voiceUrl}"></audio></div>` : ''}
-          </div>
-        `;
-      });
-    }
-
-    async function toggleRecord(){
-      const btn = document.getElementById('recordBtn');
-      const status = document.getElementById('recordStatus');
-
-      if(!recording){
-        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-          alert("Enregistrement non supporté sur cet appareil.");
-          return;
-        }
-
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
-
-          mediaRecorder.ondataavailable = event => {
-            if(event.data.size > 0) audioChunks.push(event.data);
-          };
-
-          mediaRecorder.onstop = () => {
-            const blob = new Blob(audioChunks, { type: 'audio/webm' });
-            const url = URL.createObjectURL(blob);
-            sendMessage(url, 'vocal.webm');
-            stream.getTracks().forEach(track => track.stop());
-          };
-
-          mediaRecorder.start();
-          recording = true;
-          btn.textContent = '⏹ Stop';
-          status.textContent = 'Enregistrement en cours...';
-        } catch (e){
-          alert("Micro refusé ou indisponible.");
-        }
-      } else {
-        mediaRecorder.stop();
-        recording = false;
-        btn.textContent = '🎤 Vocal';
-        status.textContent = '';
-      }
-    }
-
-    renderStories();
-    renderFeed();
-    renderProfiles();
-    renderMap();
-    renderActivity();
-    renderNotifications();
+  function finish(fileUrl="", fileName=""){
+    messages.unshift({
+      id: Date.now(),
+      from,
+      to: target,
+      text,
+      fileUrl,
+      fileName,
+      voiceUrl
+    });
+    document.getElementById("messageText").value = "";
+    document.getElementById("messageFile").value = "";
+    addNotif("Nouveau message envoyé");
+    save();
     renderMessages();
-    renderProfile();
-    setFeedMode(feedMode);
-  </script>
+    renderNotifBadge();
+  }
+
+  if(file){
+    const reader = new FileReader();
+    reader.onload = e => finish(e.target.result, file.name);
+    reader.readAsDataURL(file);
+  }else{
+    finish();
+  }
+}
+
+function renderMessages(){
+  const box = document.getElementById("messagesList");
+  box.innerHTML = messages.length ? messages.map(m=>`
+    <div class="list-item">
+      <div><b>${m.from}</b> → <b>${m.to}</b></div>
+      ${m.text ? `<div style="margin-top:6px">${m.text}</div>` : ""}
+      ${m.fileUrl ? `<a class="file-link" href="${m.fileUrl}" download="${m.fileName || 'fichier'}">${m.fileName || 'Fichier'}</a>` : ""}
+      ${m.voiceUrl ? `<div style="margin-top:8px"><audio controls style="width:100%"><source src="${m.voiceUrl}"></audio></div>` : ""}
+    </div>
+  `).join("") : `<div class="card empty">Aucun message.</div>`;
+}
+
+async function toggleRecord(){
+  const btn = document.getElementById("recordBtn");
+  const status = document.getElementById("recordStatus");
+
+  if(!recording){
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      alert("Enregistrement non supporté sur cet appareil.");
+      return;
+    }
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+
+      mediaRecorder.ondataavailable = e => {
+        if(e.data.size > 0) audioChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(audioChunks, {type:'audio/webm'});
+        const url = URL.createObjectURL(blob);
+        sendMessage(url);
+        stream.getTracks().forEach(track=>track.stop());
+      };
+
+      mediaRecorder.start();
+      recording = true;
+      btn.textContent = "⏹ Stop";
+      status.textContent = "Enregistrement en cours...";
+    }catch(e){
+      alert("Micro refusé ou indisponible.");
+    }
+  }else{
+    mediaRecorder.stop();
+    recording = false;
+    btn.textContent = "🎤 Vocal";
+    status.textContent = "";
+  }
+}
+
+function renderAll(){
+  renderFeed();
+  renderNotifications();
+  renderProfile();
+  renderProfileLists();
+  renderDiscover();
+  renderMap();
+  renderMessages();
+  renderStories();
+  renderNotifBadge();
+  populateMessageTargets();
+  nav(currentSection);
+}
+
+showProfileTab('overview');
+renderAll();
+</script>
+
 </body>
 </html>
+  
