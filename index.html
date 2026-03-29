@@ -479,7 +479,28 @@
   </style>
 </head>
 <body>
+<div id="authScreen">
+  <div class="card">
+    <div class="title">Connexion / Inscription</div>
 
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
+
+    <button onclick="registerUser(document.getElementById('email').value, document.getElementById('password').value)">
+      S'inscrire
+    </button>
+
+    <button onclick="loginUser(document.getElementById('email').value, document.getElementById('password').value)">
+      Se connecter
+    </button>
+
+    <div class="small" style="margin-top:8px;">
+      <a href="#" onclick="forgotPassword(document.getElementById('email').value)">
+        Mot de passe oublié ?
+      </a>
+    </div>
+  </div>
+</div>
 <header>
   <div class="logo">
     <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:20px;">🎵</div>
@@ -509,6 +530,11 @@
 <button onclick="registerUser(document.getElementById('email').value, document.getElementById('password').value)">
 S'inscrire
 </button>
+      <div class="small" style="margin-top:8px;">
+  <a href="#" onclick="forgotPassword(document.getElementById('email').value)">
+    Mot de passe oublié ?
+  </a>
+</div>
       <div class="title">Publier</div>
       <div class="small">Photo, vidéo, audio ou live annoncé.</div>
 
@@ -1843,7 +1869,7 @@ renderAll();
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
   const firebaseConfig = {
   apiKey: "AIzaSyD02WgGRL-Zqmuv-xo0_Fux",
   authDomain: "musicmap-eaaa1.firebaseapp.com",
