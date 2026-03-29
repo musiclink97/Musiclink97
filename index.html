@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MusicMap</title>
   <style>
-    * { box-sizing: border-box; }
+    *{box-sizing:border-box}
     :root{
       --bg:#0f1115;
       --card:#171a21;
@@ -22,72 +22,59 @@
 
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      font-family:Arial,sans-serif;
       background:linear-gradient(180deg,#10131a,#0c0f14);
       color:var(--text);
     }
 
-    a{
-      color:#93c5fd;
-      text-decoration:none;
-    }
-
-    a:hover{
-      text-decoration:underline;
-    }
-
-    .hidden{ display:none !important; }
+    .hidden{display:none!important}
+    a{color:#93c5fd;text-decoration:none}
+    a:hover{text-decoration:underline}
 
     header{
       position:sticky;
       top:0;
-      z-index:80;
+      z-index:90;
       background:rgba(15,17,21,.96);
       backdrop-filter:blur(12px);
       border-bottom:1px solid var(--line);
       padding:12px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
-    }
-
-    .logo{
-      display:flex;
       align-items:center;
       gap:10px;
-      min-width:0;
     }
 
-    .brand{
-      font-size:20px;
-      font-weight:800;
-    }
+    .logo{display:flex;align-items:center;gap:10px}
+    .brand{font-size:20px;font-weight:800}
+    .sub{font-size:12px;color:var(--muted)}
 
-    .sub{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .header-actions{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .header-btn{
+    .top-actions{display:flex;gap:8px}
+    .top-btn{
       background:#111827;
-      color:white;
+      color:#fff;
       border:1px solid var(--line);
       border-radius:10px;
       padding:8px 10px;
       position:relative;
+      cursor:pointer;
+    }
+
+    .notif-badge{
+      position:absolute;
+      top:-4px;
+      right:-4px;
+      background:var(--red);
+      color:#fff;
+      border-radius:999px;
+      font-size:10px;
+      padding:2px 6px;
     }
 
     .container{
       max-width:760px;
-      margin:0 auto;
-      padding:12px 12px 96px;
+      margin:auto;
+      padding:12px 12px 100px;
     }
 
     .card{
@@ -98,73 +85,13 @@
       margin-bottom:12px;
     }
 
-    .title{
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:6px;
-    }
+    .title{font-size:18px;font-weight:800;margin-bottom:6px}
+    .small{font-size:12px;color:var(--muted)}
 
-    .muted{
-      color:var(--muted);
-      font-size:14px;
-    }
+    .row{display:flex;align-items:center;gap:10px}
+    .between{display:flex;align-items:center;justify-content:space-between;gap:10px}
 
-    .small{
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .between{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-
-    .avatar{
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      overflow:hidden;
-      flex-shrink:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      background:linear-gradient(135deg,var(--blue),var(--violet));
-      color:white;
-    }
-
-    .avatar img,
-    .story-avatar img,
-    .hero-avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .hero-avatar{
-      width:76px;
-      height:76px;
-      border-radius:50%;
-      overflow:hidden;
-      flex-shrink:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      font-weight:800;
-      background:linear-gradient(135deg,var(--blue),var(--violet));
-      color:white;
-    }
-
-    input, textarea, select{
+    input,textarea,select{
       width:100%;
       padding:11px;
       margin-top:8px;
@@ -172,18 +99,11 @@
       border:1px solid var(--line);
       background:#0f131b;
       color:var(--text);
-      font-size:14px;
       outline:none;
     }
 
-    textarea{
-      min-height:90px;
-      resize:vertical;
-    }
-
-    input[type="file"]{
-      padding:10px;
-    }
+    textarea{min-height:90px;resize:vertical}
+    input[type="file"]{padding:10px}
 
     button{
       border:none;
@@ -195,17 +115,17 @@
 
     .btn-main{
       background:linear-gradient(135deg,var(--blue),var(--violet));
-      color:white;
+      color:#fff;
     }
 
     .btn-soft{
       background:var(--soft);
-      color:white;
+      color:#fff;
     }
 
     .btn-red{
       background:var(--red);
-      color:white;
+      color:#fff;
     }
 
     .btn-green{
@@ -213,21 +133,32 @@
       color:#04130d;
     }
 
-    .tabs{
+    .avatar,.hero-avatar,.story-avatar{
       display:flex;
-      gap:8px;
-      overflow:auto;
-      padding-bottom:4px;
-    }
-
-    .tabs::-webkit-scrollbar,
-    .stories::-webkit-scrollbar{
-      display:none;
-    }
-
-    .tabs button.active{
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      color:#fff;
+      font-weight:800;
       background:linear-gradient(135deg,var(--blue),var(--violet));
-      color:white;
+      flex-shrink:0;
+      position:relative;
+    }
+
+    .avatar{width:42px;height:42px;border-radius:50%}
+    .hero-avatar{width:76px;height:76px;border-radius:50%;font-size:28px}
+    .story-avatar{width:58px;height:58px;border-radius:50%;margin:auto;margin-bottom:6px}
+    .avatar img,.hero-avatar img,.story-avatar img{width:100%;height:100%;object-fit:cover}
+
+    .online-dot{
+      position:absolute;
+      right:2px;
+      bottom:2px;
+      width:12px;
+      height:12px;
+      background:#22c55e;
+      border:2px solid #0f1115;
+      border-radius:50%;
     }
 
     .stories{
@@ -238,25 +169,11 @@
       margin-bottom:12px;
     }
 
-    .story{
-      min-width:82px;
-      text-align:center;
-    }
+    .stories::-webkit-scrollbar,.tabs::-webkit-scrollbar{display:none}
+    .story{min-width:82px;text-align:center;cursor:pointer}
 
-    .story-avatar{
-      width:58px;
-      height:58px;
-      border-radius:50%;
-      margin:auto;
-      margin-bottom:6px;
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg,var(--blue),var(--violet));
-      color:white;
-      font-weight:800;
-    }
+    .tabs{display:flex;gap:8px;overflow:auto}
+    .tabs button.active{background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff}
 
     .post{
       background:var(--card);
@@ -267,113 +184,21 @@
       position:relative;
     }
 
-    .post-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px;
-    }
+    .post-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px}
+    .post-user{display:flex;align-items:center;gap:10px;min-width:0}
+    .post-media{width:100%;display:block;background:#0b0d12}
+    img.post-media{width:100%;height:auto;max-height:80vh;object-fit:contain}
+    video.post-media{width:100%;max-height:80vh;background:#0b0d12}
+    .post-body{padding:10px}
+    .post-actions{display:flex;gap:14px;flex-wrap:wrap;font-size:20px;margin-bottom:8px}
+    .post-actions span{cursor:pointer}
+    .stats{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:8px}
+    .comment{background:#111827;border-radius:10px;padding:8px 10px;margin-top:8px}
+    .comment-row{display:flex;justify-content:space-between;gap:8px}
+    .comment-row button{padding:4px 8px;font-size:12px;background:#222734;color:#fff}
 
-    .post-user{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    .post-user-info{
-      min-width:0;
-    }
-
-    .post-user-info b,
-    .post-user-info div{
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .post-media{
-      width:100%;
-      display:block;
-      background:#0b0d12;
-    }
-
-    img.post-media{
-      width:100%;
-      height:auto;
-      max-height:80vh;
-      object-fit:contain;
-      background:#0b0d12;
-    }
-
-    video.post-media{
-      width:100%;
-      max-height:80vh;
-      background:#0b0d12;
-    }
-
-    .post-body{
-      padding:10px;
-    }
-
-    .post-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      font-size:20px;
-      margin-bottom:8px;
-    }
-
-    .post-actions span{
-      cursor:pointer;
-    }
-
-    .stats{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:8px;
-    }
-
-    .comment{
-      background:#111827;
-      border-radius:10px;
-      padding:8px 10px;
-      margin-top:8px;
-      font-size:14px;
-    }
-
-    .comment-row{
-      display:flex;
-      justify-content:space-between;
-      gap:8px;
-      align-items:flex-start;
-    }
-
-    .comment-row button{
-      background:#222734;
-      color:white;
-      padding:4px 8px;
-      font-size:12px;
-      border-radius:8px;
-    }
-
-    .menu-wrap{
-      position:relative;
-      flex-shrink:0;
-    }
-
-    .menu-btn{
-      background:none;
-      color:white;
-      font-size:22px;
-      padding:4px 8px;
-      line-height:1;
-    }
-
+    .menu-wrap{position:relative}
+    .menu-btn{background:none;color:#fff;font-size:22px;padding:4px 8px;line-height:1}
     .menu{
       position:absolute;
       top:34px;
@@ -386,19 +211,15 @@
       z-index:30;
       box-shadow:0 10px 24px rgba(0,0,0,.35);
     }
-
     .menu button{
       width:100%;
       text-align:left;
       background:none;
-      color:white;
+      color:#fff;
       padding:10px;
       border-radius:10px;
     }
-
-    .menu button:hover{
-      background:#1f2937;
-    }
+    .menu button:hover{background:#1f2937}
 
     .list-item{
       background:var(--card);
@@ -419,9 +240,17 @@
       margin-right:6px;
     }
 
-    .pill.green{
-      background:#052e24;
-      color:#a7f3d0;
+    .pill.green{background:#052e24;color:#a7f3d0}
+    .pill.gold{background:#3b2f12;color:#fde68a}
+
+    .file-link{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#172554;
+      font-size:12px;
+      color:#bfdbfe;
     }
 
     .map{
@@ -449,28 +278,6 @@
       white-space:nowrap;
     }
 
-    .notif-badge{
-      position:absolute;
-      top:-4px;
-      right:-4px;
-      background:var(--red);
-      color:white;
-      border-radius:999px;
-      font-size:10px;
-      padding:2px 6px;
-      line-height:1.2;
-    }
-
-    .file-link{
-      display:inline-block;
-      margin-top:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#172554;
-      font-size:12px;
-      color:#bfdbfe;
-    }
-
     .nav{
       position:fixed;
       left:0;
@@ -495,17 +302,182 @@
       position:relative;
     }
 
-    .nav button.active{
+    .nav button.active{color:#fff}
+    .empty{color:var(--muted);font-size:14px}
+
+    .fab{
+      position:fixed;
+      right:18px;
+      bottom:78px;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--blue),var(--violet));
       color:white;
+      font-size:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:95;
+      box-shadow:0 10px 20px rgba(0,0,0,.35);
     }
 
-    .empty{
-      color:var(--muted);
-      font-size:14px;
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.6);
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      z-index:120;
+      padding:12px;
+    }
+
+    .modal-box{
+      width:100%;
+      max-width:760px;
+      max-height:92vh;
+      overflow:auto;
+      background:#12161f;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+    }
+
+    .story-view{
+      background:#0f131b;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      text-align:center;
+    }
+
+    .story-text-box{
+      min-height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:20px;
+      font-size:22px;
+      font-weight:700;
+      background:linear-gradient(135deg,#2563eb,#8b5cf6);
+      border-radius:16px;
+    }
+
+    .messages-layout{
+      display:grid;
+      grid-template-columns:240px 1fr;
+      gap:12px;
+    }
+
+    .conversation-list{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px;
+      max-height:520px;
+      overflow:auto;
+    }
+
+    .conversation-item{
+      padding:10px;
+      border-radius:12px;
+      cursor:pointer;
+      margin-bottom:8px;
+      background:#111827;
+      border:1px solid transparent;
+    }
+
+    .conversation-item.active{
+      border-color:var(--blue);
+      background:#172033;
+    }
+
+    .chat-box{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px;
+      display:flex;
+      flex-direction:column;
+      min-height:520px;
+    }
+
+    .chat-header{
+      padding:8px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:10px;
+    }
+
+    .chat-messages{
+      flex:1;
+      overflow:auto;
+      padding:6px 4px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .bubble-row{
+      display:flex;
+      width:100%;
+    }
+
+    .bubble-row.me{
+      justify-content:flex-end;
+    }
+
+    .bubble{
+      max-width:78%;
+      padding:10px 12px;
+      border-radius:16px;
+      background:#1f2937;
+      color:white;
+      word-break:break-word;
+    }
+
+    .bubble-row.me .bubble{
+      background:linear-gradient(135deg,var(--blue),var(--violet));
+    }
+
+    .bubble-meta{
+      font-size:11px;
+      color:#cbd5e1;
+      margin-top:6px;
+    }
+
+    .bubble-file{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      color:white;
+      font-size:12px;
+    }
+
+    .chat-inputs{
+      border-top:1px solid var(--line);
+      padding-top:10px;
+    }
+
+    @media (max-width:700px){
+      .messages-layout{
+        grid-template-columns:1fr;
+      }
+      .conversation-list{
+        max-height:none;
+      }
+      .chat-box{
+        min-height:420px;
+      }
+      .bubble{
+        max-width:88%;
+      }
     }
   </style>
 </head>
-
 <body>
 
 <header>
@@ -517,9 +489,9 @@
     </div>
   </div>
 
-  <div class="header-actions">
-    <button class="header-btn" onclick="nav('mapSection')">📍</button>
-    <button class="header-btn" onclick="nav('notif')">
+  <div class="top-actions">
+    <button class="top-btn" onclick="nav('mapSection')">📍</button>
+    <button class="top-btn" onclick="nav('notif')">
       🔔
       <span id="notifTopBadge" class="notif-badge hidden">0</span>
     </button>
@@ -547,6 +519,7 @@
       <input type="file" id="postFile" accept="image/*,video/*,audio/*">
       <input id="media" placeholder="Ou colle un lien image / vidéo / audio">
       <input id="postLocation" placeholder="Lieu (ex: Saint-Denis)">
+      <input id="postTagged" placeholder="Identifier des personnes (ex: Luna K, Studio 974)">
       <button class="btn-main" onclick="createPost()">Publier</button>
     </div>
 
@@ -558,7 +531,23 @@
       <div class="title">Découvrir</div>
       <input id="searchDiscover" placeholder="Chercher un talent, ville, métier..." oninput="renderDiscover()">
     </div>
+
+    <div class="card">
+      <div class="title">Emploi / Recherche</div>
+      <div class="small">Trouver quelqu’un par métier ou besoin.</div>
+      <input id="jobSearch" placeholder="Ex: caméraman, décorateur, studio..." oninput="renderJobs()">
+      <button class="btn-main" onclick="createJobPost()">Publier une recherche</button>
+    </div>
+
+    <div class="card">
+      <div class="title">Événements</div>
+      <div class="small">Concert, tournage, casting, session studio…</div>
+      <button class="btn-main" onclick="createEvent()">Créer un événement</button>
+    </div>
+
     <div id="discoverList"></div>
+    <div id="jobsList"></div>
+    <div id="eventsList"></div>
   </section>
 
   <section id="mapSection" class="hidden">
@@ -579,18 +568,34 @@
   </section>
 
   <section id="messages" class="hidden">
-    <div class="card">
-      <div class="title">Messages</div>
-      <select id="messageTarget"></select>
-      <textarea id="messageText" placeholder="Écris un message"></textarea>
-      <input type="file" id="messageFile">
-      <div class="row">
-        <button class="btn-main" onclick="sendMessage()">Envoyer</button>
-        <button class="btn-soft" id="recordBtn" onclick="toggleRecord()">🎤 Vocal</button>
+    <div class="messages-layout">
+      <div class="conversation-list">
+        <div class="between" style="margin-bottom:10px">
+          <div class="title" style="margin:0;font-size:16px">Conversations</div>
+          <button class="btn-soft" onclick="openNewGroup()">+ Groupe</button>
+        </div>
+        <div id="conversationList"></div>
       </div>
-      <div id="recordStatus" class="small"></div>
+
+      <div class="chat-box">
+        <div class="chat-header" id="chatHeader">
+          <div class="small">Sélectionne une conversation</div>
+        </div>
+
+        <div class="chat-messages" id="messagesList"></div>
+
+        <div class="chat-inputs">
+          <select id="messageTarget"></select>
+          <textarea id="messageText" placeholder="Écris un message"></textarea>
+          <input type="file" id="messageFile">
+          <div class="row">
+            <button class="btn-main" onclick="sendMessage()">Envoyer</button>
+            <button class="btn-soft" id="recordBtn" onclick="toggleRecord()">🎤 Vocal</button>
+          </div>
+          <div id="recordStatus" class="small"></div>
+        </div>
+      </div>
     </div>
-    <div id="messagesList"></div>
   </section>
 
   <section id="profile" class="hidden">
@@ -613,6 +618,12 @@
       </div>
 
       <div id="tab-overview">
+        <select id="accountType">
+          <option value="user">Utilisateur simple</option>
+          <option value="creator">Créateur / Artiste</option>
+          <option value="business">Entreprise</option>
+        </select>
+
         <select id="role" onchange="toggleRole()">
           <option>Artiste</option>
           <option>Beatmaker</option>
@@ -629,6 +640,7 @@
           <option>Styliste</option>
           <option>Manager</option>
           <option>Producteur</option>
+          <option>Profil simple</option>
           <option>Autre</option>
         </select>
 
@@ -642,7 +654,10 @@
         <input id="collab" placeholder="Je cherche / je propose">
         <textarea id="bio" placeholder="Bio"></textarea>
 
-        <button class="btn-main" onclick="saveProfile()">Enregistrer</button>
+        <div class="row">
+          <button class="btn-main" onclick="saveProfile()">Enregistrer</button>
+          <button class="btn-green" onclick="toggleOnlineStatus()">En ligne / Hors ligne</button>
+        </div>
       </div>
 
       <div id="tab-likes" class="hidden"></div>
@@ -653,22 +668,70 @@
 
 </div>
 
+<button class="fab" onclick="openCreateModal()">+</button>
+
+<div id="createModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="between">
+      <div class="title">Créer</div>
+      <button class="btn-soft" onclick="closeCreateModal()">Fermer</button>
+    </div>
+
+    <div class="card">
+      <div class="title">Post</div>
+      <div class="small">Retourne dans Accueil pour remplir le post, ou utilise le bouton ci-dessous.</div>
+      <button class="btn-main" onclick="goToFeedAndClose()">Aller publier un post</button>
+    </div>
+
+    <div class="card">
+      <div class="title">Story</div>
+      <select id="storyType">
+        <option value="photo">Story photo</option>
+        <option value="video">Story vidéo</option>
+        <option value="text">Story texte</option>
+      </select>
+      <input type="file" id="storyFile" accept="image/*,video/*">
+      <input id="storyMedia" placeholder="Ou colle un lien story">
+      <input id="storyText" placeholder="Texte story / légende">
+      <input id="storyTagged" placeholder="Identifier des personnes">
+      <button class="btn-main" onclick="createStory()">Publier la story</button>
+    </div>
+
+    <div class="card">
+      <div class="title">Événement</div>
+      <button class="btn-main" onclick="createEvent()">Créer un événement</button>
+    </div>
+
+    <div class="card">
+      <div class="title">Recherche / emploi</div>
+      <button class="btn-main" onclick="createJobPost()">Publier une recherche</button>
+    </div>
+  </div>
+</div>
+
+<div id="storyModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="between">
+      <div class="title">Story</div>
+      <button class="btn-soft" onclick="closeStoryModal()">Fermer</button>
+    </div>
+    <div id="storyModalContent"></div>
+  </div>
+</div>
+
 <div class="nav">
   <button class="active" data-target="feed" onclick="nav('feed', this)">
     <div>🏠</div>
     <div>Accueil</div>
   </button>
-
   <button data-target="discover" onclick="nav('discover', this)">
     <div>🔍</div>
     <div>Découvrir</div>
   </button>
-
   <button data-target="messages" onclick="nav('messages', this)">
     <div>💬</div>
     <div>Messages</div>
   </button>
-
   <button data-target="profile" onclick="nav('profile', this)">
     <div>👤</div>
     <div>Profil</div>
@@ -677,6 +740,9 @@
 
 <script>
 let posts = JSON.parse(localStorage.getItem("posts")) || [];
+let stories = JSON.parse(localStorage.getItem("stories")) || [];
+let jobs = JSON.parse(localStorage.getItem("jobs")) || [];
+let events = JSON.parse(localStorage.getItem("events")) || [];
 let likes = JSON.parse(localStorage.getItem("likes")) || [];
 let archive = JSON.parse(localStorage.getItem("archive")) || [];
 let blocked = JSON.parse(localStorage.getItem("blocked")) || [];
@@ -684,21 +750,26 @@ let hiddenPosts = JSON.parse(localStorage.getItem("hiddenPosts")) || [];
 let notif = JSON.parse(localStorage.getItem("notif")) || [];
 let profile = JSON.parse(localStorage.getItem("profile")) || null;
 let messages = JSON.parse(localStorage.getItem("messages")) || [];
+let groups = JSON.parse(localStorage.getItem("groups")) || [{name:"Général", members:["Moi"]}];
 let openMenuId = null;
 let currentSection = "feed";
+let currentConversation = null;
 
 let mediaRecorder = null;
 let audioChunks = [];
 let recording = false;
 
 const defaultTalents = [
-  {name:"Luna K", role:"Artiste", city:"Saint-Denis", x:30, y:30, bio:"Artiste en développement", specialty:"Rap mélodique"},
-  {name:"Studio 974", role:"Studio", city:"Saint-Denis", x:65, y:40, bio:"Enregistrement / mix", specialty:"Studio"},
-  {name:"Lina Cam", role:"Caméraman", city:"Saint-Pierre", x:50, y:72, bio:"Clips / backstage", specialty:"Vidéo"}
+  {name:"Luna K", role:"Artiste", city:"Saint-Denis", x:30, y:30, bio:"Artiste en développement", specialty:"Rap mélodique", online:true},
+  {name:"Studio 974", role:"Studio", city:"Saint-Denis", x:65, y:40, bio:"Enregistrement / mix", specialty:"Studio", online:false},
+  {name:"Lina Cam", role:"Caméraman", city:"Saint-Pierre", x:50, y:72, bio:"Clips / backstage", specialty:"Vidéo", online:true}
 ];
 
 function save(){
   localStorage.setItem("posts", JSON.stringify(posts));
+  localStorage.setItem("stories", JSON.stringify(stories));
+  localStorage.setItem("jobs", JSON.stringify(jobs));
+  localStorage.setItem("events", JSON.stringify(events));
   localStorage.setItem("likes", JSON.stringify(likes));
   localStorage.setItem("archive", JSON.stringify(archive));
   localStorage.setItem("blocked", JSON.stringify(blocked));
@@ -706,6 +777,7 @@ function save(){
   localStorage.setItem("notif", JSON.stringify(notif));
   localStorage.setItem("profile", JSON.stringify(profile));
   localStorage.setItem("messages", JSON.stringify(messages));
+  localStorage.setItem("groups", JSON.stringify(groups));
 }
 
 function nav(id, btn){
@@ -716,32 +788,76 @@ function nav(id, btn){
   document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
   if(btn){
     btn.classList.add("active");
-  }else{
+  } else {
     const autoBtn = document.querySelector(`.nav button[data-target="${id}"]`);
     if(autoBtn) autoBtn.classList.add("active");
   }
 
   if(id === "mapSection") renderMap();
   if(id === "notif") renderNotifications();
-  if(id === "discover") renderDiscover();
-  if(id === "messages") renderMessages();
+  if(id === "discover"){ renderDiscover(); renderJobs(); renderEvents(); }
+  if(id === "messages"){ renderConversations(); renderMessages(); }
 }
 
 function addNotif(text){
-  notif.unshift({
-    text,
-    date: new Date().toLocaleString()
-  });
+  notif.unshift({text, date:new Date().toLocaleString()});
   save();
 }
 
+function parseTagged(raw){
+  if(!raw) return [];
+  return raw.split(",").map(x=>x.trim()).filter(Boolean);
+}
+
+function getBadge(accountType){
+  if(accountType === "creator") return `<span class="pill">Créateur</span>`;
+  if(accountType === "business") return `<span class="pill green">Entreprise</span>`;
+  return `<span class="pill">Simple</span>`;
+}
+
+function getProfileOnline(){
+  return profile?.online ? `<span class="online-dot"></span>` : "";
+}
+
+function getTalentByName(name){
+  if(profile?.name === name){
+    return {
+      name: profile.name,
+      role: profile.role || "Profil simple",
+      city: profile.city || "",
+      online: !!profile.online,
+      photo: profile.photo || ""
+    };
+  }
+  return defaultTalents.find(t=>t.name===name) || null;
+}
+
+function openCreateModal(){
+  document.getElementById("createModal").classList.remove("hidden");
+}
+
+function closeCreateModal(){
+  document.getElementById("createModal").classList.add("hidden");
+}
+
+function goToFeedAndClose(){
+  closeCreateModal();
+  nav("feed");
+}
+
 function createPost(){
-  let title = document.getElementById("title").value.trim();
-  let media = document.getElementById("media").value.trim();
-  let caption = document.getElementById("caption").value.trim();
-  let type = document.getElementById("postType").value;
-  let location = document.getElementById("postLocation").value.trim();
-  let file = document.getElementById("postFile").files[0];
+  if(profile?.accountType === "user"){
+    alert("Passe en créateur ou entreprise pour publier librement.");
+    return;
+  }
+
+  const title = document.getElementById("title").value.trim();
+  const media = document.getElementById("media").value.trim();
+  const caption = document.getElementById("caption").value.trim();
+  const type = document.getElementById("postType").value;
+  const location = document.getElementById("postLocation").value.trim();
+  const tagged = parseTagged(document.getElementById("postTagged").value.trim());
+  const file = document.getElementById("postFile").files[0];
 
   if(!title){
     alert("Ajoute un titre");
@@ -751,11 +867,10 @@ function createPost(){
   function finish(mediaValue){
     posts.unshift({
       id: Date.now(),
-      title,
-      caption,
+      title, caption,
       media: mediaValue || "",
-      type,
-      location,
+      type, location,
+      tagged,
       likes: 0,
       views: 0,
       shares: 0,
@@ -763,15 +878,16 @@ function createPost(){
       collabs: [],
       author: profile?.name || "Moi",
       role: profile?.role || "Talent",
+      accountType: profile?.accountType || "user",
       createdAt: Date.now(),
       replyTo: null
     });
-
     addNotif("Nouveau post publié");
     document.getElementById("title").value = "";
     document.getElementById("caption").value = "";
     document.getElementById("media").value = "";
     document.getElementById("postLocation").value = "";
+    document.getElementById("postTagged").value = "";
     document.getElementById("postFile").value = "";
     save();
     renderAll();
@@ -784,6 +900,77 @@ function createPost(){
   } else {
     finish(media);
   }
+}
+
+function createStory(){
+  const type = document.getElementById("storyType").value;
+  const media = document.getElementById("storyMedia").value.trim();
+  const text = document.getElementById("storyText").value.trim();
+  const tagged = parseTagged(document.getElementById("storyTagged").value.trim());
+  const file = document.getElementById("storyFile").files[0];
+
+  function finish(mediaValue){
+    stories.unshift({
+      id: Date.now(),
+      author: profile?.name || "Moi",
+      media: mediaValue || "",
+      text,
+      type,
+      tagged,
+      photo: profile?.photo || "",
+      createdAt: Date.now()
+    });
+    addNotif("Nouvelle story publiée");
+    document.getElementById("storyMedia").value = "";
+    document.getElementById("storyText").value = "";
+    document.getElementById("storyTagged").value = "";
+    document.getElementById("storyFile").value = "";
+    save();
+    renderStories();
+    closeCreateModal();
+  }
+
+  if(file){
+    const reader = new FileReader();
+    reader.onload = e => finish(e.target.result);
+    reader.readAsDataURL(file);
+  } else {
+    finish(media);
+  }
+}
+
+function openStory(id){
+  const s = stories.find(x=>x.id===id);
+  if(!s) return;
+
+  let html = `
+    <div class="story-view">
+      <div class="row" style="justify-content:center;margin-bottom:12px">
+        <div class="avatar">${s.photo ? `<img src="${s.photo}">` : (s.author || "S").charAt(0)}${profile?.online && s.author===profile?.name ? `<span class="online-dot"></span>` : ""}</div>
+        <div>
+          <div><b>${s.author || "Story"}</b></div>
+          <div class="small">${s.tagged?.length ? "Identifiés : " + s.tagged.join(", ") : ""}</div>
+        </div>
+      </div>
+  `;
+
+  if(s.type === "text"){
+    html += `<div class="story-text-box">${s.text || "Story texte"}</div>`;
+  } else if(s.type === "video"){
+    html += s.media ? `<video controls style="width:100%;max-height:70vh;border-radius:16px;"><source src="${s.media}"></video>` : `<div class="story-text-box">🎬 Story vidéo</div>`;
+    if(s.text) html += `<div style="margin-top:12px">${s.text}</div>`;
+  } else {
+    html += s.media ? `<img src="${s.media}" style="width:100%;max-height:70vh;object-fit:contain;border-radius:16px;background:#0b0d12;">` : `<div class="story-text-box">📷 Story photo</div>`;
+    if(s.text) html += `<div style="margin-top:12px">${s.text}</div>`;
+  }
+
+  html += `</div>`;
+  document.getElementById("storyModalContent").innerHTML = html;
+  document.getElementById("storyModal").classList.remove("hidden");
+}
+
+function closeStoryModal(){
+  document.getElementById("storyModal").classList.add("hidden");
 }
 
 function createCreativeReply(parentId){
@@ -804,6 +991,7 @@ function createCreativeReply(parentId){
     media: media.trim(),
     type: type === "audio" ? "audio" : type === "photo" ? "photo" : "video",
     location: profile?.city || "",
+    tagged: [],
     likes: 0,
     views: 0,
     shares: 0,
@@ -811,6 +999,7 @@ function createCreativeReply(parentId){
     collabs: [],
     author: profile?.name || "Moi",
     role: profile?.role || "Talent",
+    accountType: profile?.accountType || "user",
     createdAt: Date.now(),
     replyTo: parentId
   });
@@ -840,6 +1029,77 @@ function proposeCollab(postId){
   renderAll();
 }
 
+function republishPost(id){
+  const parent = posts.find(p => p.id === id);
+  if(!parent) return;
+
+  posts.unshift({
+    id: Date.now(),
+    title: `Repub : ${parent.title}`,
+    caption: `Republié depuis ${parent.author}`,
+    media: parent.media || "",
+    type: parent.type || "photo",
+    location: profile?.city || "",
+    tagged: parent.tagged || [],
+    likes: 0,
+    views: 0,
+    shares: 0,
+    comments: [],
+    collabs: [],
+    author: profile?.name || "Moi",
+    role: profile?.role || "Profil simple",
+    accountType: profile?.accountType || "user",
+    createdAt: Date.now(),
+    replyTo: parent.id
+  });
+
+  addNotif(`Tu as republié "${parent.title}"`);
+  save();
+  renderAll();
+}
+
+function createJobPost(){
+  const title = prompt("Quel métier ou aide cherches-tu ?");
+  if(!title || !title.trim()) return;
+  const city = prompt("Ville ?") || (profile?.city || "");
+  const desc = prompt("Décris la recherche") || "";
+
+  jobs.unshift({
+    id: Date.now(),
+    title: title.trim(),
+    city: city.trim(),
+    desc: desc.trim(),
+    author: profile?.name || "Moi",
+    role: profile?.role || "Talent",
+    createdAt: Date.now()
+  });
+  addNotif("Nouvelle recherche publiée");
+  save();
+  renderJobs();
+  closeCreateModal();
+}
+
+function createEvent(){
+  const title = prompt("Nom de l'événement");
+  if(!title || !title.trim()) return;
+  const city = prompt("Ville ?") || (profile?.city || "");
+  const date = prompt("Date / heure ?") || "";
+  const desc = prompt("Description") || "";
+
+  events.unshift({
+    id: Date.now(),
+    title: title.trim(),
+    city: city.trim(),
+    date: date.trim(),
+    desc: desc.trim(),
+    author: profile?.name || "Moi"
+  });
+  addNotif("Nouvel événement publié");
+  save();
+  renderEvents();
+  closeCreateModal();
+}
+
 function renderPostMedia(p){
   if(p.type === "video"){
     return p.media ? `<video class="post-media" controls><source src="${p.media}"></video>` : "";
@@ -861,18 +1121,20 @@ function renderPosts(list, targetId, withMenu=true){
     if(blocked.includes(p.author)) return;
 
     const isMine = (profile?.name || "Moi") === p.author;
+    const person = getTalentByName(p.author);
 
     html += `
       <div class="post">
         <div class="post-head">
           <div class="post-user">
             <div class="avatar">
-              ${(profile && profile.photo && p.author === profile.name)
-                ? `<img src="${profile.photo}">`
+              ${(person?.photo)
+                ? `<img src="${person.photo}">`
                 : (p.author || "M").charAt(0)}
+              ${person?.online ? `<span class="online-dot"></span>` : ""}
             </div>
-            <div class="post-user-info">
-              <div><b>${p.author || "Moi"}</b></div>
+            <div>
+              <div><b>${p.author || "Moi"}</b> ${getBadge(p.accountType || "user")}</div>
               <div class="small">${p.role || ""}${p.location ? " • " + p.location : ""}</div>
             </div>
           </div>
@@ -897,7 +1159,7 @@ function renderPosts(list, targetId, withMenu=true){
           <div><b>${p.title}</b></div>
           ${p.replyTo ? `<div class="small">Réponse créative à un post</div>` : ""}
           ${p.caption ? `<div style="margin-top:6px">${p.caption}</div>` : ""}
-
+          ${p.tagged?.length ? `<div class="pill">Avec ${p.tagged.map(x=>`@${x}`).join(", ")}</div>` : ""}
           ${(p.collabs && p.collabs.length) ? `<div class="pill green">${p.collabs.length} proposition(s) de collab</div>` : ""}
 
           <div class="stats">
@@ -911,6 +1173,7 @@ function renderPosts(list, targetId, withMenu=true){
             <span onclick="like(${p.id})">❤️</span>
             <span onclick="commentPost(${p.id})">💬</span>
             <span onclick="sharePost(${p.id})">🔁</span>
+            <span onclick="republishPost(${p.id})">♻️</span>
             <span onclick="createCreativeReply(${p.id})">🎨</span>
             <span onclick="proposeCollab(${p.id})">🤝</span>
           </div>
@@ -931,9 +1194,7 @@ function renderPosts(list, targetId, withMenu=true){
   document.getElementById(targetId).innerHTML = html || `<div class="card empty">Rien ici pour le moment.</div>`;
 }
 
-function renderFeed(){
-  renderPosts(posts, "feedList", true);
-}
+function renderFeed(){ renderPosts(posts, "feedList", true); }
 
 function toggleMenu(id, event){
   event.stopPropagation();
@@ -949,7 +1210,7 @@ document.addEventListener("click", ()=> {
 });
 
 function like(id){
-  let p = posts.find(x=>x.id===id);
+  const p = posts.find(x=>x.id===id);
   if(!p) return;
   p.likes++;
   likes.push(id);
@@ -959,9 +1220,9 @@ function like(id){
 }
 
 function commentPost(id){
-  let text = prompt("Écris ton commentaire");
+  const text = prompt("Écris ton commentaire");
   if(!text || !text.trim()) return;
-  let p = posts.find(x=>x.id===id);
+  const p = posts.find(x=>x.id===id);
   if(!p) return;
   p.comments.push(text.trim());
   addNotif("Nouveau commentaire");
@@ -970,7 +1231,7 @@ function commentPost(id){
 }
 
 function deleteComment(postId, index){
-  let p = posts.find(x=>x.id===postId);
+  const p = posts.find(x=>x.id===postId);
   if(!p) return;
   p.comments.splice(index,1);
   save();
@@ -978,7 +1239,7 @@ function deleteComment(postId, index){
 }
 
 function sharePost(id){
-  let p = posts.find(x=>x.id===id);
+  const p = posts.find(x=>x.id===id);
   if(!p) return;
   p.shares = (p.shares || 0) + 1;
   addNotif("Post partagé");
@@ -987,15 +1248,12 @@ function sharePost(id){
 }
 
 function editPost(id){
-  let p = posts.find(x=>x.id===id);
+  const p = posts.find(x=>x.id===id);
   if(!p) return;
-
-  let newTitle = prompt("Modifier le titre", p.title);
+  const newTitle = prompt("Modifier le titre", p.title);
   if(newTitle !== null && newTitle.trim()) p.title = newTitle.trim();
-
-  let newCaption = prompt("Modifier la description", p.caption || "");
+  const newCaption = prompt("Modifier la description", p.caption || "");
   if(newCaption !== null) p.caption = newCaption.trim();
-
   save();
   renderAll();
 }
@@ -1032,12 +1290,10 @@ function blockUser(name){
   renderAll();
 }
 
-function reportPost(){
-  alert("Signalement envoyé");
-}
+function reportPost(){ alert("Signalement envoyé"); }
 
 function renderNotifications(){
-  let html = notif.map(n=>`
+  const html = notif.map(n=>`
     <div class="list-item">
       <div><b>${typeof n === "string" ? n : n.text}</b></div>
       <div class="small">${typeof n === "string" ? "" : n.date}</div>
@@ -1051,13 +1307,13 @@ function renderNotifBadge(){
   if(notif.length){
     top.classList.remove("hidden");
     top.textContent = notif.length > 9 ? "9+" : notif.length;
-  }else{
+  } else {
     top.classList.add("hidden");
   }
 }
 
 function toggleRole(){
-  let r = document.getElementById("role").value;
+  const r = document.getElementById("role").value;
   document.getElementById("customRole").classList.toggle("hidden", r !== "Autre");
 }
 
@@ -1074,12 +1330,24 @@ function saveProfile(){
     website: document.getElementById("website").value.trim(),
     collab: document.getElementById("collab").value.trim(),
     bio: document.getElementById("bio").value.trim(),
+    accountType: document.getElementById("accountType").value,
+    online: profile?.online ?? true,
     role: selectedRole === "Autre" && customRole ? customRole : selectedRole
   };
 
   save();
   addNotif("Profil enregistré");
   alert("Profil enregistré");
+  renderAll();
+}
+
+function toggleOnlineStatus(){
+  if(!profile){
+    alert("Enregistre ton profil d'abord.");
+    return;
+  }
+  profile.online = !profile.online;
+  save();
   renderAll();
 }
 
@@ -1096,7 +1364,7 @@ function renderProfile(){
   }
 
   heroName.textContent = profile.name || "Mon profil";
-  heroRole.textContent = `${profile.role || ""}${profile.city ? " • " + profile.city : ""}`;
+  heroRole.innerHTML = `${profile.role || ""}${profile.city ? " • " + profile.city : ""} ${getBadge(profile.accountType || "user")}`;
   heroAvatar.innerHTML = profile.photo ? `<img src="${profile.photo}">` : (profile.name || "M").charAt(0);
 
   document.getElementById("name").value = profile.name || "";
@@ -1107,17 +1375,18 @@ function renderProfile(){
   document.getElementById("website").value = profile.website || "";
   document.getElementById("collab").value = profile.collab || "";
   document.getElementById("bio").value = profile.bio || "";
+  document.getElementById("accountType").value = profile.accountType || "user";
 
   const knownRoles = [
     "Artiste","Beatmaker","Caméraman","Danseur","Graphiste","DJ","Décorateur",
-    "Cascadeur","Monteur","Photographe","Ingé son","Studio","Styliste","Manager","Producteur"
+    "Cascadeur","Monteur","Photographe","Ingé son","Studio","Styliste","Manager","Producteur","Profil simple"
   ];
 
   if(knownRoles.includes(profile.role)){
     document.getElementById("role").value = profile.role;
     document.getElementById("customRole").classList.add("hidden");
     document.getElementById("customRole").value = "";
-  }else{
+  } else {
     document.getElementById("role").value = "Autre";
     document.getElementById("customRole").classList.remove("hidden");
     document.getElementById("customRole").value = profile.role || "";
@@ -1173,7 +1442,9 @@ function renderDiscover(){
       specialty: profile.specialty || "",
       website: profile.website || "",
       x: 55,
-      y: 52
+      y: 52,
+      online: !!profile.online,
+      photo: profile.photo || ""
     });
   }
 
@@ -1196,10 +1467,13 @@ function renderDiscover(){
     ? filtered.map(t=>`
       <div class="list-item">
         <div class="row">
-          <div class="avatar">${t.name.charAt(0)}</div>
+          <div class="avatar">
+            ${t.photo ? `<img src="${t.photo}">` : t.name.charAt(0)}
+            ${t.online ? `<span class="online-dot"></span>` : ""}
+          </div>
           <div>
             <div><b>${t.name}</b></div>
-            <div class="small">${t.role}${t.city ? " • " + t.city : ""}</div>
+            <div class="small">${t.role}${t.city ? " • " + t.city : ""} ${t.online ? "• En ligne" : "• Hors ligne"}</div>
           </div>
         </div>
         ${t.specialty ? `<div class="pill">${t.specialty}</div>` : ""}
@@ -1207,6 +1481,33 @@ function renderDiscover(){
       </div>
     `).join("")
     : `<div class="card empty">Aucun résultat.</div>`;
+}
+
+function renderJobs(){
+  const q = (document.getElementById("jobSearch").value || "").toLowerCase();
+  const filtered = jobs.filter(j => (`${j.title} ${j.city} ${j.desc} ${j.author}`.toLowerCase()).includes(q));
+
+  document.getElementById("jobsList").innerHTML = filtered.length
+    ? filtered.map(j=>`
+      <div class="list-item">
+        <div><b>${j.title}</b></div>
+        <div class="small">${j.author}${j.city ? " • " + j.city : ""}</div>
+        ${j.desc ? `<div style="margin-top:8px">${j.desc}</div>` : ""}
+      </div>
+    `).join("")
+    : `<div class="card empty">Aucune recherche pour le moment.</div>`;
+}
+
+function renderEvents(){
+  document.getElementById("eventsList").innerHTML = events.length
+    ? events.map(e=>`
+      <div class="list-item">
+        <div><b>${e.title}</b></div>
+        <div class="small">${e.author}${e.city ? " • " + e.city : ""}${e.date ? " • " + e.date : ""}</div>
+        ${e.desc ? `<div style="margin-top:8px">${e.desc}</div>` : ""}
+      </div>
+    `).join("")
+    : `<div class="card empty">Aucun événement pour le moment.</div>`;
 }
 
 function renderMap(){
@@ -1223,7 +1524,9 @@ function renderMap(){
       specialty: profile.specialty || "",
       website: profile.website || "",
       x: 55,
-      y: 52
+      y: 52,
+      online: !!profile.online,
+      photo: profile.photo || ""
     });
   }
 
@@ -1250,10 +1553,13 @@ function renderMap(){
       box.innerHTML = `
         <div class="card">
           <div class="row">
-            <div class="avatar">${t.name.charAt(0)}</div>
+            <div class="avatar">
+              ${t.photo ? `<img src="${t.photo}">` : t.name.charAt(0)}
+              ${t.online ? `<span class="online-dot"></span>` : ""}
+            </div>
             <div>
               <div><b>${t.name}</b></div>
-              <div class="small">${t.role}${t.city ? " • " + t.city : ""}</div>
+              <div class="small">${t.role}${t.city ? " • " + t.city : ""} ${t.online ? "• En ligne" : "• Hors ligne"}</div>
             </div>
           </div>
           ${t.specialty ? `<div class="pill">${t.specialty}</div>` : ""}
@@ -1268,25 +1574,134 @@ function renderMap(){
 
 function renderStories(){
   const box = document.getElementById("stories");
-  const items = [...defaultTalents];
-  if(profile && profile.name){
-    items.unshift({name: profile.name, photo: profile.photo || ""});
+  const merged = [...stories];
+  if(profile && profile.name && !merged.find(s => s.author === profile.name)){
+    merged.push({
+      id: -1,
+      author: profile.name,
+      text:"Ta story",
+      type:"text",
+      photo: profile.photo || ""
+    });
   }
 
-  box.innerHTML = items.slice(0,6).map(t=>`
-    <div class="story">
+  box.innerHTML = merged.slice(0,8).map(s=>`
+    <div class="story" onclick="openStory(${s.id})">
       <div class="story-avatar">
-        ${t.photo ? `<img src="${t.photo}">` : (t.name || "M").charAt(0)}
+        ${s.photo ? `<img src="${s.photo}">` : s.media && s.type !== 'text' ? (s.type === 'video' ? '🎬' : '📷') : (s.author || "M").charAt(0)}
       </div>
-      <div class="small">${t.name}</div>
+      <div class="small">${s.author || "Story"}</div>
     </div>
-  `).join("");
+  `).join("") || `<div class="empty">Aucune story.</div>`;
 }
 
-function populateMessageTargets(){
-  const select = document.getElementById("messageTarget");
-  const names = [...new Set([...defaultTalents.map(t=>t.name), ...(profile && profile.name ? [profile.name] : [])])];
-  select.innerHTML = names.map(n=>`<option value="${n}">${n}</option>`).join("");
+function conversationKey(a,b){
+  return [a,b].sort().join("___");
+}
+
+function getAllConversationNames(){
+  const people = new Set(defaultTalents.map(t=>t.name));
+  if(profile?.name) people.add(profile.name);
+  messages.forEach(m=>{
+    if(m.type !== "group"){
+      people.add(m.from);
+      people.add(m.to);
+    }
+  });
+  return [...people].filter(Boolean);
+}
+
+function renderConversations(){
+  const box = document.getElementById("conversationList");
+  const me = profile?.name || "Moi";
+  let html = "";
+
+  const people = getAllConversationNames().filter(n=>n !== me);
+  people.forEach(name=>{
+    const talent = getTalentByName(name);
+    const active = currentConversation?.type === "direct" && currentConversation.name === name;
+    html += `
+      <div class="conversation-item ${active ? 'active' : ''}" onclick="openConversation('direct','${name}')">
+        <div class="row">
+          <div class="avatar">
+            ${talent?.photo ? `<img src="${talent.photo}">` : name.charAt(0)}
+            ${talent?.online ? `<span class="online-dot"></span>` : ""}
+          </div>
+          <div>
+            <div><b>${name}</b></div>
+            <div class="small">${talent?.online ? 'En ligne' : 'Hors ligne'}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  groups.forEach(g=>{
+    const active = currentConversation?.type === "group" && currentConversation.name === g.name;
+    html += `
+      <div class="conversation-item ${active ? 'active' : ''}" onclick="openConversation('group','${g.name}')">
+        <div><b>👥 ${g.name}</b></div>
+        <div class="small">${g.members?.length || 0} membre(s)</div>
+      </div>
+    `;
+  });
+
+  box.innerHTML = html || `<div class="empty">Aucune conversation.</div>`;
+
+  if(!currentConversation && people[0]){
+    openConversation('direct', people[0]);
+  } else if(!currentConversation && groups[0]){
+    openConversation('group', groups[0].name);
+  }
+}
+
+function openConversation(type, name){
+  currentConversation = {type, name};
+  const header = document.getElementById("chatHeader");
+  if(type === "direct"){
+    const talent = getTalentByName(name);
+    header.innerHTML = `
+      <div class="row">
+        <div class="avatar">
+          ${talent?.photo ? `<img src="${talent.photo}">` : name.charAt(0)}
+          ${talent?.online ? `<span class="online-dot"></span>` : ""}
+        </div>
+        <div>
+          <div><b>${name}</b></div>
+          <div class="small">${talent?.online ? 'En ligne' : 'Hors ligne'}</div>
+        </div>
+      </div>
+    `;
+    document.getElementById("messageTarget").innerHTML = `<option value="${name}">${name}</option>`;
+  } else {
+    header.innerHTML = `
+      <div class="row">
+        <div class="avatar">👥</div>
+        <div>
+          <div><b>${name}</b></div>
+          <div class="small">Groupe</div>
+        </div>
+      </div>
+    `;
+    document.getElementById("messageTarget").innerHTML = `<option value="${name}">${name}</option>`;
+  }
+  renderConversations();
+  renderMessages();
+}
+
+function openNewGroup(){
+  const name = prompt("Nom du groupe");
+  if(!name || !name.trim()) return;
+  if(groups.find(g=>g.name.toLowerCase() === name.trim().toLowerCase())){
+    alert("Ce groupe existe déjà.");
+    return;
+  }
+  groups.unshift({
+    name: name.trim(),
+    members: [profile?.name || "Moi"]
+  });
+  save();
+  openConversation("group", name.trim());
 }
 
 function sendMessage(voiceUrl=''){
@@ -1294,18 +1709,21 @@ function sendMessage(voiceUrl=''){
   const text = document.getElementById("messageText").value.trim();
   const file = document.getElementById("messageFile").files[0];
   const from = profile?.name || "Moi";
+  const type = currentConversation?.type || "direct";
 
   if(!text && !file && !voiceUrl) return;
 
   function finish(fileUrl="", fileName=""){
-    messages.unshift({
+    messages.push({
       id: Date.now(),
+      type,
       from,
       to: target,
       text,
       fileUrl,
       fileName,
-      voiceUrl
+      voiceUrl,
+      createdAt: new Date().toLocaleTimeString()
     });
     document.getElementById("messageText").value = "";
     document.getElementById("messageFile").value = "";
@@ -1319,21 +1737,42 @@ function sendMessage(voiceUrl=''){
     const reader = new FileReader();
     reader.onload = e => finish(e.target.result, file.name);
     reader.readAsDataURL(file);
-  }else{
+  } else {
     finish();
   }
 }
 
 function renderMessages(){
   const box = document.getElementById("messagesList");
-  box.innerHTML = messages.length ? messages.map(m=>`
-    <div class="list-item">
-      <div><b>${m.from}</b> → <b>${m.to}</b></div>
-      ${m.text ? `<div style="margin-top:6px">${m.text}</div>` : ""}
-      ${m.fileUrl ? `<a class="file-link" href="${m.fileUrl}" download="${m.fileName || 'fichier'}">${m.fileName || 'Fichier'}</a>` : ""}
-      ${m.voiceUrl ? `<div style="margin-top:8px"><audio controls style="width:100%"><source src="${m.voiceUrl}"></audio></div>` : ""}
+  const me = profile?.name || "Moi";
+  if(!currentConversation){
+    box.innerHTML = `<div class="empty">Sélectionne une conversation.</div>`;
+    return;
+  }
+
+  let filtered = [];
+  if(currentConversation.type === "direct"){
+    filtered = messages.filter(m =>
+      m.type !== "group" &&
+      ((m.from === me && m.to === currentConversation.name) || (m.from === currentConversation.name && m.to === me))
+    );
+  } else {
+    filtered = messages.filter(m => m.type === "group" && m.to === currentConversation.name);
+  }
+
+  box.innerHTML = filtered.length ? filtered.map(m=>`
+    <div class="bubble-row ${m.from === me ? 'me' : ''}">
+      <div class="bubble">
+        <div><b>${m.from}</b></div>
+        ${m.text ? `<div style="margin-top:6px">${m.text}</div>` : ""}
+        ${m.fileUrl ? `<a class="bubble-file" href="${m.fileUrl}" download="${m.fileName || 'fichier'}">${m.fileName || 'Fichier'}</a>` : ""}
+        ${m.voiceUrl ? `<div style="margin-top:8px"><audio controls style="width:100%"><source src="${m.voiceUrl}"></audio></div>` : ""}
+        <div class="bubble-meta">${m.createdAt || ""}</div>
+      </div>
     </div>
-  `).join("") : `<div class="card empty">Aucun message.</div>`;
+  `).join("") : `<div class="empty">Aucun message.</div>`;
+
+  box.scrollTop = box.scrollHeight;
 }
 
 async function toggleRecord(){
@@ -1382,11 +1821,13 @@ function renderAll(){
   renderProfile();
   renderProfileLists();
   renderDiscover();
+  renderJobs();
+  renderEvents();
   renderMap();
-  renderMessages();
   renderStories();
   renderNotifBadge();
-  populateMessageTargets();
+  renderConversations();
+  renderMessages();
   nav(currentSection);
 }
 
@@ -1396,4 +1837,3 @@ renderAll();
 
 </body>
 </html>
-  
