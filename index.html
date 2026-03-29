@@ -1944,9 +1944,9 @@ const auth = getAuth(app);
 window.registerUser = async function(email, password) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    alert("Compte créé 🔥");
-    - document.getElementById("authPage").style.display = "none";
-+ document.getElementById("authScreen").style.display = "none";
+    alert("Compte créé ✅");
+    document.getElementById("authScreen").style.display = "none"; // <- ici
+    document.getElementById("app").style.display = "block"; // <- ici
     console.log(userCredential.user);
   } catch (error) {
     alert(error.message);
@@ -1958,8 +1958,8 @@ window.loginUser = async function(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     alert("Connecté ✅");
-    - document.getElementById("authPage").style.display = "none";
-+ document.getElementById("authScreen").style.display = "none";
+    document.getElementById("authScreen").style.display = "none"; // <- ici
+    document.getElementById("app").style.display = "block"; // <- ici
     console.log(userCredential.user);
   } catch (error) {
     alert(error.message);
