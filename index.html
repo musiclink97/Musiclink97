@@ -519,7 +519,7 @@
   </div>
 </header>
 
-<div class="container">
+<div class="container" id="app" style="display:none;">
 
   <section id="feed">
     <div class="stories" id="stories"></div>
@@ -1889,6 +1889,8 @@ window.registerUser = async function(email, password) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     alert("Compte créé 🔥");
+    document.getElementById("authPage").style.display = "none";
+document.getElementById("app").style.display = "block";
     console.log(userCredential.user);
   } catch (error) {
     alert(error.message);
@@ -1900,6 +1902,8 @@ window.loginUser = async function(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     alert("Connecté ✅");
+    document.getElementById("authPage").style.display = "none";
+document.getElementById("app").style.display = "block";
     console.log(userCredential.user);
   } catch (error) {
     alert(error.message);
