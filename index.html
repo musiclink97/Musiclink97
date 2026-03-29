@@ -1834,6 +1834,34 @@ function renderAll(){
 showProfileTab('overview');
 renderAll();
 </script>
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Upload</button>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "A_REMPLACER",
+    authDomain: "A_REMPLACER",
+    projectId: "A_REMPLACER",
+    storageBucket: "A_REMPLACER",
+    messagingSenderId: "A_REMPLACER",
+    appId: "A_REMPLACER"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  window.uploadFile = async function () {
+    const file = document.getElementById("fileInput").files[0];
+    const storageRef = ref(storage, "uploads/" + file.name);
+
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+
+    alert("Upload OK 🔥\n" + url);
+  };
+</script>
 </body>
 </html>
