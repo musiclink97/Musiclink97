@@ -6,79 +6,68 @@
   <title>MusicMap Live</title>
   <style>
     * { box-sizing: border-box; }
- :root {
-  --primary: #3b82f6;
+:root {
+  --primary: #2563eb;
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --text: #111827;
 }
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.card {
+  background: var(--card);
+  margin: 12px;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.post {
+  margin-top: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+}
 
 button {
   background: var(--primary);
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: bold;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-color: #000;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: white;
-color: black;
-      border-bottom: 1px solid #252938;
-      padding: 14px;
-    }
-    .brand {
-      font-size: 22px;
-      font-weight: 700;
-    }
-    .sub {
-      font-size: 12px;
-      color: #aeb6c9;
-      margin-top: 2px;
-    }
-    .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin-top: 12px;
-      padding-bottom: 2px;
-    }
-    .tab-btn {
-      border: none;
-      background: #222738;
-      color: white;
-      padding: 10px 14px;
-      border-radius: 999px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .tab-btn.active {
-      background: #00d084;
-      color: black;
-      font-weight: 700;
-    }
+.nav button {
+  background: transparent;
+  color: #555;
+}
 
-    .container {
-      padding: 14px;
-      padding-bottom: 92px;
-    }
-
-    .hidden { display: none; }
-
-    .card {
-      background: #171b25;
-      border: 1px solid #252938;
-      border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 14px;
-    }
+.nav button.active {
+  background: var(--primary);
+  color: white;
+}
 
     .row {
       display: flex;
