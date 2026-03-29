@@ -3,375 +3,495 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MusicMap Live</title>
+  <title>MusicMap</title>
   <style>
     * { box-sizing: border-box; }
-:root {
-  --primary: #2563eb;
-  --bg: #f3f4f6;
-  --card: #ffffff;
-  --text: #111827;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 15px;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.card {
-  background: var(--card);
-  margin: 12px;
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.post {
-  margin-top: 10px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-top: 8px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  background: white;
-}
-
-button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-.nav button {
-  background: transparent;
-  color: #555;
-}
-
-.nav button.active {
-  background: var(--primary);
-  color: white;
-}
-
-    .row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    :root{
+      --bg:#0f1115;
+      --card:#171a21;
+      --soft:#222734;
+      --text:#f3f4f6;
+      --muted:#9ca3af;
+      --line:#2b3140;
+      --blue:#2563eb;
+      --blue2:#60a5fa;
+      --red:#ef4444;
+      --green:#10b981;
+      --gold:#f59e0b;
     }
 
-    .between {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
     }
 
-    .avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: #2a3145;
-      object-fit: cover;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      overflow: hidden;
+    a{ color:#93c5fd; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .hidden{ display:none !important; }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(15,17,21,.96);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--line);
+      padding:14px 16px;
     }
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .brand{
+      font-size:22px;
+      font-weight:800;
+      letter-spacing:.2px;
     }
 
-    .muted {
-      color: #aeb6c9;
-      font-size: 14px;
+    .sub{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:3px;
     }
 
-    .title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 6px;
+    .container{
+      max-width:760px;
+      margin:0 auto;
+      padding:14px 12px 92px;
     }
 
-    .pill {
-      display: inline-block;
-      padding: 6px 10px;
-      background: #23293a;
-      border-radius: 999px;
-      margin: 6px 6px 0 0;
-      font-size: 12px;
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:14px;
+      box-shadow:0 8px 22px rgba(0,0,0,.14);
     }
 
-    .pill.live {
-      background: #ff3b5c;
-      color: white;
-      font-weight: bold;
+    .title{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:6px;
     }
 
-    .pill.premium {
-      background: #4b3d13;
-      color: #ffd76a;
-      border: 1px solid #7b641e;
+    .muted{
+      color:var(--muted);
+      font-size:14px;
     }
 
-    .btn {
-      border: none;
-      border-radius: 10px;
-      padding: 11px 13px;
-      cursor: pointer;
-      font-weight: 700;
-      margin-top: 10px;
+    .small{ font-size:12px; }
+
+    .row{
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
-    .btn-main {
-      background: #00d084;
-      color: black;
+    .between{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
 
-    .btn-secondary {
-      background: #252b3d;
-      color: white;
+    .avatar{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--blue2),var(--blue));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      flex-shrink:0;
+      overflow:hidden;
     }
 
-    .btn-danger {
-      background: #ff3b5c;
-      color: white;
+    .avatar img,
+    .story-avatar img,
+    .profile-avatar-lg img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
+    .profile-avatar-lg{
+      width:84px;
+      height:84px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--blue2),var(--blue));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      font-size:30px;
+      font-weight:800;
+      flex-shrink:0;
     }
 
-    .stats {
-      display: flex;
-      gap: 14px;
-      margin-top: 10px;
-      color: #d3d8e7;
-      font-size: 13px;
-      flex-wrap: wrap;
+    input, select, textarea{
+      width:100%;
+      padding:12px;
+      margin-top:8px;
+      margin-bottom:10px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#0f131b;
+      color:var(--text);
+      font-size:14px;
+      outline:none;
     }
 
-    input, select, textarea {
-      width: 100%;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #31384b;
-      background: #10131a;
-      color: white;
-      font-size: 14px;
+    textarea{
+      min-height:90px;
+      resize:vertical;
     }
 
-    textarea {
-      min-height: 90px;
-      resize: vertical;
+    button{
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.15s ease;
     }
 
-    .stories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      margin-bottom: 14px;
+    button:active{ transform:scale(.98); }
+
+    .btn-main{ background:var(--blue); color:white; }
+    .btn-soft{ background:var(--soft); color:white; }
+    .btn-green{ background:var(--green); color:#03130d; }
+    .btn-red{ background:var(--red); color:white; }
+    .btn-gold{ background:var(--gold); color:#261600; }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
     }
 
-    .story {
-      min-width: 84px;
-      text-align: center;
-      background: #171b25;
-      border: 1px solid #252938;
-      border-radius: 14px;
-      padding: 10px;
+    .feed-switch{
+      display:flex;
+      gap:8px;
+      margin-bottom:14px;
     }
 
-    .story-avatar {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      margin: 0 auto 8px;
-      background: linear-gradient(135deg, #00d084, #0cc2ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: black;
-      font-weight: bold;
-      overflow: hidden;
+    .feed-switch button.active{
+      background:var(--blue);
+      color:#fff;
     }
 
-    .story-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .stories{
+      display:flex;
+      gap:10px;
+      overflow-x:auto;
+      padding-bottom:4px;
+      margin-bottom:14px;
+      scrollbar-width:none;
     }
 
-    .mapbox {
-      position: relative;
-      height: 320px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #293044;
+    .stories::-webkit-scrollbar{ display:none; }
+
+    .story{
+      min-width:86px;
+      text-align:center;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px;
+    }
+
+    .story-avatar{
+      width:56px;
+      height:56px;
+      border-radius:50%;
+      margin:0 auto 8px;
+      background:linear-gradient(135deg,#f472b6,#2563eb);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight:800;
+      overflow:hidden;
+    }
+
+    .post-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      margin-bottom:16px;
+      box-shadow:0 8px 22px rgba(0,0,0,.14);
+    }
+
+    .post-header{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:12px;
+    }
+
+    .post-img{
+      width:100%;
+      max-height:560px;
+      object-fit:cover;
+      display:block;
+      background:#0b0d12;
+    }
+
+    .post-media-box{
+      background:#0f131b;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    .post-content{
+      padding:12px;
+    }
+
+    .post-actions{
+      display:flex;
+      gap:18px;
+      font-size:22px;
+      margin-bottom:10px;
+      user-select:none;
+      flex-wrap:wrap;
+    }
+
+    .post-actions span{
+      cursor:pointer;
+    }
+
+    .liked{ color:#ff4d6d; }
+
+    .stats{
+      display:flex;
+      gap:12px;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:8px;
+      flex-wrap:wrap;
+    }
+
+    .comment{
+      background:#111827;
+      padding:8px 10px;
+      border-radius:10px;
+      margin-top:8px;
+      font-size:14px;
+      line-height:1.35;
+    }
+
+    .comment-box{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .comment-box input{
+      flex:1;
+      margin:0;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size:12px;
+      border-radius:999px;
+      padding:6px 10px;
+      margin:6px 6px 0 0;
+      background:#172554;
+      color:#bfdbfe;
+    }
+
+    .pill.green{
+      background:#052e24;
+      color:#a7f3d0;
+    }
+
+    .pill.gold{
+      background:#3b2f12;
+      color:#fde68a;
+    }
+
+    .pill.red{
+      background:#450a0a;
+      color:#fecaca;
+    }
+
+    .list-item{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:12px;
+    }
+
+    .profile-hero{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .gallery-item{
+      background:#0f131b;
+      border:1px solid var(--line);
+      border-radius:14px;
+      min-height:92px;
+      padding:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .mapbox{
+      position:relative;
+      height:340px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--line);
       background:
-        radial-gradient(circle at 20% 30%, rgba(0,208,132,.15), transparent 18%),
-        radial-gradient(circle at 70% 60%, rgba(12,194,255,.12), transparent 18%),
-        linear-gradient(180deg, #1a2030, #0f1219);
+        radial-gradient(circle at 20% 30%, rgba(37,99,235,.12), transparent 18%),
+        radial-gradient(circle at 70% 60%, rgba(16,185,129,.12), transparent 18%),
+        linear-gradient(180deg,#151923,#0f1115);
     }
 
-    .map-pin {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      padding: 7px 9px;
-      border-radius: 999px;
-      background: #00d084;
-      color: black;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: 0 4px 14px rgba(0,0,0,.28);
-      cursor: pointer;
+    .map-pin{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      padding:7px 9px;
+      border-radius:999px;
+      background:var(--blue);
+      color:white;
+      font-size:12px;
+      font-weight:800;
+      box-shadow:0 4px 14px rgba(0,0,0,.28);
+      cursor:pointer;
+      white-space:nowrap;
     }
 
-    .map-pin.premium {
-      background: gold;
+    .map-pin.gold{
+      background:var(--gold);
+      color:#201100;
     }
 
-    .map-pin.live {
-      background: #ff3b5c;
-      color: white;
+    .map-pin.red{
+      background:var(--red);
+      color:white;
     }
 
-    .media-box {
-      background: #11141b;
-      border: 1px dashed #31384b;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
+    .nav{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      background:#0f1115;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-around;
+      padding:10px 6px;
+      z-index:60;
     }
 
-    .feed-badge {
-      font-size: 12px;
-      color: #aeb6c9;
-      margin-top: 4px;
+    .nav button{
+      background:transparent;
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:10px;
+      font-size:13px;
+      font-weight:700;
     }
 
-    .nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #151821;
-      border-top: 1px solid #252938;
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 6px;
-      z-index: 30;
+    .nav button.active{
+      background:var(--blue);
+      color:white;
     }
 
-    .nav button {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 13px;
-      cursor: pointer;
+    .message-item{
+      background:#111827;
+      border:1px solid #1e293b;
+      border-radius:14px;
+      padding:10px 12px;
+      margin-top:10px;
     }
 
-    .small {
-      font-size: 12px;
+    .file-chip{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      background:#172554;
+      color:#bfdbfe;
+      font-size:12px;
+      margin-top:6px;
     }
 
-    .comment-box {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #252938;
+    .live-box{
+      background:#111827;
+      border:1px solid #1f2937;
+      border-radius:16px;
+      padding:14px;
+      margin-top:12px;
     }
 
-    .message {
-      background: #222738;
-      padding: 10px 12px;
-      border-radius: 12px;
-      margin-top: 8px;
-    }
-
-    .empty {
-      text-align: center;
-      color: #9da6be;
-      padding: 22px 8px;
+    .empty{
+      color:var(--muted);
+      font-size:14px;
     }
   </style>
 </head>
 <body>
   <header>
     <div class="brand">MusicMap</div>
-    <div class="sub">Réseau musique, création, map et lives</div>
-    <div class="tabs">
-      <button class="tab-btn active" onclick="showTab('feed', this)">Feed</button>
-      <button class="tab-btn" onclick="showTab('map', this)">Map</button>
-      <button class="tab-btn" onclick="showTab('discover', this)">Découvrir</button>
-      <button class="tab-btn" onclick="showTab('messages', this)">Messages</button>
-      <button class="tab-btn" onclick="showTab('profile', this)">Profil</button>
-    </div>
+    <div class="sub">Musique, profils, connexion, visibilité</div>
   </header>
 
   <div class="container">
+
     <section id="feed-tab">
-      <div class="stories" id="storiesList"></div>
+      <div id="storiesList" class="stories"></div>
+
+      <div class="feed-switch">
+        <button id="btn-foryou" class="btn-soft active" onclick="setFeedMode('foryou')">Pour toi</button>
+        <button id="btn-following" class="btn-soft" onclick="setFeedMode('following')">Abonnements</button>
+      </div>
 
       <div class="card">
         <div class="title">Publier</div>
-        <div class="muted">Les créateurs peuvent publier photo, vidéo, audio et lancer un live.</div>
+        <div class="muted">Photo, vidéo, audio ou live annoncé.</div>
+
         <select id="postType">
           <option value="photo">Photo</option>
           <option value="video">Vidéo</option>
           <option value="audio">Audio</option>
           <option value="live">Live</option>
         </select>
-        <input id="postTitle" placeholder="Titre du post ou du live">
-        <textarea id="postCaption" placeholder="Description / légende"></textarea>
-        <input id="postMedia" placeholder="Lien image / vidéo / audio (optionnel)">
-        <button class="btn btn-main" onclick="createPost()">Publier</button>
+
+        <input id="postTitle" placeholder="Titre du post">
+        <textarea id="postCaption" placeholder="Description"></textarea>
+        <input id="postMedia" placeholder="Lien image / vidéo / audio">
+        <input id="postLocation" placeholder="Lieu du post (ex: Saint-Denis)">
+        <input type="datetime-local" id="postSchedule">
+
+        <button class="btn-main" onclick="createPost()">Publier</button>
       </div>
 
       <div id="feedList"></div>
     </section>
 
-    <section id="map-tab" class="hidden">
-      <div class="card">
-        <div class="between">
-          <div>
-            <div class="title">Carte artistique</div>
-            <div class="muted">Studios, artistes, caméramans, danseurs et profils recommandés.</div>
-          </div>
-        </div>
-        <div class="mapbox" id="mapBox"></div>
-      </div>
-      <div id="mapProfileView"></div>
-    </section>
-
     <section id="discover-tab" class="hidden">
       <div class="card">
-        <div class="title">Recherche</div>
-        <input id="searchInput" placeholder="Chercher : studio, rappeur, danseur, ville..." oninput="filterProfiles()">
+        <div class="title">Découvrir</div>
+        <input id="searchInput" placeholder="Chercher : artiste, studio, ville..." oninput="filterProfiles()">
         <select id="roleFilter" onchange="filterProfiles()">
           <option value="">Tous les rôles</option>
           <option value="Artiste">Artiste</option>
@@ -379,44 +499,70 @@ button {
           <option value="Beatmaker">Beatmaker</option>
           <option value="Caméraman">Caméraman</option>
           <option value="Danseur">Danseur</option>
-          <option value="Photographe">Photographe</option>
+          <option value="Pro">Pro</option>
           <option value="Fan">Fan</option>
         </select>
       </div>
       <div id="discoverList"></div>
     </section>
 
+    <section id="map-tab" class="hidden">
+      <div class="card">
+        <div class="title">Map</div>
+        <div class="muted">Clique sur un profil pour ouvrir sa fiche.</div>
+        <div id="mapBox" class="mapbox"></div>
+      </div>
+      <div id="mapProfileView"></div>
+    </section>
+
+    <section id="activity-tab" class="hidden">
+      <div class="card">
+        <div class="title">Activité</div>
+        <div id="activityList"></div>
+      </div>
+    </section>
+
     <section id="messages-tab" class="hidden">
       <div class="card">
-        <div class="title">Messagerie</div>
-        <div class="muted">Prototype de discussion privée.</div>
+        <div class="title">Conversations</div>
         <select id="messageTarget">
-          <option value="Studio 974">Studio 974</option>
           <option value="Luna K">Luna K</option>
-          <option value="Kévin Beats">Kévin Beats</option>
+          <option value="Studio 974">Studio 974</option>
           <option value="Lina Cam">Lina Cam</option>
-          <option value="Mia Move">Mia Move</option>
         </select>
-        <textarea id="messageText" placeholder="Écris ton message"></textarea>
-        <button class="btn btn-main" onclick="sendMessage()">Envoyer</button>
+        <textarea id="messageText" placeholder="Écris un message"></textarea>
+        <input type="file" id="messageFile">
+        <div class="actions">
+          <button class="btn-main" onclick="sendMessage()">Envoyer</button>
+          <button class="btn-soft" id="recordBtn" onclick="toggleRecord()">🎤 Vocal</button>
+        </div>
+        <div id="recordStatus" class="small muted"></div>
       </div>
       <div class="card">
-        <div class="title">Conversations</div>
+        <div class="title">Messages</div>
         <div id="messagesList"></div>
       </div>
     </section>
 
     <section id="profile-tab" class="hidden">
       <div class="card">
-        <div class="title">Mon compte</div>
-        <div class="muted">Rôle actuel : <span id="currentRole">Fan</span></div>
-        <button class="btn btn-main" onclick="becomeCreator()">Devenir créateur</button>
+        <div class="profile-hero">
+          <div class="profile-avatar-lg" id="heroAvatar">👤</div>
+          <div>
+            <div class="title" id="heroName">Mon profil</div>
+            <div class="muted" id="heroMeta">Fan • Réunion</div>
+            <div>
+              <span class="pill green" id="heroStatus">Disponible</span>
+            </div>
+            <div class="small muted" id="heroFollowers">0 abonnés • 0 abonnements</div>
+          </div>
+        </div>
       </div>
 
       <div class="card">
         <div class="title">Créer / modifier mon profil</div>
-        <input id="profilePhoto" placeholder="Lien de ta photo de profil">
-        <input id="nameInput" placeholder="Nom / nom d’artiste">
+        <input id="profilePhoto" placeholder="Lien photo de profil">
+        <input id="nameInput" placeholder="Nom / pseudo">
         <input id="cityInput" placeholder="Ville">
         <select id="typeInput">
           <option>Artiste</option>
@@ -424,93 +570,146 @@ button {
           <option>Beatmaker</option>
           <option>Caméraman</option>
           <option>Danseur</option>
-          <option>Photographe</option>
+          <option>Pro</option>
           <option>Fan</option>
         </select>
-        <input id="specialtyInput" placeholder="Spécialité / style musical">
+        <input id="specialtyInput" placeholder="Spécialité">
+        <input id="contactInput" placeholder="Contact direct / Insta / WhatsApp">
+        <input id="websiteInput" placeholder="Site / YouTube / TikTok / lien cliquable">
+        <input id="collabInput" placeholder="Je cherche / je propose quoi ?">
+        <select id="languageInput">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
         <textarea id="bioInput" placeholder="Bio"></textarea>
-        <input id="instagramInput" placeholder="Instagram ou lien externe">
-        <button class="btn btn-main" onclick="saveProfile()">Enregistrer mon profil</button>
+
+        <button class="btn-main" onclick="saveProfile()">Enregistrer</button>
+        <button class="btn-green" onclick="becomeCreator()">Passer en créateur</button>
       </div>
 
       <div class="card">
-        <div class="title">Mon profil aperçu</div>
+        <div class="title">Mon aperçu</div>
         <div id="myProfilePreview" class="muted">Aucun profil enregistré.</div>
+      </div>
+
+      <div class="card">
+        <div class="title">Mes œuvres</div>
+        <div class="gallery">
+          <div class="gallery-item">Photos</div>
+          <div class="gallery-item">Vidéos</div>
+          <div class="gallery-item">Audios</div>
+          <div class="gallery-item">Lives</div>
+        </div>
       </div>
     </section>
   </div>
 
   <div class="nav">
-    <button onclick="navTab('feed')">Accueil</button>
-    <button onclick="navTab('map')">Map</button>
-    <button onclick="navTab('discover')">Recherche</button>
-    <button onclick="navTab('messages')">Messages</button>
-    <button onclick="navTab('profile')">Profil</button>
+    <button class="active" onclick="navTab('feed', this)">Accueil</button>
+    <button onclick="navTab('discover', this)">Découvrir</button>
+    <button onclick="navTab('map', this)">Map</button>
+    <button onclick="navTab('activity', this)">Activité</button>
+    <button onclick="navTab('messages', this)">Messages</button>
+    <button onclick="navTab('profile', this)">Profil</button>
   </div>
 
   <script>
+    const translations = {
+      fr: {
+        shared: "Post partagé",
+        commentPlaceholder: "Commenter...",
+        send: "Envoyer",
+        followers: "abonnés",
+        following: "abonnements",
+        hide: "Masquer",
+        block: "Bloquer",
+        enteredLive: "Tu es entré dans le live",
+        noActivity: "Aucune activité pour le moment.",
+        noProfile: "Aucun profil enregistré.",
+        messageSent: "Message envoyé"
+      },
+      en: {
+        shared: "Post shared",
+        commentPlaceholder: "Comment...",
+        send: "Send",
+        followers: "followers",
+        following: "following",
+        hide: "Hide",
+        block: "Block",
+        enteredLive: "You entered the live",
+        noActivity: "No activity yet.",
+        noProfile: "No saved profile.",
+        messageSent: "Message sent"
+      },
+      es: {
+        shared: "Publicación compartida",
+        commentPlaceholder: "Comentar...",
+        send: "Enviar",
+        followers: "seguidores",
+        following: "siguiendo",
+        hide: "Ocultar",
+        block: "Bloquear",
+        enteredLive: "Entraste al live",
+        noActivity: "Sin actividad.",
+        noProfile: "Ningún perfil guardado.",
+        messageSent: "Mensaje enviado"
+      }
+    };
+
+    function t(key) {
+      return translations[currentLanguage]?.[key] || translations.fr[key] || key;
+    }
+
     let currentUserRole = localStorage.getItem('musicmap_role') || 'Fan';
+    let feedMode = localStorage.getItem('musicmap_feedmode') || 'foryou';
+    let currentLanguage = localStorage.getItem('musicmap_language') || 'fr';
 
     const defaultProfiles = [
-      {
-        name: "Studio 974",
-        role: "Studio",
-        city: "Saint-Denis",
-        specialty: "Enregistrement, mix, mastering",
-        bio: "Studio pro disponible pour artistes et voix off.",
-        premium: true,
-        x: 22,
-        y: 34,
-        photo: "",
-        instagram: "@studio974"
-      },
       {
         name: "Luna K",
         role: "Artiste",
         city: "Saint-Denis",
         specialty: "Rap mélodique",
         bio: "Artiste en développement, démos et clips.",
-        premium: false,
-        x: 48,
-        y: 62,
         photo: "",
-        instagram: "@lunak"
+        contact: "@lunak",
+        website: "https://example.com",
+        collab: "Cherche beatmaker et clips",
+        followers: 12,
+        x: 44,
+        y: 42,
+        premium: false
       },
       {
-        name: "Kévin Beats",
-        role: "Beatmaker",
-        city: "Saint-Paul",
-        specialty: "Afro, trap, amapiano",
-        bio: "Beatmaker dispo pour collaborations et placements.",
-        premium: false,
-        x: 72,
-        y: 54,
+        name: "Studio 974",
+        role: "Studio",
+        city: "Saint-Denis",
+        specialty: "Enregistrement / mix / mastering",
+        bio: "Studio pro disponible pour artistes.",
         photo: "",
-        instagram: "@kevinbeats"
+        contact: "@studio974",
+        website: "https://example.com",
+        collab: "Studio dispo aujourd'hui",
+        followers: 24,
+        x: 25,
+        y: 30,
+        premium: true
       },
       {
         name: "Lina Cam",
         role: "Caméraman",
         city: "Saint-Pierre",
-        specialty: "Clips, backstage, réels",
-        bio: "Réalisation vidéo pour artistes et marques.",
-        premium: true,
-        x: 58,
-        y: 28,
+        specialty: "Clips / backstage",
+        bio: "Réalisation vidéo pour artistes.",
         photo: "",
-        instagram: "@linacam"
-      },
-      {
-        name: "Mia Move",
-        role: "Danseur",
-        city: "Le Port",
-        specialty: "Danse urbaine",
-        bio: "Danseuse, chorégraphies pour scènes et clips.",
-        premium: false,
-        x: 37,
-        y: 47,
-        photo: "",
-        instagram: "@miamove"
+        contact: "@linacam",
+        website: "https://example.com",
+        collab: "Disponible pour tournage ce week-end",
+        followers: 18,
+        x: 70,
+        y: 64,
+        premium: false
       }
     ];
 
@@ -520,270 +719,340 @@ button {
         author: "Luna K",
         role: "Artiste",
         city: "Saint-Denis",
-        type: "audio",
+        location: "Saint-Denis",
+        type: "photo",
         title: "Nuit 974",
-        caption: "Nouvelle démo, dites-moi ce que vous en pensez.",
-        media: "",
-        likes: 24,
-        comments: ["Très propre 🔥", "Le refrain reste en tête"],
-        shares: 4,
-        live: false
+        caption: "Nouvelle vibe 🔥",
+        media: "https://picsum.photos/id/1015/900/1200",
+        likes: 8,
+        shares: 2,
+        comments: ["Stylé", "J'aime bien"],
+        createdAt: Date.now() - 200000
       },
       {
         id: 2,
-        author: "Lina Cam",
-        role: "Caméraman",
-        city: "Saint-Pierre",
-        type: "video",
-        title: "Extrait de clip",
-        caption: "Backstage du dernier tournage.",
-        media: "",
-        likes: 41,
-        comments: ["La lumière est folle", "Très pro"],
-        shares: 8,
-        live: false
-      },
-      {
-        id: 3,
         author: "Studio 974",
         role: "Studio",
         city: "Saint-Denis",
+        location: "Saint-Denis",
         type: "live",
-        title: "Live session studio",
-        caption: "Session en direct ce soir à 20h.",
+        title: "Live studio",
+        caption: "On démarre dans 10 minutes 🎶",
         media: "",
-        likes: 17,
-        comments: ["Je passe !", "Envoyez le lien"],
-        shares: 5,
-        live: true
+        likes: 15,
+        shares: 3,
+        comments: ["J'arrive", "Hâte"],
+        createdAt: Date.now() - 100000
       }
     ];
 
     let profiles = JSON.parse(localStorage.getItem('musicmap_profiles')) || defaultProfiles;
     let posts = JSON.parse(localStorage.getItem('musicmap_posts')) || defaultPosts;
+    let follows = JSON.parse(localStorage.getItem('musicmap_follows')) || [];
+    let followersMap = JSON.parse(localStorage.getItem('musicmap_followersMap')) || {};
+    let activity = JSON.parse(localStorage.getItem('musicmap_activity')) || [];
+    let likedPosts = JSON.parse(localStorage.getItem('musicmap_likedposts')) || [];
+    let hiddenPosts = JSON.parse(localStorage.getItem('musicmap_hiddenPosts')) || [];
+    let blockedUsers = JSON.parse(localStorage.getItem('musicmap_blockedUsers')) || [];
     let messages = JSON.parse(localStorage.getItem('musicmap_messages')) || [];
+    let myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recording = false;
 
     function saveAll() {
       localStorage.setItem('musicmap_profiles', JSON.stringify(profiles));
       localStorage.setItem('musicmap_posts', JSON.stringify(posts));
+      localStorage.setItem('musicmap_follows', JSON.stringify(follows));
+      localStorage.setItem('musicmap_followersMap', JSON.stringify(followersMap));
+      localStorage.setItem('musicmap_activity', JSON.stringify(activity));
+      localStorage.setItem('musicmap_likedposts', JSON.stringify(likedPosts));
+      localStorage.setItem('musicmap_hiddenPosts', JSON.stringify(hiddenPosts));
+      localStorage.setItem('musicmap_blockedUsers', JSON.stringify(blockedUsers));
       localStorage.setItem('musicmap_messages', JSON.stringify(messages));
       localStorage.setItem('musicmap_role', currentUserRole);
+      localStorage.setItem('musicmap_feedmode', feedMode);
+      localStorage.setItem('musicmap_language', currentLanguage);
+      localStorage.setItem('musicmap_profile', JSON.stringify(myProfile));
     }
 
-    function showTab(tab, btn) {
-      ['feed', 'map', 'discover', 'messages', 'profile'].forEach(name => {
+    function navTab(tab, btn) {
+      ['feed','discover','map','activity','messages','profile'].forEach(name => {
         document.getElementById(name + '-tab').classList.add('hidden');
       });
       document.getElementById(tab + '-tab').classList.remove('hidden');
 
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      if (btn) {
-        btn.classList.add('active');
-      }
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
     }
 
-    function navTab(tab) {
-      showTab(tab);
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      const match = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
-        const txt = b.textContent.toLowerCase();
-        if (tab === 'feed') return txt.includes('feed');
-        if (tab === 'map') return txt.includes('map');
-        if (tab === 'discover') return txt.includes('découvrir');
-        if (tab === 'messages') return txt.includes('messages');
-        if (tab === 'profile') return txt.includes('profil');
-      });
-      if (match) match.classList.add('active');
+    function setFeedMode(mode){
+      feedMode = mode;
+      document.getElementById('btn-foryou').classList.toggle('active', mode === 'foryou');
+      document.getElementById('btn-following').classList.toggle('active', mode === 'following');
+      saveAll();
+      renderFeed();
     }
 
     function emojiForRole(role) {
-      if (role === 'Artiste') return '🎤';
-      if (role === 'Studio') return '🎧';
-      if (role === 'Beatmaker') return '🥁';
-      if (role === 'Caméraman') return '🎥';
-      if (role === 'Danseur') return '💃';
-      if (role === 'Photographe') return '📸';
-      if (role === 'Fan') return '❤️';
-      return '👤';
+      const map = {
+        'Artiste':'🎤',
+        'Studio':'🎧',
+        'Beatmaker':'🥁',
+        'Caméraman':'🎥',
+        'Danseur':'💃',
+        'Pro':'🛠️',
+        'Fan':'❤️'
+      };
+      return map[role] || '👤';
     }
 
-    function renderAvatar(photo, role) {
-      if (photo) {
-        return `<div class="avatar"><img src="${photo}" alt="photo"></div>`;
+    function safeText(str='') {
+      return str
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+
+    function safeUrl(url) {
+      if (!url) return '';
+      const trimmed = url.trim();
+      if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) return trimmed;
+      return 'https://' + trimmed;
+    }
+
+    function renderAvatar(photo, role){
+      if(photo){
+        return `<div class="avatar"><img src="${safeUrl(photo)}" alt=""></div>`;
       }
       return `<div class="avatar">${emojiForRole(role)}</div>`;
     }
 
-    function renderStories() {
-      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
-      const stories = document.getElementById('storiesList');
-      stories.innerHTML = '';
+    function renderStories(){
+      const box = document.getElementById('storiesList');
+      box.innerHTML = '';
 
       const first = document.createElement('div');
       first.className = 'story';
       first.innerHTML = `
-        <div class="story-avatar">${myProfile?.photo ? `<img src="${myProfile.photo}" alt="story">` : '➕'}</div>
+        <div class="story-avatar">${myProfile?.photo ? `<img src="${safeUrl(myProfile.photo)}" alt="">` : '➕'}</div>
         <div class="small">Ta story</div>
       `;
-      stories.appendChild(first);
+      box.appendChild(first);
 
-      profiles.slice(0, 6).forEach(p => {
+      profiles.slice(0,6).forEach(p => {
         const item = document.createElement('div');
         item.className = 'story';
         item.innerHTML = `
-          <div class="story-avatar">${p.photo ? `<img src="${p.photo}" alt="${p.name}">` : emojiForRole(p.role)}</div>
-          <div class="small">${p.name}</div>
+          <div class="story-avatar">${p.photo ? `<img src="${safeUrl(p.photo)}" alt="">` : emojiForRole(p.role)}</div>
+          <div class="small">${safeText(p.name)}</div>
         `;
-        stories.appendChild(item);
+        box.appendChild(item);
       });
     }
 
-    function renderFeed() {
+    function computeScore(post){
+      return (post.likes || 0) + (post.comments?.length || 0) * 2 + (post.shares || 0) * 3;
+    }
+
+    function postVisible(post){
+      if(hiddenPosts.includes(post.id)) return false;
+      if(blockedUsers.includes(post.author)) return false;
+
+      if(post.scheduled){
+        const postTime = new Date(post.scheduled).getTime();
+        if(postTime > Date.now()) return false;
+      }
+
+      if(feedMode === 'following'){
+        return follows.includes(post.author);
+      }
+
+      return true;
+    }
+
+    function getFeedPosts(){
+      let list = [...posts].filter(postVisible);
+      if(feedMode === 'foryou'){
+        list.sort((a,b) => computeScore(b) - computeScore(a));
+      } else {
+        list.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
+      }
+      return list;
+    }
+
+    function renderMedia(post){
+      if(post.type === 'photo'){
+        return post.media
+          ? `<img src="${safeUrl(post.media)}" class="post-img" alt="">`
+          : `<div class="post-media-box">📷 Photo</div>`;
+      }
+      if(post.type === 'video'){
+        return post.media
+          ? `<div class="post-media-box"><video controls style="width:100%;border-radius:12px;"><source src="${safeUrl(post.media)}"></video></div>`
+          : `<div class="post-media-box">🎥 Vidéo</div>`;
+      }
+      if(post.type === 'audio'){
+        return post.media
+          ? `<div class="post-media-box"><audio controls style="width:100%;"><source src="${safeUrl(post.media)}"></audio></div>`
+          : `<div class="post-media-box">🎵 Audio</div>`;
+      }
+      if(post.type === 'live'){
+        return `
+          <div class="post-media-box">
+            🔴 Live annoncé
+            <div class="actions" style="justify-content:center;">
+              <button class="btn-red" onclick="enterLive(${post.id})">Entrer dans le live</button>
+            </div>
+          </div>
+        `;
+      }
+      return '';
+    }
+
+    function renderFeed(){
       const feed = document.getElementById('feedList');
       feed.innerHTML = '';
 
-      if (!posts.length) {
+      const list = getFeedPosts();
+
+      if(!list.length){
         feed.innerHTML = `<div class="card empty">Aucun post pour le moment.</div>`;
         return;
       }
 
-      posts.slice().reverse().forEach(post => {
-        const card = document.createElement('div');
-        card.className = 'card';
-
+      list.forEach(post => {
         const authorProfile = profiles.find(p => p.name === post.author);
-        const avatar = renderAvatar(authorProfile?.photo || '', post.role);
+        const isLiked = likedPosts.includes(post.id);
 
-        card.innerHTML = `
-          <div class="row">
-            ${avatar}
+        const div = document.createElement('div');
+        div.className = 'post-card';
+        div.innerHTML = `
+          <div class="post-header">
+            ${renderAvatar(authorProfile?.photo || '', post.role)}
             <div>
-              <strong>${post.author}</strong><br>
-              <span class="muted">${post.role} • ${post.city}</span>
-              <div class="feed-badge">${labelType(post.type)}</div>
+              <strong>${safeText(post.author)}</strong><br>
+              <span class="muted">${safeText(post.role)} • ${safeText(post.location || post.city || '')}</span>
             </div>
           </div>
 
-          <div style="margin-top:10px;">
-            <strong>${post.title}</strong>
-            ${post.live ? `<div class="pill live">LIVE</div>` : ''}
-            <p>${post.caption}</p>
-          </div>
+          ${renderMedia(post)}
 
-          <div class="media-box">
-            ${renderMedia(post)}
-          </div>
+          <div class="post-content">
+            <div class="post-actions">
+              <span class="${isLiked ? 'liked' : ''}" onclick="toggleLike(${post.id})">❤️</span>
+              <span onclick="focusComment(${post.id})">💬</span>
+              <span onclick="sharePost(${post.id})">🔁</span>
+              <span onclick="hidePost(${post.id})">🙈</span>
+              <span onclick="blockUser('${safeText(post.author)}')">⛔</span>
+            </div>
 
-          <div class="stats">
-            <span>❤️ ${post.likes}</span>
-            <span>💬 ${post.comments.length}</span>
-            <span>🔁 ${post.shares}</span>
-          </div>
+            <div class="stats">
+              <span>${post.likes} j'aime</span>
+              <span>${post.comments.length} commentaires</span>
+              <span>${post.shares} partages</span>
+            </div>
 
-          <div class="actions">
-            <button class="btn btn-secondary" onclick="likePost(${post.id})">Aimer</button>
-            <button class="btn btn-secondary" onclick="sharePost(${post.id})">Partager</button>
-            <button class="btn ${post.live ? 'btn-danger' : 'btn-secondary'}" onclick="joinLive(${post.id})">
-              ${post.live ? 'Rejoindre le live' : 'Voir le post'}
-            </button>
-          </div>
+            <div><strong>${safeText(post.title)}</strong></div>
+            <div style="margin-top:6px;"><strong>${safeText(post.author)}</strong> ${safeText(post.caption || '')}</div>
 
-          <div class="comment-box">
-            <input id="comment-${post.id}" placeholder="Ajouter un commentaire">
-            <button class="btn btn-main" onclick="addComment(${post.id})">Commenter</button>
-            <div id="comments-${post.id}" style="margin-top:8px;"></div>
+            <div id="comments-${post.id}">
+              ${post.comments.map(c => `<div class="comment">${safeText(c)}</div>`).join('')}
+            </div>
+
+            <div class="comment-box">
+              <input id="input-${post.id}" placeholder="${t('commentPlaceholder')}">
+              <button class="btn-main" onclick="addComment(${post.id})">${t('send')}</button>
+            </div>
           </div>
         `;
-        feed.appendChild(card);
-        renderComments(post.id);
+        feed.appendChild(div);
       });
     }
 
-    function renderComments(postId) {
-      const post = posts.find(p => p.id === postId);
-      const target = document.getElementById('comments-' + postId);
-      if (!target || !post) return;
-
-      target.innerHTML = '';
-      post.comments.forEach(c => {
-        const d = document.createElement('div');
-        d.className = 'message';
-        d.textContent = c;
-        target.appendChild(d);
-      });
-    }
-
-    function labelType(type) {
-      if (type === 'photo') return 'Publication photo';
-      if (type === 'video') return 'Publication vidéo';
-      if (type === 'audio') return 'Publication audio';
-      if (type === 'live') return 'Live';
-      return 'Publication';
-    }
-
-    function renderMedia(post) {
-      if (post.type === 'photo') {
-        return post.media
-          ? `<img src="${post.media}" alt="photo" style="width:100%; border-radius:10px;">`
-          : `📷 Photo du post`;
-      }
-      if (post.type === 'video') {
-        return post.media
-          ? `<video controls style="width:100%; border-radius:10px;"><source src="${post.media}"></video>`
-          : `🎥 Vidéo du post`;
-      }
-      if (post.type === 'audio') {
-        return post.media
-          ? `<audio controls style="width:100%;"><source src="${post.media}"></audio>`
-          : `🎵 Audio du post`;
-      }
-      if (post.type === 'live') {
-        return `🔴 Live en cours ou programmé<br><span class="small">Dans la vraie app, tu brancheras une vraie techno live ici.</span>`;
-      }
-      return `Contenu`;
-    }
-
-    function likePost(id) {
+    function toggleLike(id){
       const post = posts.find(p => p.id === id);
-      if (!post) return;
-      post.likes += 1;
-      saveAll();
-      renderFeed();
-    }
+      if(!post) return;
 
-    function sharePost(id) {
-      const post = posts.find(p => p.id === id);
-      if (!post) return;
-      post.shares += 1;
-      saveAll();
-      renderFeed();
-      alert("Post partagé dans le prototype.");
-    }
-
-    function addComment(id) {
-      const input = document.getElementById('comment-' + id);
-      const value = input.value.trim();
-      if (!value) return;
-      const post = posts.find(p => p.id === id);
-      post.comments.push(value);
-      input.value = '';
-      saveAll();
-      renderFeed();
-    }
-
-    function joinLive(id) {
-      const post = posts.find(p => p.id === id);
-      if (!post) return;
-      if (post.type === 'live') {
-        alert("Prototype live : dans la vraie app, ce bouton ouvrira la salle live.");
+      if(likedPosts.includes(id)){
+        likedPosts = likedPosts.filter(x => x !== id);
+        post.likes = Math.max(0, post.likes - 1);
       } else {
-        alert("Vue détaillée du post à ajouter dans la vraie app.");
+        likedPosts.push(id);
+        post.likes += 1;
+        activity.push(`Tu as aimé le post de ${post.author}`);
+      }
+
+      saveAll();
+      renderFeed();
+      renderActivity();
+    }
+
+    function addComment(id){
+      const input = document.getElementById(`input-${id}`);
+      const text = input.value.trim();
+      if(!text) return;
+
+      const post = posts.find(p => p.id === id);
+      if(!post) return;
+
+      post.comments.push(text);
+      input.value = '';
+      activity.push(`Tu as commenté le post de ${post.author}`);
+      saveAll();
+      renderFeed();
+      renderActivity();
+    }
+
+    function focusComment(id){
+      const input = document.getElementById(`input-${id}`);
+      if(input) input.focus();
+    }
+
+    function sharePost(id){
+      const post = posts.find(p => p.id === id);
+      if(!post) return;
+      post.shares += 1;
+      activity.push(`Tu as partagé le post de ${post.author}`);
+      saveAll();
+      renderFeed();
+      renderActivity();
+      alert(t('shared'));
+    }
+
+    function hidePost(id){
+      if(!hiddenPosts.includes(id)){
+        hiddenPosts.push(id);
+        activity.push("Tu as masqué une publication");
+        saveAll();
+        renderFeed();
+        renderActivity();
       }
     }
 
-    function createPost() {
-      if (currentUserRole !== 'Créateur') {
-        alert("Seuls les créateurs peuvent publier du contenu principal.");
+    function blockUser(name){
+      if(!blockedUsers.includes(name)){
+        blockedUsers.push(name);
+        follows = follows.filter(n => n !== name);
+        activity.push(`Tu as bloqué ${name}`);
+        saveAll();
+        renderFeed();
+        renderProfiles();
+        renderActivity();
+      }
+    }
+
+    function createPost(){
+      if(currentUserRole !== 'Créateur'){
+        alert("Passe en créateur pour publier.");
+        return;
+      }
+
+      if(!myProfile || !myProfile.name){
+        alert("Crée ton profil d'abord.");
         return;
       }
 
@@ -791,14 +1060,10 @@ button {
       const title = document.getElementById('postTitle').value.trim();
       const caption = document.getElementById('postCaption').value.trim();
       const media = document.getElementById('postMedia').value.trim();
-      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+      const location = document.getElementById('postLocation').value.trim();
+      const schedule = document.getElementById('postSchedule').value;
 
-      if (!myProfile || !myProfile.name) {
-        alert("Crée d’abord ton profil.");
-        return;
-      }
-
-      if (!title) {
+      if(!title){
         alert("Ajoute un titre.");
         return;
       }
@@ -808,6 +1073,7 @@ button {
         author: myProfile.name,
         role: myProfile.role,
         city: myProfile.city,
+        location: location || myProfile.city,
         type,
         title,
         caption,
@@ -815,300 +1081,406 @@ button {
         likes: 0,
         comments: [],
         shares: 0,
-        live: type === 'live'
+        scheduled: schedule || null,
+        createdAt: Date.now()
       };
 
       posts.push(newPost);
-      saveAll();
-      renderFeed();
+      activity.push(`Tu as publié : ${title}`);
 
       document.getElementById('postTitle').value = '';
       document.getElementById('postCaption').value = '';
       document.getElementById('postMedia').value = '';
+      document.getElementById('postLocation').value = '';
+      document.getElementById('postSchedule').value = '';
 
-      alert(type === 'live' ? "Live créé dans le prototype." : "Publication ajoutée.");
+      saveAll();
+      renderFeed();
+      renderActivity();
     }
 
-    function renderMap() {
-      const map = document.getElementById('mapBox');
-      map.innerHTML = '';
-
-      profiles.forEach(p => {
-        const pin = document.createElement('div');
-        let cls = 'map-pin';
-        if (p.premium) cls += ' premium';
-        if (hasLiveByAuthor(p.name)) cls += ' live';
-
-        pin.className = cls;
-        pin.style.left = (p.x || 50) + '%';
-        pin.style.top = (p.y || 50) + '%';
-        pin.textContent = p.name;
-        pin.onclick = () => showMapProfile(p.name);
-        map.appendChild(pin);
-      });
+    function filterProfiles(){
+      renderProfiles();
     }
 
-    function hasLiveByAuthor(name) {
-      return posts.some(p => p.author === name && p.type === 'live');
-    }
-
-    function showMapProfile(name) {
-      const p = profiles.find(x => x.name === name);
-      const target = document.getElementById('mapProfileView');
-      if (!p) return;
-
-      target.innerHTML = `
-        <div class="card">
-          <div class="row">
-            ${renderAvatar(p.photo, p.role)}
-            <div>
-              <strong>${p.name}</strong><br>
-              <span class="muted">${p.role} • ${p.city}</span>
-            </div>
-          </div>
-          <p style="margin-top:10px;">${p.bio}</p>
-          <div class="pill">${p.specialty || 'Sans spécialité'}</div>
-          ${p.premium ? `<div class="pill premium">Recommandé</div>` : ''}
-          ${hasLiveByAuthor(p.name) ? `<div class="pill live">Live actif / prévu</div>` : ''}
-          <div class="actions">
-            <button class="btn btn-secondary" onclick="alert('Contact prototype : bientôt messagerie directe')">Contacter</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderProfiles(list = profiles) {
-      const wrap = document.getElementById('discoverList');
-      wrap.innerHTML = '';
-
-      if (!list.length) {
-        wrap.innerHTML = `<div class="card empty">Aucun profil trouvé.</div>`;
-        return;
-      }
-
-      list.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="row">
-            ${renderAvatar(p.photo, p.role)}
-            <div>
-              <strong>${p.name}</strong><br>
-              <span class="muted">${p.role} • ${p.city}</span>
-            </div>
-          </div>
-          <p style="margin-top:10px;">${p.bio}</p>
-          <div class="pill">${p.specialty || 'Sans spécialité'}</div>
-          ${p.premium ? `<div class="pill premium">Recommandé</div>` : ''}
-          <div class="actions">
-            <button class="btn btn-secondary" onclick="alert('Contact prototype : bientôt messagerie / Insta / WhatsApp')">Contacter</button>
-          </div>
-        `;
-        wrap.appendChild(card);
-      });
-    }
-
-    function filterProfiles() {
+    function renderProfiles(){
       const q = document.getElementById('searchInput').value.toLowerCase();
       const role = document.getElementById('roleFilter').value;
+      const box = document.getElementById('discoverList');
+      box.innerHTML = '';
 
-      const filtered = profiles.filter(p => {
+      const list = profiles.filter(p => {
+        if(blockedUsers.includes(p.name)) return false;
         const textMatch =
           p.name.toLowerCase().includes(q) ||
           p.role.toLowerCase().includes(q) ||
           p.city.toLowerCase().includes(q) ||
           (p.specialty || '').toLowerCase().includes(q) ||
-          (p.bio || '').toLowerCase().includes(q);
-
+          (p.bio || '').toLowerCase().includes(q) ||
+          (p.collab || '').toLowerCase().includes(q);
         const roleMatch = !role || p.role === role;
         return textMatch && roleMatch;
       });
 
-      renderProfiles(filtered);
+      if(!list.length){
+        box.innerHTML = `<div class="card empty">Aucun profil trouvé.</div>`;
+        return;
+      }
+
+      list.forEach(p => {
+        const followed = follows.includes(p.name);
+        const div = document.createElement('div');
+        div.className = 'list-item';
+        div.innerHTML = `
+          <div class="row">
+            ${renderAvatar(p.photo, p.role)}
+            <div>
+              <strong>${safeText(p.name)}</strong><br>
+              <span class="muted">${safeText(p.role)} • ${safeText(p.city)}</span>
+            </div>
+          </div>
+
+          <p style="margin:10px 0 0;">${safeText(p.bio || '')}</p>
+          <div class="pill">${safeText(p.specialty || 'Sans spécialité')}</div>
+          ${p.collab ? `<div class="pill green">${safeText(p.collab)}</div>` : ''}
+
+          <div class="actions">
+            <button class="${followed ? 'btn-soft' : 'btn-green'}" onclick="toggleFollow('${safeText(p.name)}')">
+              ${followed ? 'Suivi' : 'Suivre'}
+            </button>
+            <button class="btn-soft" onclick="proposeTo('${safeText(p.name)}')">Proposer</button>
+            <button class="btn-red" onclick="blockUser('${safeText(p.name)}')">${t('block')}</button>
+            ${p.website ? `<a class="file-chip" href="${safeUrl(p.website)}" target="_blank">Lien</a>` : ''}
+          </div>
+        `;
+        box.appendChild(div);
+      });
     }
 
-    function becomeCreator() {
-      currentUserRole = 'Créateur';
+    function toggleFollow(name){
+      const target = profiles.find(p => p.name === name);
+      if(!target) return;
+
+      if(follows.includes(name)){
+        follows = follows.filter(n => n !== name);
+        target.followers = Math.max(0, (target.followers || 0) - 1);
+      } else {
+        follows.push(name);
+        target.followers = (target.followers || 0) + 1;
+        activity.push(`Tu suis maintenant ${name}`);
+      }
+
       saveAll();
-      document.getElementById('currentRole').textContent = currentUserRole;
-      alert("Ton rôle passe en mode créateur dans le prototype.");
+      renderProfiles();
+      renderActivity();
+      renderProfile();
+      renderFeed();
+      renderMap();
     }
 
-    function saveProfile() {
+    function proposeTo(name){
+      const message = prompt(`Que veux-tu proposer à ${name} ?`);
+      if(!message) return;
+      activity.push(`Tu as proposé à ${name} : ${message}`);
+      saveAll();
+      renderActivity();
+      alert("Proposition envoyée dans le prototype.");
+    }
+
+    function renderActivity(){
+      const box = document.getElementById('activityList');
+      box.innerHTML = '';
+
+      if(!activity.length){
+        box.innerHTML = `<div class="empty">${t('noActivity')}</div>`;
+        return;
+      }
+
+      activity.slice().reverse().forEach(item => {
+        box.innerHTML += `<div class="list-item">${safeText(item)}</div>`;
+      });
+    }
+
+    function becomeCreator(){
+      currentUserRole = 'Créateur';
+      activity.push("Ton compte est passé en créateur");
+      saveAll();
+      renderActivity();
+      renderProfile();
+      alert("Tu peux maintenant publier.");
+    }
+
+    function saveProfile(){
       const photo = document.getElementById('profilePhoto').value.trim();
       const name = document.getElementById('nameInput').value.trim();
       const city = document.getElementById('cityInput').value.trim();
       const role = document.getElementById('typeInput').value;
       const specialty = document.getElementById('specialtyInput').value.trim();
+      const contact = document.getElementById('contactInput').value.trim();
+      const website = document.getElementById('websiteInput').value.trim();
+      const collab = document.getElementById('collabInput').value.trim();
       const bio = document.getElementById('bioInput').value.trim();
-      const instagram = document.getElementById('instagramInput').value.trim();
+      const language = document.getElementById('languageInput').value;
 
-      if (!name || !city || !bio) {
-        alert("Remplis au moins le nom, la ville et la bio.");
+      if(!name || !city){
+        alert("Remplis au moins le nom et la ville.");
         return;
       }
 
-      const myProfile = {
-        name, city, role, specialty, bio, instagram, photo,
-        premium: false,
-        x: 40 + Math.floor(Math.random() * 30),
-        y: 30 + Math.floor(Math.random() * 35)
+      currentLanguage = language;
+
+      const previousFollowers = profiles.find(p => p.name === name)?.followers || 0;
+
+      myProfile = {
+        name, city, role, specialty, contact, website, collab, bio, photo, language,
+        followers: previousFollowers,
+        x: profiles.find(p => p.name === name)?.x || (30 + Math.floor(Math.random() * 40)),
+        y: profiles.find(p => p.name === name)?.y || (25 + Math.floor(Math.random() * 45)),
+        premium: false
       };
 
-      localStorage.setItem('musicmap_profile', JSON.stringify(myProfile));
-
       const existingIndex = profiles.findIndex(p => p.name === name);
-      if (existingIndex >= 0) {
+      if(existingIndex >= 0){
         profiles[existingIndex] = { ...profiles[existingIndex], ...myProfile };
       } else {
         profiles.push(myProfile);
       }
 
-      if (role !== 'Fan') {
-        currentUserRole = 'Créateur';
-      }
-
+      activity.push(`Profil mis à jour : ${name}`);
       saveAll();
-      renderMyProfile();
-      renderProfiles();
-      renderMap();
       renderStories();
-      document.getElementById('currentRole').textContent = currentUserRole;
-      alert("Profil enregistré.");
+      renderProfiles();
+      renderProfile();
+      renderMap();
+      renderActivity();
     }
 
-    function renderMyProfile() {
-      document.getElementById('currentRole').textContent = currentUserRole;
-      const raw = localStorage.getItem('musicmap_profile');
+    function renderProfile(){
       const preview = document.getElementById('myProfilePreview');
 
-      if (!raw) {
-        preview.innerHTML = 'Aucun profil enregistré.';
+      if(!myProfile){
+        document.getElementById('heroName').textContent = 'Mon profil';
+        document.getElementById('heroMeta').textContent = 'Fan • Réunion';
+        document.getElementById('heroFollowers').textContent = `0 ${t('followers')} • ${follows.length} ${t('following')}`;
+        document.getElementById('heroAvatar').innerHTML = '👤';
+        preview.innerHTML = `<div class="empty">${t('noProfile')}</div>`;
         return;
       }
 
-      const p = JSON.parse(raw);
+      const followersCount = profiles.find(p => p.name === myProfile.name)?.followers || 0;
+
+      document.getElementById('heroName').textContent = myProfile.name;
+      document.getElementById('heroMeta').textContent = `${myProfile.role} • ${myProfile.city}`;
+      document.getElementById('heroFollowers').textContent = `${followersCount} ${t('followers')} • ${follows.length} ${t('following')}`;
+      document.getElementById('heroAvatar').innerHTML = myProfile.photo ? `<img src="${safeUrl(myProfile.photo)}" alt="">` : emojiForRole(myProfile.role);
+
+      document.getElementById('profilePhoto').value = myProfile.photo || '';
+      document.getElementById('nameInput').value = myProfile.name || '';
+      document.getElementById('cityInput').value = myProfile.city || '';
+      document.getElementById('typeInput').value = myProfile.role || 'Artiste';
+      document.getElementById('specialtyInput').value = myProfile.specialty || '';
+      document.getElementById('contactInput').value = myProfile.contact || '';
+      document.getElementById('websiteInput').value = myProfile.website || '';
+      document.getElementById('collabInput').value = myProfile.collab || '';
+      document.getElementById('bioInput').value = myProfile.bio || '';
+      document.getElementById('languageInput').value = myProfile.language || currentLanguage || 'fr';
+
       preview.innerHTML = `
         <div class="row">
-          ${renderAvatar(p.photo, p.role)}
+          ${renderAvatar(myProfile.photo, myProfile.role)}
           <div>
-            <strong>${p.name}</strong><br>
-            <span class="muted">${p.role} • ${p.city}</span>
+            <strong>${safeText(myProfile.name)}</strong><br>
+            <span class="muted">${safeText(myProfile.role)} • ${safeText(myProfile.city)}</span>
           </div>
         </div>
-        <p style="margin-top:10px;">${p.bio}</p>
-        <div class="pill">${p.specialty || 'Sans spécialité'}</div>
-        ${p.instagram ? `<div class="pill">${p.instagram}</div>` : ''}
+        <p style="margin-top:10px;">${safeText(myProfile.bio || '')}</p>
+        ${myProfile.specialty ? `<div class="pill">${safeText(myProfile.specialty)}</div>` : ''}
+        ${myProfile.collab ? `<div class="pill green">${safeText(myProfile.collab)}</div>` : ''}
+        ${myProfile.contact ? `<div style="margin-top:10px;" class="muted">Contact : ${safeText(myProfile.contact)}</div>` : ''}
+        ${myProfile.website ? `<div style="margin-top:8px;"><a href="${safeUrl(myProfile.website)}" target="_blank">${safeText(myProfile.website)}</a></div>` : ''}
       `;
-
-      document.getElementById('profilePhoto').value = p.photo || '';
-      document.getElementById('nameInput').value = p.name || '';
-      document.getElementById('cityInput').value = p.city || '';
-      document.getElementById('typeInput').value = p.role || 'Artiste';
-      document.getElementById('specialtyInput').value = p.specialty || '';
-      document.getElementById('bioInput').value = p.bio || '';
-      document.getElementById('instagramInput').value = p.instagram || '';
     }
 
-    function sendMessage() {
-      const to = document.getElementById('messageTarget').value;
+    function renderMap(){
+      const box = document.getElementById('mapBox');
+      box.innerHTML = '';
+
+      profiles.forEach(p => {
+        if(blockedUsers.includes(p.name)) return;
+
+        const pin = document.createElement('div');
+        let cls = 'map-pin';
+        if(p.premium) cls += ' gold';
+        if(posts.some(x => x.author === p.name && x.type === 'live')) cls += ' red';
+
+        pin.className = cls;
+        pin.style.left = (p.x || 50) + '%';
+        pin.style.top = (p.y || 50) + '%';
+        pin.textContent = p.name;
+        pin.onclick = () => openMapProfile(p.name);
+        box.appendChild(pin);
+      });
+    }
+
+    function openMapProfile(name){
+      const p = profiles.find(x => x.name === name);
+      const box = document.getElementById('mapProfileView');
+      if(!p) return;
+
+      box.innerHTML = `
+        <div class="card">
+          <div class="row">
+            ${renderAvatar(p.photo, p.role)}
+            <div>
+              <strong>${safeText(p.name)}</strong><br>
+              <span class="muted">${safeText(p.role)} • ${safeText(p.city)}</span>
+            </div>
+          </div>
+
+          <p style="margin-top:10px;">${safeText(p.bio || '')}</p>
+          ${p.specialty ? `<div class="pill">${safeText(p.specialty)}</div>` : ''}
+          ${p.collab ? `<div class="pill green">${safeText(p.collab)}</div>` : ''}
+          ${p.premium ? `<div class="pill gold">Profil recommandé</div>` : ''}
+
+          <div class="actions">
+            <button class="btn-soft" onclick="toggleFollow('${safeText(p.name)}')">Suivre</button>
+            <button class="btn-main" onclick="proposeTo('${safeText(p.name)}')">Proposer</button>
+            ${p.website ? `<a class="file-chip" href="${safeUrl(p.website)}" target="_blank">Lien</a>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function enterLive(postId){
+      const post = posts.find(p => p.id === postId);
+      if(!post) return;
+      activity.push(`Tu es entré dans le live de ${post.author}`);
+      saveAll();
+      renderActivity();
+      alert(`${t('enteredLive')} : ${post.author}`);
+    }
+
+    function sendMessage(voiceUrl = '', voiceName = ''){
+      const target = document.getElementById('messageTarget').value;
       const text = document.getElementById('messageText').value.trim();
-      const myProfile = JSON.parse(localStorage.getItem('musicmap_profile') || 'null');
+      const fileInput = document.getElementById('messageFile');
+      const file = fileInput.files[0];
       const from = myProfile?.name || 'Moi';
 
-      if (!text) {
-        alert("Écris un message.");
+      if(!text && !file && !voiceUrl){
         return;
       }
 
-      messages.push({
-        id: Date.now(),
-        from,
-        to,
-        text
-      });
-
-      document.getElementById('messageText').value = '';
-      saveAll();
-      renderMessages();
-      alert("Message ajouté au prototype.");
+      if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+          messages.push({
+            id: Date.now(),
+            from,
+            to: target,
+            text,
+            fileName: file.name,
+            fileUrl: e.target.result,
+            voiceUrl: voiceUrl || '',
+            voiceName: voiceName || ''
+          });
+          finishMessage();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        messages.push({
+          id: Date.now(),
+          from,
+          to: target,
+          text,
+          fileName: '',
+          fileUrl: '',
+          voiceUrl: voiceUrl || '',
+          voiceName: voiceName || ''
+        });
+        finishMessage();
+      }
     }
 
-    function renderMessages() {
-      const wrap = document.getElementById('messagesList');
-      wrap.innerHTML = '';
+    function finishMessage(){
+      document.getElementById('messageText').value = '';
+      document.getElementById('messageFile').value = '';
+      activity.push(t('messageSent'));
+      saveAll();
+      renderMessages();
+      renderActivity();
+    }
 
-      if (!messages.length) {
-        wrap.innerHTML = `<div class="empty">Aucun message pour le moment.</div>`;
+    function renderMessages(){
+      const box = document.getElementById('messagesList');
+      box.innerHTML = '';
+
+      if(!messages.length){
+        box.innerHTML = `<div class="empty">Aucun message.</div>`;
         return;
       }
 
       messages.slice().reverse().forEach(m => {
-        const d = document.createElement('div');
-        d.className = 'message';
-        d.innerHTML = `<strong>${m.from}</strong> → <strong>${m.to}</strong><br>${m.text}`;
-        wrap.appendChild(d);
+        box.innerHTML += `
+          <div class="message-item">
+            <strong>${safeText(m.from)}</strong> → <strong>${safeText(m.to)}</strong>
+            ${m.text ? `<div style="margin-top:6px;">${safeText(m.text)}</div>` : ''}
+            ${m.fileUrl ? `<div class="file-chip"><a href="${m.fileUrl}" download="${safeText(m.fileName)}">${safeText(m.fileName)}</a></div>` : ''}
+            ${m.voiceUrl ? `<div style="margin-top:8px;"><audio controls style="width:100%;"><source src="${m.voiceUrl}"></audio></div>` : ''}
+          </div>
+        `;
       });
+    }
+
+    async function toggleRecord(){
+      const btn = document.getElementById('recordBtn');
+      const status = document.getElementById('recordStatus');
+
+      if(!recording){
+        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+          alert("Enregistrement non supporté sur cet appareil.");
+          return;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = event => {
+            if(event.data.size > 0) audioChunks.push(event.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(audioChunks, { type: 'audio/webm' });
+            const url = URL.createObjectURL(blob);
+            sendMessage(url, 'vocal.webm');
+            stream.getTracks().forEach(track => track.stop());
+          };
+
+          mediaRecorder.start();
+          recording = true;
+          btn.textContent = '⏹ Stop';
+          status.textContent = 'Enregistrement en cours...';
+        } catch (e){
+          alert("Micro refusé ou indisponible.");
+        }
+      } else {
+        mediaRecorder.stop();
+        recording = false;
+        btn.textContent = '🎤 Vocal';
+        status.textContent = '';
+      }
     }
 
     renderStories();
     renderFeed();
     renderProfiles();
     renderMap();
+    renderActivity();
     renderMessages();
-    renderMyProfile();
-    const SUPABASE_URL = "https://glxkwzfmwbfjrpvclvih.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xxxxxxxxxxxxx";
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-    let posts = [];
-
-function createPost() {
-  const title = document.getElementById('postTitle').value.trim();
-  const caption = document.getElementById('postCaption').value.trim();
-  const media = document.getElementById('postMedia').value.trim();
-
-  if (!title && !caption) return;
-
-  posts.push({
-    title,
-    caption,
-    media,
-    date: new Date().toLocaleString()
-  });
-
-  document.getElementById('postTitle').value = "";
-  document.getElementById('postCaption').value = "";
-  document.getElementById('postMedia').value = "";
-
-  renderFeed();
-}
-
-function renderFeed() {
-  const container = document.getElementById('feedList');
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  posts.slice().reverse().forEach(p => {
-    const div = document.createElement('div');
-    div.className = "post";
-
-    div.innerHTML = `
-      <div class="card">
-        <strong>${p.title || "Utilisateur"}</strong><br>
-        <small>${p.date}</small>
-        <p>${p.caption || ""}</p>
-        ${p.media ? `<img src="${p.media}" style="width:100%;border-radius:10px;margin-top:10px;">` : ""}
-      </div>
-    `;
-
-    container.appendChild(div);
-  });
-}
+    renderProfile();
+    setFeedMode(feedMode);
   </script>
 </body>
 </html>
