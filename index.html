@@ -1865,16 +1865,6 @@ const firebaseConfig = {
 // Initialise Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // <-- ici, hors du firebaseConfig
-window.registerUser = async function(email, password) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    alert("Compte créé ✅");
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('appShell').style.display = 'block';
-  } catch(error) {
-    alert(error.message);
-  }
-}
 
 window.loginUser = async function(email, password) {
   try {
@@ -1907,17 +1897,6 @@ window.registerUser = async function(email, password) {
   }
 };
 
-window.loginUser = async function(email, password) {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    alert("Connecté ✅");
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    console.log(userCredential.user);
-  } catch (error) {
-    alert(error.message);
-  }
-};
 
 window.forgotPassword = async function(email) {
   try {
@@ -1941,17 +1920,7 @@ window.forgotPassword = async function(email) {
 const auth = getAuth(app);
 
 // INSCRIPTION
-window.registerUser = async function(email, password) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    alert("Compte créé ✅");
-    document.getElementById("authScreen").style.display = "none"; // <- ici
-    document.getElementById("app").style.display = "block"; // <- ici
-    console.log(userCredential.user);
-  } catch (error) {
-    alert(error.message);
-  }
-};
+
 
 // CONNEXION
 window.loginUser = async function(email, password) {
@@ -1966,15 +1935,7 @@ window.loginUser = async function(email, password) {
   }
 };
 
-  window.uploadFile = async function () {
-    const file = document.getElementById("fileInput").files[0];
-    const storageRef = ref(storage, "uploads/" + file.name);
-
-    await uploadBytes(storageRef, file);
-    const url = await getDownloadURL(storageRef);
-
-    alert("Upload OK 🔥\n" + url);
-  };
+  
 </script>
 </body>
 </html>
